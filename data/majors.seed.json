@@ -1,0 +1,3972 @@
+{
+  "version": "2026-11",
+  "updated": "2026-11-06",
+  "disclaimer": "种子数据仅供工具匹配参考，非官方目录，最终以国家公务员局专业参考目录和教育部本科专业目录为准",
+  "categories": [
+    {
+      "id": "computer",
+      "category": "计算机类",
+      "majors": [
+        {
+          "name": "计算机科学与技术",
+          "aliases": [
+            "Computer Science",
+            "CS",
+            "Computing",
+            "计算机科学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "数据结构",
+              "en": [
+                "data structure",
+                "data structures",
+                "dsa"
+              ]
+            },
+            {
+              "zh": "操作系统",
+              "en": [
+                "operating system",
+                "operating systems"
+              ]
+            },
+            {
+              "zh": "计算机组成原理",
+              "en": [
+                "computer organization",
+                "computer architecture",
+                "computer composition"
+              ]
+            },
+            {
+              "zh": "计算机网络",
+              "en": [
+                "computer network",
+                "computer networks",
+                "networking"
+              ]
+            },
+            {
+              "zh": "数据库原理",
+              "en": [
+                "database",
+                "database systems",
+                "databases"
+              ]
+            },
+            {
+              "zh": "算法设计与分析",
+              "en": [
+                "algorithm design",
+                "algorithms",
+                "design and analysis of algorithms"
+              ]
+            },
+            {
+              "zh": "离散数学",
+              "en": [
+                "discrete mathematics",
+                "discrete math"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "软件工程",
+          "aliases": [
+            "Software Engineering",
+            "软件工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "软件工程导论",
+              "en": [
+                "software engineering",
+                "introduction to software engineering"
+              ]
+            },
+            {
+              "zh": "数据结构",
+              "en": [
+                "data structure",
+                "data structures",
+                "dsa"
+              ]
+            },
+            {
+              "zh": "操作系统",
+              "en": [
+                "operating system",
+                "operating systems"
+              ]
+            },
+            {
+              "zh": "数据库原理",
+              "en": [
+                "database",
+                "database systems",
+                "databases"
+              ]
+            },
+            {
+              "zh": "软件测试",
+              "en": [
+                "software testing"
+              ]
+            },
+            {
+              "zh": "软件项目管理",
+              "en": [
+                "software project management"
+              ]
+            },
+            {
+              "zh": "面向对象程序设计",
+              "en": [
+                "object oriented programming",
+                "object-oriented programming",
+                "oop"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "信息安全",
+          "aliases": [
+            "Information Security",
+            "Cyber Security",
+            "Cybersecurity",
+            "网络空间安全"
+          ],
+          "coreCourses": [
+            {
+              "zh": "密码学",
+              "en": [
+                "cryptography"
+              ]
+            },
+            {
+              "zh": "网络安全",
+              "en": [
+                "network security"
+              ]
+            },
+            {
+              "zh": "操作系统",
+              "en": [
+                "operating system",
+                "operating systems"
+              ]
+            },
+            {
+              "zh": "计算机组成原理",
+              "en": [
+                "computer organization",
+                "computer architecture",
+                "computer composition"
+              ]
+            },
+            {
+              "zh": "网络攻防技术",
+              "en": [
+                "network attack and defense",
+                "cyber attack and defense"
+              ]
+            },
+            {
+              "zh": "信息安全概论",
+              "en": [
+                "information security",
+                "introduction to information security"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "数据科学与大数据技术",
+          "aliases": [
+            "Data Science",
+            "Data Science and Analytics",
+            "Big Data Technology",
+            "数据科学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "数据结构",
+              "en": [
+                "data structure",
+                "data structures",
+                "dsa"
+              ]
+            },
+            {
+              "zh": "数据库原理",
+              "en": [
+                "database",
+                "database systems",
+                "databases"
+              ]
+            },
+            {
+              "zh": "概率论与数理统计",
+              "en": [
+                "probability and statistics",
+                "probability theory and mathematical statistics"
+              ]
+            },
+            {
+              "zh": "机器学习",
+              "en": [
+                "machine learning"
+              ]
+            },
+            {
+              "zh": "数据挖掘",
+              "en": [
+                "data mining"
+              ]
+            },
+            {
+              "zh": "大数据技术基础",
+              "en": [
+                "big data",
+                "big data technology"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "人工智能",
+          "aliases": [
+            "Artificial Intelligence",
+            "AI",
+            "Machine Learning",
+            "人工智能"
+          ],
+          "coreCourses": [
+            {
+              "zh": "机器学习",
+              "en": [
+                "machine learning"
+              ]
+            },
+            {
+              "zh": "深度学习",
+              "en": [
+                "deep learning"
+              ]
+            },
+            {
+              "zh": "模式识别",
+              "en": [
+                "pattern recognition"
+              ]
+            },
+            {
+              "zh": "数据结构",
+              "en": [
+                "data structure",
+                "data structures",
+                "dsa"
+              ]
+            },
+            {
+              "zh": "算法设计与分析",
+              "en": [
+                "algorithm design",
+                "algorithms",
+                "design and analysis of algorithms"
+              ]
+            },
+            {
+              "zh": "自然语言处理",
+              "en": [
+                "natural language processing",
+                "nlp"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "electronic",
+      "category": "电子信息类",
+      "majors": [
+        {
+          "name": "电子信息工程",
+          "aliases": [
+            "Electronic and Information Engineering",
+            "Electrical and Electronic Engineering",
+            "EEE",
+            "电子信息工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "电路分析",
+              "en": [
+                "circuit analysis",
+                "electric circuit analysis"
+              ]
+            },
+            {
+              "zh": "模拟电子技术",
+              "en": [
+                "analog electronics",
+                "analogue electronics"
+              ]
+            },
+            {
+              "zh": "数字电子技术",
+              "en": [
+                "digital electronics"
+              ]
+            },
+            {
+              "zh": "信号与系统",
+              "en": [
+                "signals and systems"
+              ]
+            },
+            {
+              "zh": "通信原理",
+              "en": [
+                "communication principles",
+                "principles of communication",
+                "communication theory"
+              ]
+            },
+            {
+              "zh": "数字信号处理",
+              "en": [
+                "digital signal processing",
+                "dsp"
+              ]
+            },
+            {
+              "zh": "电磁场与电磁波",
+              "en": [
+                "electromagnetic fields and waves",
+                "electromagnetics"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "通信工程",
+          "aliases": [
+            "Communication Engineering",
+            "Telecommunications Engineering",
+            "Telecommunications",
+            "通信工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "通信原理",
+              "en": [
+                "communication principles",
+                "principles of communication",
+                "communication theory"
+              ]
+            },
+            {
+              "zh": "信号与系统",
+              "en": [
+                "signals and systems"
+              ]
+            },
+            {
+              "zh": "数字信号处理",
+              "en": [
+                "digital signal processing",
+                "dsp"
+              ]
+            },
+            {
+              "zh": "电磁场与电磁波",
+              "en": [
+                "electromagnetic fields and waves",
+                "electromagnetics"
+              ]
+            },
+            {
+              "zh": "信息论基础",
+              "en": [
+                "information theory"
+              ]
+            },
+            {
+              "zh": "移动通信",
+              "en": [
+                "mobile communication",
+                "mobile communications",
+                "wireless communications"
+              ]
+            },
+            {
+              "zh": "光纤通信",
+              "en": [
+                "optical fiber communication",
+                "fiber optic communication",
+                "optical communications"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "电子科学与技术",
+          "aliases": [
+            "Electronic Science and Technology",
+            "Electronics",
+            "电子科学与技术"
+          ],
+          "coreCourses": [
+            {
+              "zh": "半导体物理",
+              "en": [
+                "semiconductor physics"
+              ]
+            },
+            {
+              "zh": "固体物理",
+              "en": [
+                "solid state physics"
+              ]
+            },
+            {
+              "zh": "模拟电子技术",
+              "en": [
+                "analog electronics",
+                "analogue electronics"
+              ]
+            },
+            {
+              "zh": "数字电子技术",
+              "en": [
+                "digital electronics"
+              ]
+            },
+            {
+              "zh": "微电子学基础",
+              "en": [
+                "microelectronics",
+                "introduction to microelectronics"
+              ]
+            },
+            {
+              "zh": "光电子技术",
+              "en": [
+                "optoelectronics",
+                "optoelectronic technology"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "微电子科学与工程",
+          "aliases": [
+            "Microelectronics Science and Engineering",
+            "Microelectronics",
+            "微电子学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "半导体物理与器件",
+              "en": [
+                "semiconductor physics and devices",
+                "semiconductor devices"
+              ]
+            },
+            {
+              "zh": "集成电路设计",
+              "en": [
+                "integrated circuit design",
+                "ic design"
+              ]
+            },
+            {
+              "zh": "模拟集成电路",
+              "en": [
+                "analog integrated circuits"
+              ]
+            },
+            {
+              "zh": "数字集成电路",
+              "en": [
+                "digital integrated circuits"
+              ]
+            },
+            {
+              "zh": "半导体工艺原理",
+              "en": [
+                "semiconductor manufacturing",
+                "semiconductor process",
+                "semiconductor fabrication"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "automation",
+      "category": "自动化类",
+      "majors": [
+        {
+          "name": "自动化",
+          "aliases": [
+            "Automation",
+            "Automatic Control",
+            "Control Engineering",
+            "Control Science and Engineering",
+            "自动化"
+          ],
+          "coreCourses": [
+            {
+              "zh": "自动控制原理",
+              "en": [
+                "automatic control",
+                "automatic control theory",
+                "control systems"
+              ]
+            },
+            {
+              "zh": "现代控制理论",
+              "en": [
+                "modern control theory"
+              ]
+            },
+            {
+              "zh": "电路分析",
+              "en": [
+                "circuit analysis",
+                "electric circuit analysis"
+              ]
+            },
+            {
+              "zh": "模拟电子技术",
+              "en": [
+                "analog electronics",
+                "analogue electronics"
+              ]
+            },
+            {
+              "zh": "数字电子技术",
+              "en": [
+                "digital electronics"
+              ]
+            },
+            {
+              "zh": "微机原理与接口技术",
+              "en": [
+                "microcomputer principles",
+                "microprocessor systems",
+                "computer interface technology"
+              ]
+            },
+            {
+              "zh": "过程控制",
+              "en": [
+                "process control"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "机器人工程",
+          "aliases": [
+            "Robotics Engineering",
+            "Robotics",
+            "机器人工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "机器人学",
+              "en": [
+                "robotics"
+              ]
+            },
+            {
+              "zh": "自动控制原理",
+              "en": [
+                "automatic control",
+                "automatic control theory",
+                "control systems"
+              ]
+            },
+            {
+              "zh": "传感器技术",
+              "en": [
+                "sensor technology",
+                "sensors"
+              ]
+            },
+            {
+              "zh": "机器视觉",
+              "en": [
+                "machine vision"
+              ]
+            },
+            {
+              "zh": "嵌入式系统",
+              "en": [
+                "embedded systems"
+              ]
+            },
+            {
+              "zh": "电机与拖动",
+              "en": [
+                "electric machines and drives",
+                "motors and drives"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "轨道交通信号与控制",
+          "aliases": [
+            "Rail Transit Signal and Control",
+            "轨道交通信号与控制"
+          ],
+          "coreCourses": [
+            {
+              "zh": "自动控制原理",
+              "en": [
+                "automatic control",
+                "automatic control theory",
+                "control systems"
+              ]
+            },
+            {
+              "zh": "信号与系统",
+              "en": [
+                "signals and systems"
+              ]
+            },
+            {
+              "zh": "数字信号处理",
+              "en": [
+                "digital signal processing",
+                "dsp"
+              ]
+            },
+            {
+              "zh": "铁路信号基础",
+              "en": [
+                "railway signaling",
+                "railway signal"
+              ]
+            },
+            {
+              "zh": "车站信号自动控制",
+              "en": [
+                "station signal control",
+                "railway station signaling"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "electrical",
+      "category": "电气类",
+      "majors": [
+        {
+          "name": "电气工程及其自动化",
+          "aliases": [
+            "Electrical Engineering",
+            "Electrical Power Engineering",
+            "Electrical and Electronic Engineering",
+            "电力工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "电路原理",
+              "en": [
+                "electric circuits",
+                "circuit theory"
+              ]
+            },
+            {
+              "zh": "模拟电子技术",
+              "en": [
+                "analog electronics",
+                "analogue electronics"
+              ]
+            },
+            {
+              "zh": "数字电子技术",
+              "en": [
+                "digital electronics"
+              ]
+            },
+            {
+              "zh": "电机学",
+              "en": [
+                "electric machinery",
+                "electrical machines"
+              ]
+            },
+            {
+              "zh": "电力系统分析",
+              "en": [
+                "power system analysis"
+              ]
+            },
+            {
+              "zh": "电力电子技术",
+              "en": [
+                "power electronics"
+              ]
+            },
+            {
+              "zh": "自动控制原理",
+              "en": [
+                "automatic control",
+                "automatic control theory",
+                "control systems"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "智能电网信息工程",
+          "aliases": [
+            "Smart Grid Information Engineering",
+            "Power Systems",
+            "智能电网"
+          ],
+          "coreCourses": [
+            {
+              "zh": "电路原理",
+              "en": [
+                "electric circuits",
+                "circuit theory"
+              ]
+            },
+            {
+              "zh": "电机学",
+              "en": [
+                "electric machinery",
+                "electrical machines"
+              ]
+            },
+            {
+              "zh": "电力系统分析",
+              "en": [
+                "power system analysis"
+              ]
+            },
+            {
+              "zh": "电力电子技术",
+              "en": [
+                "power electronics"
+              ]
+            },
+            {
+              "zh": "智能电网技术",
+              "en": [
+                "smart grid",
+                "smart grid technology"
+              ]
+            },
+            {
+              "zh": "通信原理",
+              "en": [
+                "communication principles",
+                "principles of communication",
+                "communication theory"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "电气工程与智能控制",
+          "aliases": [
+            "Electrical Engineering and Intelligent Control",
+            "电气工程与智能控制"
+          ],
+          "coreCourses": [
+            {
+              "zh": "自动控制原理",
+              "en": [
+                "automatic control",
+                "automatic control theory",
+                "control systems"
+              ]
+            },
+            {
+              "zh": "电力电子技术",
+              "en": [
+                "power electronics"
+              ]
+            },
+            {
+              "zh": "嵌入式系统",
+              "en": [
+                "embedded systems"
+              ]
+            },
+            {
+              "zh": "电机与拖动",
+              "en": [
+                "electric machines and drives",
+                "motors and drives"
+              ]
+            },
+            {
+              "zh": "智能控制",
+              "en": [
+                "intelligent control"
+              ]
+            },
+            {
+              "zh": "传感器技术",
+              "en": [
+                "sensor technology",
+                "sensors"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mechanical",
+      "category": "机械类",
+      "majors": [
+        {
+          "name": "机械设计制造及其自动化",
+          "aliases": [
+            "Mechanical Engineering",
+            "Mechanical Design, Manufacturing and Automation",
+            "机械工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "机械制图",
+              "en": [
+                "mechanical drawing",
+                "engineering drawing"
+              ]
+            },
+            {
+              "zh": "理论力学",
+              "en": [
+                "theoretical mechanics",
+                "engineering mechanics"
+              ]
+            },
+            {
+              "zh": "材料力学",
+              "en": [
+                "mechanics of materials",
+                "strength of materials"
+              ]
+            },
+            {
+              "zh": "机械原理",
+              "en": [
+                "theory of machines",
+                "mechanical principles"
+              ]
+            },
+            {
+              "zh": "机械设计",
+              "en": [
+                "machine design",
+                "mechanical design"
+              ]
+            },
+            {
+              "zh": "机械制造技术基础",
+              "en": [
+                "manufacturing technology",
+                "mechanical manufacturing"
+              ]
+            },
+            {
+              "zh": "控制工程基础",
+              "en": [
+                "control engineering",
+                "fundamentals of control engineering"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "车辆工程",
+          "aliases": [
+            "Vehicle Engineering",
+            "Automotive Engineering",
+            "车辆工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "汽车构造",
+              "en": [
+                "automotive construction",
+                "automobile structure"
+              ]
+            },
+            {
+              "zh": "汽车理论",
+              "en": [
+                "automotive theory",
+                "vehicle dynamics"
+              ]
+            },
+            {
+              "zh": "发动机原理",
+              "en": [
+                "engine principles",
+                "internal combustion engines"
+              ]
+            },
+            {
+              "zh": "汽车设计",
+              "en": [
+                "automotive design",
+                "vehicle design"
+              ]
+            },
+            {
+              "zh": "材料力学",
+              "en": [
+                "mechanics of materials",
+                "strength of materials"
+              ]
+            },
+            {
+              "zh": "机械设计",
+              "en": [
+                "machine design",
+                "mechanical design"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "机械电子工程",
+          "aliases": [
+            "Mechatronic Engineering",
+            "Mechatronics",
+            "机电一体化"
+          ],
+          "coreCourses": [
+            {
+              "zh": "机械设计",
+              "en": [
+                "machine design",
+                "mechanical design"
+              ]
+            },
+            {
+              "zh": "电工学",
+              "en": [
+                "electrical engineering",
+                "electrotechnics"
+              ]
+            },
+            {
+              "zh": "传感器技术",
+              "en": [
+                "sensor technology",
+                "sensors"
+              ]
+            },
+            {
+              "zh": "机电一体化技术",
+              "en": [
+                "mechatronics"
+              ]
+            },
+            {
+              "zh": "单片机原理及应用",
+              "en": [
+                "microcontroller",
+                "single chip microcomputer",
+                "mcu"
+              ]
+            },
+            {
+              "zh": "自动控制原理",
+              "en": [
+                "automatic control",
+                "automatic control theory",
+                "control systems"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "智能制造工程",
+          "aliases": [
+            "Smart Manufacturing Engineering",
+            "Intelligent Manufacturing",
+            "智能制造工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "机械设计基础",
+              "en": [
+                "fundamentals of machine design",
+                "mechanical design fundamentals"
+              ]
+            },
+            {
+              "zh": "自动控制原理",
+              "en": [
+                "automatic control",
+                "automatic control theory",
+                "control systems"
+              ]
+            },
+            {
+              "zh": "人工智能基础",
+              "en": [
+                "artificial intelligence",
+                "introduction to artificial intelligence"
+              ]
+            },
+            {
+              "zh": "工业机器人技术",
+              "en": [
+                "industrial robotics",
+                "industrial robots"
+              ]
+            },
+            {
+              "zh": "生产计划与控制",
+              "en": [
+                "production planning and control"
+              ]
+            },
+            {
+              "zh": "智能工厂技术",
+              "en": [
+                "smart factory",
+                "smart manufacturing"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "math",
+      "category": "数学类",
+      "majors": [
+        {
+          "name": "数学与应用数学",
+          "aliases": [
+            "Mathematics",
+            "Applied Mathematics",
+            "Pure Mathematics",
+            "数学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "数学分析",
+              "en": [
+                "mathematical analysis",
+                "real analysis"
+              ]
+            },
+            {
+              "zh": "高等代数",
+              "en": [
+                "advanced algebra",
+                "higher algebra"
+              ]
+            },
+            {
+              "zh": "概率论",
+              "en": [
+                "probability theory",
+                "probability"
+              ]
+            },
+            {
+              "zh": "数理统计",
+              "en": [
+                "mathematical statistics",
+                "statistics"
+              ]
+            },
+            {
+              "zh": "常微分方程",
+              "en": [
+                "ordinary differential equations",
+                "ode"
+              ]
+            },
+            {
+              "zh": "复变函数",
+              "en": [
+                "complex analysis",
+                "complex variables"
+              ]
+            },
+            {
+              "zh": "实变函数",
+              "en": [
+                "real analysis",
+                "real variable functions"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "信息与计算科学",
+          "aliases": [
+            "Information and Computing Science",
+            "Computational Mathematics",
+            "计算数学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "数学分析",
+              "en": [
+                "mathematical analysis",
+                "real analysis"
+              ]
+            },
+            {
+              "zh": "高等代数",
+              "en": [
+                "advanced algebra",
+                "higher algebra"
+              ]
+            },
+            {
+              "zh": "数值分析",
+              "en": [
+                "numerical analysis"
+              ]
+            },
+            {
+              "zh": "数据结构",
+              "en": [
+                "data structure",
+                "data structures",
+                "dsa"
+              ]
+            },
+            {
+              "zh": "算法设计与分析",
+              "en": [
+                "algorithm design",
+                "algorithms",
+                "design and analysis of algorithms"
+              ]
+            },
+            {
+              "zh": "运筹学",
+              "en": [
+                "operations research"
+              ]
+            },
+            {
+              "zh": "概率论",
+              "en": [
+                "probability theory",
+                "probability"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "数据计算及应用",
+          "aliases": [
+            "Data Computing and Application",
+            "数据计算及应用"
+          ],
+          "coreCourses": [
+            {
+              "zh": "数学分析",
+              "en": [
+                "mathematical analysis",
+                "real analysis"
+              ]
+            },
+            {
+              "zh": "高等代数",
+              "en": [
+                "advanced algebra",
+                "higher algebra"
+              ]
+            },
+            {
+              "zh": "概率论与数理统计",
+              "en": [
+                "probability and statistics",
+                "probability theory and mathematical statistics"
+              ]
+            },
+            {
+              "zh": "数据结构",
+              "en": [
+                "data structure",
+                "data structures",
+                "dsa"
+              ]
+            },
+            {
+              "zh": "数据挖掘",
+              "en": [
+                "data mining"
+              ]
+            },
+            {
+              "zh": "机器学习",
+              "en": [
+                "machine learning"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "statistics",
+      "category": "统计学类",
+      "majors": [
+        {
+          "name": "统计学",
+          "aliases": [
+            "Statistics",
+            "Statistical Science",
+            "统计学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "概率论",
+              "en": [
+                "probability theory",
+                "probability"
+              ]
+            },
+            {
+              "zh": "数理统计",
+              "en": [
+                "mathematical statistics",
+                "statistics"
+              ]
+            },
+            {
+              "zh": "回归分析",
+              "en": [
+                "regression analysis"
+              ]
+            },
+            {
+              "zh": "时间序列分析",
+              "en": [
+                "time series analysis"
+              ]
+            },
+            {
+              "zh": "多元统计分析",
+              "en": [
+                "multivariate statistical analysis",
+                "multivariate statistics"
+              ]
+            },
+            {
+              "zh": "抽样调查",
+              "en": [
+                "sampling",
+                "sample survey"
+              ]
+            },
+            {
+              "zh": "统计计算",
+              "en": [
+                "statistical computing"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "应用统计学",
+          "aliases": [
+            "Applied Statistics",
+            "Statistics and Data Science",
+            "应用统计学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "概率论",
+              "en": [
+                "probability theory",
+                "probability"
+              ]
+            },
+            {
+              "zh": "数理统计",
+              "en": [
+                "mathematical statistics",
+                "statistics"
+              ]
+            },
+            {
+              "zh": "回归分析",
+              "en": [
+                "regression analysis"
+              ]
+            },
+            {
+              "zh": "数据挖掘",
+              "en": [
+                "data mining"
+              ]
+            },
+            {
+              "zh": "统计软件应用",
+              "en": [
+                "statistical software",
+                "applied statistical software"
+              ]
+            },
+            {
+              "zh": "抽样调查",
+              "en": [
+                "sampling",
+                "sample survey"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "经济统计学",
+          "aliases": [
+            "Economic Statistics",
+            "Quantitative Economics",
+            "经济统计学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "概率论",
+              "en": [
+                "probability theory",
+                "probability"
+              ]
+            },
+            {
+              "zh": "数理统计",
+              "en": [
+                "mathematical statistics",
+                "statistics"
+              ]
+            },
+            {
+              "zh": "微观经济学",
+              "en": [
+                "microeconomics"
+              ]
+            },
+            {
+              "zh": "宏观经济学",
+              "en": [
+                "macroeconomics"
+              ]
+            },
+            {
+              "zh": "计量经济学",
+              "en": [
+                "econometrics"
+              ]
+            },
+            {
+              "zh": "国民经济核算",
+              "en": [
+                "national accounts",
+                "national economic accounting"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "economics",
+      "category": "经济学类",
+      "majors": [
+        {
+          "name": "经济学",
+          "aliases": [
+            "Economics",
+            "Economy",
+            "经济学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "微观经济学",
+              "en": [
+                "microeconomics"
+              ]
+            },
+            {
+              "zh": "宏观经济学",
+              "en": [
+                "macroeconomics"
+              ]
+            },
+            {
+              "zh": "计量经济学",
+              "en": [
+                "econometrics"
+              ]
+            },
+            {
+              "zh": "政治经济学",
+              "en": [
+                "political economy"
+              ]
+            },
+            {
+              "zh": "中级微观经济学",
+              "en": [
+                "intermediate microeconomics"
+              ]
+            },
+            {
+              "zh": "中级宏观经济学",
+              "en": [
+                "intermediate macroeconomics"
+              ]
+            },
+            {
+              "zh": "经济学说史",
+              "en": [
+                "history of economic thought"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "数字经济",
+          "aliases": [
+            "Digital Economy",
+            "数字经济"
+          ],
+          "coreCourses": [
+            {
+              "zh": "微观经济学",
+              "en": [
+                "microeconomics"
+              ]
+            },
+            {
+              "zh": "宏观经济学",
+              "en": [
+                "macroeconomics"
+              ]
+            },
+            {
+              "zh": "计量经济学",
+              "en": [
+                "econometrics"
+              ]
+            },
+            {
+              "zh": "数字经济学",
+              "en": [
+                "digital economics",
+                "digital economy"
+              ]
+            },
+            {
+              "zh": "大数据分析",
+              "en": [
+                "big data analytics"
+              ]
+            },
+            {
+              "zh": "平台经济学",
+              "en": [
+                "platform economics"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "国民经济管理",
+          "aliases": [
+            "National Economic Management",
+            "国民经济管理"
+          ],
+          "coreCourses": [
+            {
+              "zh": "微观经济学",
+              "en": [
+                "microeconomics"
+              ]
+            },
+            {
+              "zh": "宏观经济学",
+              "en": [
+                "macroeconomics"
+              ]
+            },
+            {
+              "zh": "国民经济管理学",
+              "en": [
+                "national economic management"
+              ]
+            },
+            {
+              "zh": "计量经济学",
+              "en": [
+                "econometrics"
+              ]
+            },
+            {
+              "zh": "财政学",
+              "en": [
+                "public finance"
+              ]
+            },
+            {
+              "zh": "产业经济学",
+              "en": [
+                "industrial economics"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "finance",
+      "category": "金融学类",
+      "majors": [
+        {
+          "name": "金融学",
+          "aliases": [
+            "Finance",
+            "Financial Economics",
+            "Banking and Finance",
+            "金融学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "微观经济学",
+              "en": [
+                "microeconomics"
+              ]
+            },
+            {
+              "zh": "宏观经济学",
+              "en": [
+                "macroeconomics"
+              ]
+            },
+            {
+              "zh": "货币银行学",
+              "en": [
+                "money and banking",
+                "monetary economics"
+              ]
+            },
+            {
+              "zh": "国际金融",
+              "en": [
+                "international finance"
+              ]
+            },
+            {
+              "zh": "金融市场学",
+              "en": [
+                "financial markets"
+              ]
+            },
+            {
+              "zh": "投资学",
+              "en": [
+                "investments",
+                "investment"
+              ]
+            },
+            {
+              "zh": "公司金融",
+              "en": [
+                "corporate finance"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "金融工程",
+          "aliases": [
+            "Financial Engineering",
+            "Quantitative Finance",
+            "金融工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "金融学",
+              "en": [
+                "finance",
+                "principles of finance"
+              ]
+            },
+            {
+              "zh": "金融工程学",
+              "en": [
+                "financial engineering"
+              ]
+            },
+            {
+              "zh": "衍生金融工具",
+              "en": [
+                "derivatives",
+                "financial derivatives"
+              ]
+            },
+            {
+              "zh": "计量经济学",
+              "en": [
+                "econometrics"
+              ]
+            },
+            {
+              "zh": "随机过程",
+              "en": [
+                "stochastic processes"
+              ]
+            },
+            {
+              "zh": "金融风险管理",
+              "en": [
+                "financial risk management"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "金融科技",
+          "aliases": [
+            "FinTech",
+            "Financial Technology",
+            "金融科技"
+          ],
+          "coreCourses": [
+            {
+              "zh": "金融学",
+              "en": [
+                "finance",
+                "principles of finance"
+              ]
+            },
+            {
+              "zh": "数据结构",
+              "en": [
+                "data structure",
+                "data structures",
+                "dsa"
+              ]
+            },
+            {
+              "zh": "数据库原理",
+              "en": [
+                "database",
+                "database systems",
+                "databases"
+              ]
+            },
+            {
+              "zh": "区块链技术",
+              "en": [
+                "blockchain",
+                "blockchain technology"
+              ]
+            },
+            {
+              "zh": "机器学习",
+              "en": [
+                "machine learning"
+              ]
+            },
+            {
+              "zh": "金融风险管理",
+              "en": [
+                "financial risk management"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "投资学",
+          "aliases": [
+            "Investment",
+            "Investment Management",
+            "投资学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "投资学",
+              "en": [
+                "investments",
+                "investment"
+              ]
+            },
+            {
+              "zh": "证券投资分析",
+              "en": [
+                "securities investment analysis",
+                "security analysis"
+              ]
+            },
+            {
+              "zh": "金融市场学",
+              "en": [
+                "financial markets"
+              ]
+            },
+            {
+              "zh": "公司金融",
+              "en": [
+                "corporate finance"
+              ]
+            },
+            {
+              "zh": "资产评估",
+              "en": [
+                "asset valuation",
+                "asset appraisal"
+              ]
+            },
+            {
+              "zh": "宏观经济学",
+              "en": [
+                "macroeconomics"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public_finance",
+      "category": "财政学类",
+      "majors": [
+        {
+          "name": "财政学",
+          "aliases": [
+            "Public Finance",
+            "Public Economics",
+            "财政学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "财政学",
+              "en": [
+                "public finance"
+              ]
+            },
+            {
+              "zh": "税收学",
+              "en": [
+                "taxation",
+                "tax science"
+              ]
+            },
+            {
+              "zh": "政府预算管理",
+              "en": [
+                "government budget",
+                "government budgeting"
+              ]
+            },
+            {
+              "zh": "微观经济学",
+              "en": [
+                "microeconomics"
+              ]
+            },
+            {
+              "zh": "宏观经济学",
+              "en": [
+                "macroeconomics"
+              ]
+            },
+            {
+              "zh": "公共经济学",
+              "en": [
+                "public economics"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "税收学",
+          "aliases": [
+            "Taxation",
+            "Tax Law and Policy",
+            "税收学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "税收学原理",
+              "en": [
+                "principles of taxation"
+              ]
+            },
+            {
+              "zh": "中国税制",
+              "en": [
+                "chinese tax system",
+                "china tax system"
+              ]
+            },
+            {
+              "zh": "国际税收",
+              "en": [
+                "international taxation",
+                "international tax"
+              ]
+            },
+            {
+              "zh": "税务管理",
+              "en": [
+                "tax administration",
+                "tax management"
+              ]
+            },
+            {
+              "zh": "财政学",
+              "en": [
+                "public finance"
+              ]
+            },
+            {
+              "zh": "会计学基础",
+              "en": [
+                "fundamentals of accounting",
+                "introduction to accounting"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trade",
+      "category": "经济与贸易类",
+      "majors": [
+        {
+          "name": "国际经济与贸易",
+          "aliases": [
+            "International Economics and Trade",
+            "International Trade",
+            "International Business Economics",
+            "国际经济与贸易"
+          ],
+          "coreCourses": [
+            {
+              "zh": "国际贸易实务",
+              "en": [
+                "international trade practice",
+                "practice of international trade"
+              ]
+            },
+            {
+              "zh": "国际经济学",
+              "en": [
+                "international economics"
+              ]
+            },
+            {
+              "zh": "国际贸易理论",
+              "en": [
+                "international trade theory",
+                "theory of international trade"
+              ]
+            },
+            {
+              "zh": "国际金融",
+              "en": [
+                "international finance"
+              ]
+            },
+            {
+              "zh": "国际市场营销",
+              "en": [
+                "international marketing",
+                "global marketing"
+              ]
+            },
+            {
+              "zh": "外贸函电",
+              "en": [
+                "foreign trade correspondence",
+                "business correspondence"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "贸易经济",
+          "aliases": [
+            "Trade Economics",
+            "贸易经济"
+          ],
+          "coreCourses": [
+            {
+              "zh": "微观经济学",
+              "en": [
+                "microeconomics"
+              ]
+            },
+            {
+              "zh": "宏观经济学",
+              "en": [
+                "macroeconomics"
+              ]
+            },
+            {
+              "zh": "贸易经济学",
+              "en": [
+                "trade economics",
+                "commercial economics"
+              ]
+            },
+            {
+              "zh": "国际贸易实务",
+              "en": [
+                "international trade practice",
+                "practice of international trade"
+              ]
+            },
+            {
+              "zh": "市场营销学",
+              "en": [
+                "marketing",
+                "marketing management"
+              ]
+            },
+            {
+              "zh": "流通经济学",
+              "en": [
+                "circulation economics",
+                "economics of distribution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "business",
+      "category": "工商管理类",
+      "majors": [
+        {
+          "name": "工商管理",
+          "aliases": [
+            "Business Administration",
+            "Management",
+            "Business Management",
+            "MBA",
+            "工商管理"
+          ],
+          "coreCourses": [
+            {
+              "zh": "管理学原理",
+              "en": [
+                "principles of management",
+                "management"
+              ]
+            },
+            {
+              "zh": "微观经济学",
+              "en": [
+                "microeconomics"
+              ]
+            },
+            {
+              "zh": "宏观经济学",
+              "en": [
+                "macroeconomics"
+              ]
+            },
+            {
+              "zh": "组织行为学",
+              "en": [
+                "organizational behavior"
+              ]
+            },
+            {
+              "zh": "市场营销学",
+              "en": [
+                "marketing",
+                "marketing management"
+              ]
+            },
+            {
+              "zh": "财务管理",
+              "en": [
+                "financial management"
+              ]
+            },
+            {
+              "zh": "战略管理",
+              "en": [
+                "strategic management"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "会计学",
+          "aliases": [
+            "Accounting",
+            "Accountancy",
+            "Accounting and Finance",
+            "会计学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "基础会计学",
+              "en": [
+                "basic accounting",
+                "accounting principles"
+              ]
+            },
+            {
+              "zh": "中级财务会计",
+              "en": [
+                "intermediate financial accounting"
+              ]
+            },
+            {
+              "zh": "高级财务会计",
+              "en": [
+                "advanced financial accounting"
+              ]
+            },
+            {
+              "zh": "成本会计",
+              "en": [
+                "cost accounting"
+              ]
+            },
+            {
+              "zh": "管理会计",
+              "en": [
+                "management accounting",
+                "managerial accounting"
+              ]
+            },
+            {
+              "zh": "审计学",
+              "en": [
+                "auditing",
+                "audit"
+              ]
+            },
+            {
+              "zh": "财务管理",
+              "en": [
+                "financial management"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "财务管理",
+          "aliases": [
+            "Financial Management",
+            "Corporate Finance",
+            "财务管理"
+          ],
+          "coreCourses": [
+            {
+              "zh": "财务管理",
+              "en": [
+                "financial management"
+              ]
+            },
+            {
+              "zh": "中级财务会计",
+              "en": [
+                "intermediate financial accounting"
+              ]
+            },
+            {
+              "zh": "管理会计",
+              "en": [
+                "management accounting",
+                "managerial accounting"
+              ]
+            },
+            {
+              "zh": "公司金融",
+              "en": [
+                "corporate finance"
+              ]
+            },
+            {
+              "zh": "投资学",
+              "en": [
+                "investments",
+                "investment"
+              ]
+            },
+            {
+              "zh": "审计学",
+              "en": [
+                "auditing",
+                "audit"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "市场营销",
+          "aliases": [
+            "Marketing",
+            "Marketing Management",
+            "Digital Marketing",
+            "市场营销"
+          ],
+          "coreCourses": [
+            {
+              "zh": "市场营销学",
+              "en": [
+                "marketing",
+                "marketing management"
+              ]
+            },
+            {
+              "zh": "消费者行为学",
+              "en": [
+                "consumer behavior"
+              ]
+            },
+            {
+              "zh": "市场调查与预测",
+              "en": [
+                "market research and forecasting",
+                "marketing research"
+              ]
+            },
+            {
+              "zh": "品牌管理",
+              "en": [
+                "brand management"
+              ]
+            },
+            {
+              "zh": "营销渠道管理",
+              "en": [
+                "marketing channels",
+                "channel management"
+              ]
+            },
+            {
+              "zh": "广告学",
+              "en": [
+                "advertising"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "国际商务",
+          "aliases": [
+            "International Business",
+            "Global Business",
+            "Business Analytics",
+            "国际商务"
+          ],
+          "coreCourses": [
+            {
+              "zh": "国际商务",
+              "en": [
+                "international business"
+              ]
+            },
+            {
+              "zh": "国际贸易实务",
+              "en": [
+                "international trade practice",
+                "practice of international trade"
+              ]
+            },
+            {
+              "zh": "国际市场营销",
+              "en": [
+                "international marketing",
+                "global marketing"
+              ]
+            },
+            {
+              "zh": "跨国公司管理",
+              "en": [
+                "multinational corporation management",
+                "multinational management"
+              ]
+            },
+            {
+              "zh": "国际商法",
+              "en": [
+                "international commercial law",
+                "international business law"
+              ]
+            },
+            {
+              "zh": "跨文化管理",
+              "en": [
+                "cross-cultural management"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public_admin",
+      "category": "公共管理类",
+      "majors": [
+        {
+          "name": "行政管理",
+          "aliases": [
+            "Public Administration",
+            "Administrative Management",
+            "Public Policy",
+            "行政管理"
+          ],
+          "coreCourses": [
+            {
+              "zh": "行政管理学",
+              "en": [
+                "public administration",
+                "administrative management"
+              ]
+            },
+            {
+              "zh": "公共政策学",
+              "en": [
+                "public policy"
+              ]
+            },
+            {
+              "zh": "政治学原理",
+              "en": [
+                "principles of political science",
+                "political science"
+              ]
+            },
+            {
+              "zh": "公共经济学",
+              "en": [
+                "public economics"
+              ]
+            },
+            {
+              "zh": "组织行为学",
+              "en": [
+                "organizational behavior"
+              ]
+            },
+            {
+              "zh": "社会研究方法",
+              "en": [
+                "social research methods"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "公共事业管理",
+          "aliases": [
+            "Public Affairs Management",
+            "Public Management",
+            "公共事业管理"
+          ],
+          "coreCourses": [
+            {
+              "zh": "公共管理学",
+              "en": [
+                "public management"
+              ]
+            },
+            {
+              "zh": "行政管理学",
+              "en": [
+                "public administration",
+                "administrative management"
+              ]
+            },
+            {
+              "zh": "公共政策学",
+              "en": [
+                "public policy"
+              ]
+            },
+            {
+              "zh": "公共经济学",
+              "en": [
+                "public economics"
+              ]
+            },
+            {
+              "zh": "社会研究方法",
+              "en": [
+                "social research methods"
+              ]
+            },
+            {
+              "zh": "非营利组织管理",
+              "en": [
+                "nonprofit organization management",
+                "non-profit management"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "劳动与社会保障",
+          "aliases": [
+            "Labor and Social Security",
+            "Social Policy",
+            "劳动与社会保障"
+          ],
+          "coreCourses": [
+            {
+              "zh": "社会保障学",
+              "en": [
+                "social security",
+                "social welfare"
+              ]
+            },
+            {
+              "zh": "劳动经济学",
+              "en": [
+                "labor economics"
+              ]
+            },
+            {
+              "zh": "社会保险",
+              "en": [
+                "social insurance"
+              ]
+            },
+            {
+              "zh": "公共管理学",
+              "en": [
+                "public management"
+              ]
+            },
+            {
+              "zh": "社会政策",
+              "en": [
+                "social policy"
+              ]
+            },
+            {
+              "zh": "人力资源管理",
+              "en": [
+                "human resource management"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "law",
+      "category": "法学类",
+      "majors": [
+        {
+          "name": "法学",
+          "aliases": [
+            "Law",
+            "LLB",
+            "Juris Doctor",
+            "JD",
+            "法学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "法理学",
+              "en": [
+                "jurisprudence",
+                "legal theory"
+              ]
+            },
+            {
+              "zh": "宪法学",
+              "en": [
+                "constitutional law"
+              ]
+            },
+            {
+              "zh": "民法学",
+              "en": [
+                "civil law"
+              ]
+            },
+            {
+              "zh": "刑法学",
+              "en": [
+                "criminal law"
+              ]
+            },
+            {
+              "zh": "行政法学",
+              "en": [
+                "administrative law"
+              ]
+            },
+            {
+              "zh": "民事诉讼法学",
+              "en": [
+                "civil procedure law"
+              ]
+            },
+            {
+              "zh": "刑事诉讼法学",
+              "en": [
+                "criminal procedure law"
+              ]
+            },
+            {
+              "zh": "商法学",
+              "en": [
+                "commercial law"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "知识产权",
+          "aliases": [
+            "Intellectual Property Law",
+            "IP Law",
+            "知识产权"
+          ],
+          "coreCourses": [
+            {
+              "zh": "知识产权法",
+              "en": [
+                "intellectual property law"
+              ]
+            },
+            {
+              "zh": "民法学",
+              "en": [
+                "civil law"
+              ]
+            },
+            {
+              "zh": "专利法",
+              "en": [
+                "patent law"
+              ]
+            },
+            {
+              "zh": "商标法",
+              "en": [
+                "trademark law"
+              ]
+            },
+            {
+              "zh": "著作权法",
+              "en": [
+                "copyright law"
+              ]
+            },
+            {
+              "zh": "竞争法",
+              "en": [
+                "competition law"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "国际经贸规则",
+          "aliases": [
+            "International Economic and Trade Law",
+            "International Business Law",
+            "国际经贸规则"
+          ],
+          "coreCourses": [
+            {
+              "zh": "国际法",
+              "en": [
+                "international law"
+              ]
+            },
+            {
+              "zh": "国际经济法",
+              "en": [
+                "international economic law"
+              ]
+            },
+            {
+              "zh": "国际贸易法",
+              "en": [
+                "international trade law"
+              ]
+            },
+            {
+              "zh": "民法学",
+              "en": [
+                "civil law"
+              ]
+            },
+            {
+              "zh": "商法学",
+              "en": [
+                "commercial law"
+              ]
+            },
+            {
+              "zh": "世界贸易组织法",
+              "en": [
+                "wto law",
+                "world trade organization law"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "education",
+      "category": "教育学类",
+      "majors": [
+        {
+          "name": "教育学",
+          "aliases": [
+            "Education",
+            "Education Studies",
+            "Educational Studies",
+            "教育学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "教育学原理",
+              "en": [
+                "principles of education",
+                "pedagogy"
+              ]
+            },
+            {
+              "zh": "教育心理学",
+              "en": [
+                "educational psychology"
+              ]
+            },
+            {
+              "zh": "中国教育史",
+              "en": [
+                "history of chinese education"
+              ]
+            },
+            {
+              "zh": "外国教育史",
+              "en": [
+                "history of foreign education"
+              ]
+            },
+            {
+              "zh": "课程与教学论",
+              "en": [
+                "curriculum and instruction",
+                "curriculum and teaching"
+              ]
+            },
+            {
+              "zh": "教育研究方法",
+              "en": [
+                "educational research methods"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "学前教育",
+          "aliases": [
+            "Early Childhood Education",
+            "Preschool Education",
+            "学前教育"
+          ],
+          "coreCourses": [
+            {
+              "zh": "学前教育学",
+              "en": [
+                "early childhood education",
+                "preschool education"
+              ]
+            },
+            {
+              "zh": "学前儿童发展心理学",
+              "en": [
+                "child development",
+                "early childhood development psychology"
+              ]
+            },
+            {
+              "zh": "幼儿园课程",
+              "en": [
+                "kindergarten curriculum",
+                "early childhood curriculum"
+              ]
+            },
+            {
+              "zh": "学前儿童健康教育",
+              "en": [
+                "early childhood health education"
+              ]
+            },
+            {
+              "zh": "学前教育研究方法",
+              "en": [
+                "early childhood education research methods"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "教育技术学",
+          "aliases": [
+            "Educational Technology",
+            "Instructional Technology",
+            "教育技术学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "教育技术学导论",
+              "en": [
+                "educational technology",
+                "introduction to educational technology"
+              ]
+            },
+            {
+              "zh": "教学设计",
+              "en": [
+                "instructional design"
+              ]
+            },
+            {
+              "zh": "教育心理学",
+              "en": [
+                "educational psychology"
+              ]
+            },
+            {
+              "zh": "多媒体技术",
+              "en": [
+                "multimedia technology"
+              ]
+            },
+            {
+              "zh": "远程教育学",
+              "en": [
+                "distance education",
+                "online education"
+              ]
+            },
+            {
+              "zh": "教育统计与测量",
+              "en": [
+                "educational statistics and measurement"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psychology",
+      "category": "心理学类",
+      "majors": [
+        {
+          "name": "心理学",
+          "aliases": [
+            "Psychology",
+            "Psychological Science",
+            "心理学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "普通心理学",
+              "en": [
+                "general psychology",
+                "introduction to psychology"
+              ]
+            },
+            {
+              "zh": "实验心理学",
+              "en": [
+                "experimental psychology"
+              ]
+            },
+            {
+              "zh": "发展心理学",
+              "en": [
+                "developmental psychology"
+              ]
+            },
+            {
+              "zh": "心理统计学",
+              "en": [
+                "psychological statistics",
+                "statistics for psychology"
+              ]
+            },
+            {
+              "zh": "心理测量学",
+              "en": [
+                "psychometrics",
+                "psychological measurement"
+              ]
+            },
+            {
+              "zh": "社会心理学",
+              "en": [
+                "social psychology"
+              ]
+            },
+            {
+              "zh": "认知心理学",
+              "en": [
+                "cognitive psychology"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "应用心理学",
+          "aliases": [
+            "Applied Psychology",
+            "Counselling Psychology",
+            "应用心理学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "普通心理学",
+              "en": [
+                "general psychology",
+                "introduction to psychology"
+              ]
+            },
+            {
+              "zh": "实验心理学",
+              "en": [
+                "experimental psychology"
+              ]
+            },
+            {
+              "zh": "发展心理学",
+              "en": [
+                "developmental psychology"
+              ]
+            },
+            {
+              "zh": "心理测量学",
+              "en": [
+                "psychometrics",
+                "psychological measurement"
+              ]
+            },
+            {
+              "zh": "咨询心理学",
+              "en": [
+                "counseling psychology"
+              ]
+            },
+            {
+              "zh": "变态心理学",
+              "en": [
+                "abnormal psychology"
+              ]
+            },
+            {
+              "zh": "人格心理学",
+              "en": [
+                "personality psychology"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chinese_lang",
+      "category": "中国语言文学类",
+      "majors": [
+        {
+          "name": "汉语言文学",
+          "aliases": [
+            "Chinese Language and Literature",
+            "Chinese Literature",
+            "汉语言文学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "现代汉语",
+              "en": [
+                "modern chinese"
+              ]
+            },
+            {
+              "zh": "古代汉语",
+              "en": [
+                "classical chinese",
+                "ancient chinese"
+              ]
+            },
+            {
+              "zh": "中国古代文学",
+              "en": [
+                "ancient chinese literature",
+                "classical chinese literature"
+              ]
+            },
+            {
+              "zh": "中国现当代文学",
+              "en": [
+                "modern and contemporary chinese literature"
+              ]
+            },
+            {
+              "zh": "外国文学",
+              "en": [
+                "foreign literature",
+                "world literature"
+              ]
+            },
+            {
+              "zh": "文学理论",
+              "en": [
+                "literary theory"
+              ]
+            },
+            {
+              "zh": "语言学概论",
+              "en": [
+                "introduction to linguistics",
+                "general linguistics"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "汉语国际教育",
+          "aliases": [
+            "Teaching Chinese as a Foreign Language",
+            "Teaching Chinese to Speakers of Other Languages",
+            "TCSOL",
+            "对外汉语",
+            "国际中文教育"
+          ],
+          "coreCourses": [
+            {
+              "zh": "现代汉语",
+              "en": [
+                "modern chinese"
+              ]
+            },
+            {
+              "zh": "古代汉语",
+              "en": [
+                "classical chinese",
+                "ancient chinese"
+              ]
+            },
+            {
+              "zh": "语言学概论",
+              "en": [
+                "introduction to linguistics",
+                "general linguistics"
+              ]
+            },
+            {
+              "zh": "第二语言习得",
+              "en": [
+                "second language acquisition"
+              ]
+            },
+            {
+              "zh": "跨文化交际",
+              "en": [
+                "intercultural communication"
+              ]
+            },
+            {
+              "zh": "汉语教学法",
+              "en": [
+                "chinese language teaching methods",
+                "teaching chinese as a foreign language"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "汉语言",
+          "aliases": [
+            "Chinese Language",
+            "Linguistics",
+            "汉语言"
+          ],
+          "coreCourses": [
+            {
+              "zh": "现代汉语",
+              "en": [
+                "modern chinese"
+              ]
+            },
+            {
+              "zh": "古代汉语",
+              "en": [
+                "classical chinese",
+                "ancient chinese"
+              ]
+            },
+            {
+              "zh": "语言学概论",
+              "en": [
+                "introduction to linguistics",
+                "general linguistics"
+              ]
+            },
+            {
+              "zh": "汉语史",
+              "en": [
+                "history of chinese language"
+              ]
+            },
+            {
+              "zh": "文字学",
+              "en": [
+                "chinese philology",
+                "grammatology"
+              ]
+            },
+            {
+              "zh": "音韵学",
+              "en": [
+                "chinese phonology",
+                "historical phonology"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "foreign_lang",
+      "category": "外国语言文学类",
+      "majors": [
+        {
+          "name": "英语",
+          "aliases": [
+            "English",
+            "English Language and Literature",
+            "English Studies",
+            "TESOL",
+            "Applied Linguistics",
+            "英语"
+          ],
+          "coreCourses": [
+            {
+              "zh": "综合英语",
+              "en": [
+                "comprehensive english",
+                "integrated english"
+              ]
+            },
+            {
+              "zh": "英语听力",
+              "en": [
+                "english listening"
+              ]
+            },
+            {
+              "zh": "英语口语",
+              "en": [
+                "oral english",
+                "spoken english"
+              ]
+            },
+            {
+              "zh": "英语写作",
+              "en": [
+                "english writing",
+                "english composition"
+              ]
+            },
+            {
+              "zh": "英美文学",
+              "en": [
+                "english and american literature",
+                "british and american literature"
+              ]
+            },
+            {
+              "zh": "语言学导论",
+              "en": [
+                "introduction to linguistics"
+              ]
+            },
+            {
+              "zh": "翻译理论与实践",
+              "en": [
+                "translation theory and practice"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "翻译",
+          "aliases": [
+            "Translation and Interpreting",
+            "Translation Studies",
+            "Interpreting",
+            "翻译"
+          ],
+          "coreCourses": [
+            {
+              "zh": "翻译理论与实践",
+              "en": [
+                "translation theory and practice"
+              ]
+            },
+            {
+              "zh": "笔译",
+              "en": [
+                "written translation",
+                "translation"
+              ]
+            },
+            {
+              "zh": "口译",
+              "en": [
+                "interpreting",
+                "interpretation"
+              ]
+            },
+            {
+              "zh": "跨文化交际",
+              "en": [
+                "intercultural communication"
+              ]
+            },
+            {
+              "zh": "综合英语",
+              "en": [
+                "comprehensive english",
+                "integrated english"
+              ]
+            },
+            {
+              "zh": "英汉语言对比",
+              "en": [
+                "contrastive analysis of english and chinese",
+                "english-chinese contrastive studies"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "商务英语",
+          "aliases": [
+            "Business English",
+            "商务英语"
+          ],
+          "coreCourses": [
+            {
+              "zh": "综合商务英语",
+              "en": [
+                "comprehensive business english",
+                "business english"
+              ]
+            },
+            {
+              "zh": "商务英语写作",
+              "en": [
+                "business english writing"
+              ]
+            },
+            {
+              "zh": "国际贸易实务",
+              "en": [
+                "international trade practice",
+                "practice of international trade"
+              ]
+            },
+            {
+              "zh": "商务口译",
+              "en": [
+                "business interpreting"
+              ]
+            },
+            {
+              "zh": "跨文化商务交际",
+              "en": [
+                "cross-cultural business communication",
+                "intercultural business communication"
+              ]
+            },
+            {
+              "zh": "市场营销学",
+              "en": [
+                "marketing",
+                "marketing management"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "日语",
+          "aliases": [
+            "Japanese",
+            "Japanese Language and Literature",
+            "日语"
+          ],
+          "coreCourses": [
+            {
+              "zh": "基础日语",
+              "en": [
+                "basic japanese",
+                "elementary japanese"
+              ]
+            },
+            {
+              "zh": "高级日语",
+              "en": [
+                "advanced japanese"
+              ]
+            },
+            {
+              "zh": "日语听力",
+              "en": [
+                "japanese listening"
+              ]
+            },
+            {
+              "zh": "日语会话",
+              "en": [
+                "japanese conversation",
+                "spoken japanese"
+              ]
+            },
+            {
+              "zh": "日本文学",
+              "en": [
+                "japanese literature"
+              ]
+            },
+            {
+              "zh": "日语翻译",
+              "en": [
+                "japanese translation"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "journalism",
+      "category": "新闻传播学类",
+      "majors": [
+        {
+          "name": "新闻学",
+          "aliases": [
+            "Journalism",
+            "Journalism Studies",
+            "新闻学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "新闻学概论",
+              "en": [
+                "introduction to journalism",
+                "journalism"
+              ]
+            },
+            {
+              "zh": "新闻采访与写作",
+              "en": [
+                "news gathering and writing",
+                "news reporting and writing"
+              ]
+            },
+            {
+              "zh": "新闻编辑",
+              "en": [
+                "news editing"
+              ]
+            },
+            {
+              "zh": "新闻评论",
+              "en": [
+                "news commentary"
+              ]
+            },
+            {
+              "zh": "中国新闻史",
+              "en": [
+                "history of chinese journalism"
+              ]
+            },
+            {
+              "zh": "传播学概论",
+              "en": [
+                "introduction to communication",
+                "communication studies"
+              ]
+            },
+            {
+              "zh": "媒介经营管理",
+              "en": [
+                "media management",
+                "media economics"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "传播学",
+          "aliases": [
+            "Communication",
+            "Communication Studies",
+            "Media and Communication",
+            "传播学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "传播学概论",
+              "en": [
+                "introduction to communication",
+                "communication studies"
+              ]
+            },
+            {
+              "zh": "大众传播理论",
+              "en": [
+                "mass communication theory"
+              ]
+            },
+            {
+              "zh": "媒介研究",
+              "en": [
+                "media studies",
+                "media research"
+              ]
+            },
+            {
+              "zh": "人际传播",
+              "en": [
+                "interpersonal communication"
+              ]
+            },
+            {
+              "zh": "网络传播",
+              "en": [
+                "online communication",
+                "internet communication",
+                "network communication"
+              ]
+            },
+            {
+              "zh": "传播研究方法",
+              "en": [
+                "communication research methods"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "广告学",
+          "aliases": [
+            "Advertising",
+            "Advertising and Marketing",
+            "广告学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "广告学概论",
+              "en": [
+                "introduction to advertising"
+              ]
+            },
+            {
+              "zh": "广告策划",
+              "en": [
+                "advertising planning",
+                "advertising campaign"
+              ]
+            },
+            {
+              "zh": "广告创意",
+              "en": [
+                "advertising creativity",
+                "creative advertising"
+              ]
+            },
+            {
+              "zh": "市场营销学",
+              "en": [
+                "marketing",
+                "marketing management"
+              ]
+            },
+            {
+              "zh": "品牌传播",
+              "en": [
+                "brand communication"
+              ]
+            },
+            {
+              "zh": "消费者行为学",
+              "en": [
+                "consumer behavior"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "网络与新媒体",
+          "aliases": [
+            "Network and New Media",
+            "Digital Media",
+            "Digital Media and Society",
+            "网络与新媒体"
+          ],
+          "coreCourses": [
+            {
+              "zh": "网络传播学",
+              "en": [
+                "internet communication studies",
+                "network communication studies"
+              ]
+            },
+            {
+              "zh": "新媒体概论",
+              "en": [
+                "introduction to new media",
+                "new media"
+              ]
+            },
+            {
+              "zh": "数字媒体技术",
+              "en": [
+                "digital media technology"
+              ]
+            },
+            {
+              "zh": "数据新闻",
+              "en": [
+                "data journalism"
+              ]
+            },
+            {
+              "zh": "网页设计与制作",
+              "en": [
+                "web design",
+                "web design and development"
+              ]
+            },
+            {
+              "zh": "社交媒体运营",
+              "en": [
+                "social media operation",
+                "social media management"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "category": "设计学类",
+      "majors": [
+        {
+          "name": "视觉传达设计",
+          "aliases": [
+            "Visual Communication Design",
+            "Graphic Design",
+            "平面设计"
+          ],
+          "coreCourses": [
+            {
+              "zh": "平面构成",
+              "en": [
+                "graphic composition",
+                "plane composition"
+              ]
+            },
+            {
+              "zh": "色彩构成",
+              "en": [
+                "color composition",
+                "colour composition"
+              ]
+            },
+            {
+              "zh": "图形创意",
+              "en": [
+                "graphic creativity",
+                "creative graphics"
+              ]
+            },
+            {
+              "zh": "字体设计",
+              "en": [
+                "typography",
+                "typeface design"
+              ]
+            },
+            {
+              "zh": "版式设计",
+              "en": [
+                "layout design"
+              ]
+            },
+            {
+              "zh": "品牌形象设计",
+              "en": [
+                "brand identity design"
+              ]
+            },
+            {
+              "zh": "包装设计",
+              "en": [
+                "packaging design"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "环境设计",
+          "aliases": [
+            "Environmental Design",
+            "Interior Design",
+            "Landscape Design",
+            "环境设计"
+          ],
+          "coreCourses": [
+            {
+              "zh": "设计素描",
+              "en": [
+                "design sketch",
+                "design drawing"
+              ]
+            },
+            {
+              "zh": "室内设计原理",
+              "en": [
+                "interior design principles",
+                "interior design"
+              ]
+            },
+            {
+              "zh": "景观设计基础",
+              "en": [
+                "landscape design",
+                "landscape architecture basics"
+              ]
+            },
+            {
+              "zh": "建筑制图",
+              "en": [
+                "architectural drawing"
+              ]
+            },
+            {
+              "zh": "装饰材料与构造",
+              "en": [
+                "decorative materials and construction",
+                "finishing materials and construction"
+              ]
+            },
+            {
+              "zh": "人机工程学",
+              "en": [
+                "ergonomics",
+                "human factors"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "数字媒体艺术",
+          "aliases": [
+            "Digital Media Art",
+            "Digital Arts",
+            "数字媒体艺术"
+          ],
+          "coreCourses": [
+            {
+              "zh": "数字图像处理",
+              "en": [
+                "digital image processing"
+              ]
+            },
+            {
+              "zh": "动画设计",
+              "en": [
+                "animation design"
+              ]
+            },
+            {
+              "zh": "交互设计",
+              "en": [
+                "interaction design"
+              ]
+            },
+            {
+              "zh": "视频编辑",
+              "en": [
+                "video editing"
+              ]
+            },
+            {
+              "zh": "三维建模",
+              "en": [
+                "3d modeling",
+                "three-dimensional modeling"
+              ]
+            },
+            {
+              "zh": "视听语言",
+              "en": [
+                "audiovisual language",
+                "film language"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "architecture",
+      "category": "建筑类",
+      "majors": [
+        {
+          "name": "建筑学",
+          "aliases": [
+            "Architecture",
+            "Architectural Studies",
+            "建筑学"
+          ],
+          "coreCourses": [
+            {
+              "zh": "建筑设计",
+              "en": [
+                "architectural design"
+              ]
+            },
+            {
+              "zh": "建筑构造",
+              "en": [
+                "building construction"
+              ]
+            },
+            {
+              "zh": "建筑物理",
+              "en": [
+                "building physics"
+              ]
+            },
+            {
+              "zh": "建筑历史",
+              "en": [
+                "architectural history",
+                "history of architecture"
+              ]
+            },
+            {
+              "zh": "城市规划原理",
+              "en": [
+                "urban planning principles",
+                "principles of urban planning"
+              ]
+            },
+            {
+              "zh": "建筑结构",
+              "en": [
+                "building structures"
+              ]
+            },
+            {
+              "zh": "建筑制图",
+              "en": [
+                "architectural drawing"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "城乡规划",
+          "aliases": [
+            "Urban and Rural Planning",
+            "Urban Planning",
+            "City Planning",
+            "城乡规划"
+          ],
+          "coreCourses": [
+            {
+              "zh": "城市规划原理",
+              "en": [
+                "urban planning principles",
+                "principles of urban planning"
+              ]
+            },
+            {
+              "zh": "城市设计",
+              "en": [
+                "urban design"
+              ]
+            },
+            {
+              "zh": "城市地理学",
+              "en": [
+                "urban geography"
+              ]
+            },
+            {
+              "zh": "城市道路交通规划",
+              "en": [
+                "urban road and traffic planning",
+                "urban transportation planning"
+              ]
+            },
+            {
+              "zh": "城乡规划管理与法规",
+              "en": [
+                "urban and rural planning management and regulations",
+                "planning law"
+              ]
+            },
+            {
+              "zh": "规划制图",
+              "en": [
+                "planning cartography",
+                "planning drawing"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "civil",
+      "category": "土木类",
+      "majors": [
+        {
+          "name": "土木工程",
+          "aliases": [
+            "Civil Engineering",
+            "Structural Engineering",
+            "土木工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "材料力学",
+              "en": [
+                "mechanics of materials",
+                "strength of materials"
+              ]
+            },
+            {
+              "zh": "结构力学",
+              "en": [
+                "structural mechanics"
+              ]
+            },
+            {
+              "zh": "土力学",
+              "en": [
+                "soil mechanics"
+              ]
+            },
+            {
+              "zh": "混凝土结构设计原理",
+              "en": [
+                "reinforced concrete design",
+                "concrete structure design"
+              ]
+            },
+            {
+              "zh": "钢结构",
+              "en": [
+                "steel structures",
+                "steel structure"
+              ]
+            },
+            {
+              "zh": "土木工程施工",
+              "en": [
+                "civil engineering construction",
+                "construction technology"
+              ]
+            },
+            {
+              "zh": "工程测量",
+              "en": [
+                "engineering surveying",
+                "surveying"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "给排水科学与工程",
+          "aliases": [
+            "Water Supply and Drainage Engineering",
+            "Municipal Engineering",
+            "给排水科学与工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "水力学",
+              "en": [
+                "hydraulics"
+              ]
+            },
+            {
+              "zh": "给水工程",
+              "en": [
+                "water supply engineering"
+              ]
+            },
+            {
+              "zh": "排水工程",
+              "en": [
+                "drainage engineering",
+                "wastewater engineering"
+              ]
+            },
+            {
+              "zh": "水质工程学",
+              "en": [
+                "water quality engineering"
+              ]
+            },
+            {
+              "zh": "泵与泵站",
+              "en": [
+                "pumps and pumping stations"
+              ]
+            },
+            {
+              "zh": "水处理生物学",
+              "en": [
+                "water treatment biology",
+                "biological water treatment"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "建筑环境与能源应用工程",
+          "aliases": [
+            "Building Environment and Energy Engineering",
+            "HVAC",
+            "建筑环境与能源应用工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "流体力学",
+              "en": [
+                "fluid mechanics"
+              ]
+            },
+            {
+              "zh": "工程热力学",
+              "en": [
+                "engineering thermodynamics"
+              ]
+            },
+            {
+              "zh": "传热学",
+              "en": [
+                "heat transfer"
+              ]
+            },
+            {
+              "zh": "暖通空调",
+              "en": [
+                "hvac",
+                "heating ventilation and air conditioning"
+              ]
+            },
+            {
+              "zh": "建筑环境学",
+              "en": [
+                "building environment"
+              ]
+            },
+            {
+              "zh": "制冷技术",
+              "en": [
+                "refrigeration technology",
+                "refrigeration"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "materials",
+      "category": "材料类",
+      "majors": [
+        {
+          "name": "材料科学与工程",
+          "aliases": [
+            "Materials Science and Engineering",
+            "Materials Science",
+            "材料科学与工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "材料科学基础",
+              "en": [
+                "fundamentals of materials science",
+                "materials science"
+              ]
+            },
+            {
+              "zh": "材料物理",
+              "en": [
+                "materials physics"
+              ]
+            },
+            {
+              "zh": "材料化学",
+              "en": [
+                "materials chemistry"
+              ]
+            },
+            {
+              "zh": "固体物理",
+              "en": [
+                "solid state physics"
+              ]
+            },
+            {
+              "zh": "材料力学性能",
+              "en": [
+                "mechanical properties of materials"
+              ]
+            },
+            {
+              "zh": "材料分析方法",
+              "en": [
+                "materials analysis methods",
+                "materials characterization"
+              ]
+            },
+            {
+              "zh": "金属材料学",
+              "en": [
+                "metallic materials",
+                "metal materials"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "高分子材料与工程",
+          "aliases": [
+            "Polymer Materials and Engineering",
+            "Polymer Science",
+            "高分子材料与工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "高分子化学",
+              "en": [
+                "polymer chemistry"
+              ]
+            },
+            {
+              "zh": "高分子物理",
+              "en": [
+                "polymer physics"
+              ]
+            },
+            {
+              "zh": "高分子材料成型加工",
+              "en": [
+                "polymer processing",
+                "polymer molding"
+              ]
+            },
+            {
+              "zh": "聚合物表征",
+              "en": [
+                "polymer characterization"
+              ]
+            },
+            {
+              "zh": "材料科学基础",
+              "en": [
+                "fundamentals of materials science",
+                "materials science"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "金属材料工程",
+          "aliases": [
+            "Metallic Materials Engineering",
+            "Metallurgical Engineering",
+            "金属材料工程"
+          ],
+          "coreCourses": [
+            {
+              "zh": "材料科学基础",
+              "en": [
+                "fundamentals of materials science",
+                "materials science"
+              ]
+            },
+            {
+              "zh": "金属学与热处理",
+              "en": [
+                "metallurgy and heat treatment",
+                "physical metallurgy"
+              ]
+            },
+            {
+              "zh": "金属材料学",
+              "en": [
+                "metallic materials",
+                "metal materials"
+              ]
+            },
+            {
+              "zh": "材料分析测试方法",
+              "en": [
+                "materials analysis and testing",
+                "materials testing methods"
+              ]
+            },
+            {
+              "zh": "金属腐蚀与防护",
+              "en": [
+                "metal corrosion and protection",
+                "corrosion and protection"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
