@@ -19,55 +19,51 @@
             {
               "zh": "数据结构",
               "en": [
-                "data structure",
                 "data structures",
-                "dsa"
+                "data structures and algorithms"
               ]
             },
             {
               "zh": "操作系统",
               "en": [
-                "operating system",
-                "operating systems"
+                "operating systems",
+                "operating system principles"
               ]
             },
             {
               "zh": "计算机组成原理",
               "en": [
                 "computer organization",
-                "computer architecture",
-                "computer composition"
+                "computer architecture"
               ]
             },
             {
               "zh": "计算机网络",
               "en": [
-                "computer network",
                 "computer networks",
-                "networking"
+                "computer networking",
+                "networks and communications"
               ]
             },
             {
               "zh": "数据库原理",
               "en": [
-                "database",
                 "database systems",
-                "databases"
+                "database management systems"
               ]
             },
             {
               "zh": "算法设计与分析",
               "en": [
-                "algorithm design",
-                "algorithms",
-                "design and analysis of algorithms"
+                "design and analysis of algorithms",
+                "algorithms"
               ]
             },
             {
               "zh": "离散数学",
               "en": [
                 "discrete mathematics",
-                "discrete math"
+                "discrete structures"
               ]
             }
           ]
@@ -82,51 +78,50 @@
             {
               "zh": "软件工程导论",
               "en": [
-                "software engineering",
-                "introduction to software engineering"
+                "introduction to software engineering",
+                "software engineering"
               ]
             },
             {
               "zh": "数据结构",
               "en": [
-                "data structure",
                 "data structures",
-                "dsa"
+                "data structures and algorithms"
               ]
             },
             {
               "zh": "操作系统",
               "en": [
-                "operating system",
-                "operating systems"
+                "operating systems",
+                "operating system principles"
               ]
             },
             {
               "zh": "数据库原理",
               "en": [
-                "database",
                 "database systems",
-                "databases"
+                "database management systems"
               ]
             },
             {
               "zh": "软件测试",
               "en": [
-                "software testing"
+                "software testing",
+                "software quality assurance"
               ]
             },
             {
               "zh": "软件项目管理",
               "en": [
-                "software project management"
+                "software project management",
+                "software management"
               ]
             },
             {
               "zh": "面向对象程序设计",
               "en": [
-                "object oriented programming",
                 "object-oriented programming",
-                "oop"
+                "object oriented programming"
               ]
             }
           ]
@@ -143,28 +138,29 @@
             {
               "zh": "密码学",
               "en": [
-                "cryptography"
+                "cryptography",
+                "cryptography and network security"
               ]
             },
             {
               "zh": "网络安全",
               "en": [
-                "network security"
+                "network security",
+                "computer and network security"
               ]
             },
             {
               "zh": "操作系统",
               "en": [
-                "operating system",
-                "operating systems"
+                "operating systems",
+                "operating system principles"
               ]
             },
             {
               "zh": "计算机组成原理",
               "en": [
                 "computer organization",
-                "computer architecture",
-                "computer composition"
+                "computer architecture"
               ]
             },
             {
@@ -177,8 +173,8 @@
             {
               "zh": "信息安全概论",
               "en": [
-                "information security",
-                "introduction to information security"
+                "introduction to information security",
+                "information security fundamentals"
               ]
             }
           ]
@@ -195,43 +191,44 @@
             {
               "zh": "数据结构",
               "en": [
-                "data structure",
                 "data structures",
-                "dsa"
+                "data structures and algorithms"
               ]
             },
             {
               "zh": "数据库原理",
               "en": [
-                "database",
                 "database systems",
-                "databases"
+                "database management systems"
               ]
             },
             {
               "zh": "概率论与数理统计",
               "en": [
                 "probability and statistics",
-                "probability theory and mathematical statistics"
+                "probability and mathematical statistics"
               ]
             },
             {
               "zh": "机器学习",
               "en": [
-                "machine learning"
+                "machine learning",
+                "machine learning for finance"
               ]
             },
             {
               "zh": "数据挖掘",
               "en": [
-                "data mining"
+                "data mining",
+                "statistical learning"
               ]
             },
             {
               "zh": "大数据技术基础",
               "en": [
-                "big data",
-                "big data technology"
+                "big data technology",
+                "big data technologies",
+                "introduction to big data"
               ]
             }
           ]
@@ -248,42 +245,43 @@
             {
               "zh": "机器学习",
               "en": [
-                "machine learning"
+                "machine learning",
+                "machine learning for finance"
               ]
             },
             {
               "zh": "深度学习",
               "en": [
-                "deep learning"
+                "deep learning",
+                "neural networks and deep learning"
               ]
             },
             {
               "zh": "模式识别",
               "en": [
-                "pattern recognition"
+                "pattern recognition",
+                "pattern recognition and machine learning"
               ]
             },
             {
               "zh": "数据结构",
               "en": [
-                "data structure",
                 "data structures",
-                "dsa"
+                "data structures and algorithms"
               ]
             },
             {
               "zh": "算法设计与分析",
               "en": [
-                "algorithm design",
-                "algorithms",
-                "design and analysis of algorithms"
+                "design and analysis of algorithms",
+                "algorithms"
               ]
             },
             {
               "zh": "自然语言处理",
               "en": [
                 "natural language processing",
-                "nlp"
+                "computational linguistics"
               ]
             }
           ]
@@ -320,28 +318,29 @@
             {
               "zh": "数字电子技术",
               "en": [
-                "digital electronics"
+                "digital electronics",
+                "digital circuits"
               ]
             },
             {
               "zh": "信号与系统",
               "en": [
-                "signals and systems"
+                "signals and systems",
+                "signal processing"
               ]
             },
             {
               "zh": "通信原理",
               "en": [
                 "communication principles",
-                "principles of communication",
-                "communication theory"
+                "communication systems"
               ]
             },
             {
               "zh": "数字信号处理",
               "en": [
                 "digital signal processing",
-                "dsp"
+                "digital signal processing and applications"
               ]
             },
             {
@@ -366,21 +365,21 @@
               "zh": "通信原理",
               "en": [
                 "communication principles",
-                "principles of communication",
-                "communication theory"
+                "communication systems"
               ]
             },
             {
               "zh": "信号与系统",
               "en": [
-                "signals and systems"
+                "signals and systems",
+                "signal processing"
               ]
             },
             {
               "zh": "数字信号处理",
               "en": [
                 "digital signal processing",
-                "dsp"
+                "digital signal processing and applications"
               ]
             },
             {
@@ -393,22 +392,23 @@
             {
               "zh": "信息论基础",
               "en": [
-                "information theory"
+                "information theory",
+                "information theory and coding"
               ]
             },
             {
               "zh": "移动通信",
               "en": [
-                "mobile communication",
                 "mobile communications",
-                "wireless communications"
+                "wireless communications",
+                "mobile communication systems"
               ]
             },
             {
               "zh": "光纤通信",
               "en": [
-                "optical fiber communication",
-                "fiber optic communication",
+                "optical fiber communications",
+                "fiber optic communications",
                 "optical communications"
               ]
             }
@@ -425,13 +425,15 @@
             {
               "zh": "半导体物理",
               "en": [
-                "semiconductor physics"
+                "semiconductor physics",
+                "physics of semiconductor devices"
               ]
             },
             {
               "zh": "固体物理",
               "en": [
-                "solid state physics"
+                "solid state physics",
+                "condensed matter physics"
               ]
             },
             {
@@ -444,21 +446,22 @@
             {
               "zh": "数字电子技术",
               "en": [
-                "digital electronics"
+                "digital electronics",
+                "digital circuits"
               ]
             },
             {
               "zh": "微电子学基础",
               "en": [
-                "microelectronics",
-                "introduction to microelectronics"
+                "introduction to microelectronics",
+                "microelectronics"
               ]
             },
             {
               "zh": "光电子技术",
               "en": [
                 "optoelectronics",
-                "optoelectronic technology"
+                "optoelectronic devices"
               ]
             }
           ]
@@ -482,26 +485,28 @@
               "zh": "集成电路设计",
               "en": [
                 "integrated circuit design",
-                "ic design"
+                "very large scale integration design"
               ]
             },
             {
               "zh": "模拟集成电路",
               "en": [
-                "analog integrated circuits"
+                "analog integrated circuits",
+                "analogue integrated circuit design"
               ]
             },
             {
               "zh": "数字集成电路",
               "en": [
-                "digital integrated circuits"
+                "digital integrated circuits",
+                "digital integrated circuit design"
               ]
             },
             {
               "zh": "半导体工艺原理",
               "en": [
                 "semiconductor manufacturing",
-                "semiconductor process",
+                "semiconductor process technology",
                 "semiconductor fabrication"
               ]
             }
@@ -527,14 +532,14 @@
               "zh": "自动控制原理",
               "en": [
                 "automatic control",
-                "automatic control theory",
                 "control systems"
               ]
             },
             {
               "zh": "现代控制理论",
               "en": [
-                "modern control theory"
+                "modern control theory",
+                "advanced control systems"
               ]
             },
             {
@@ -554,21 +559,23 @@
             {
               "zh": "数字电子技术",
               "en": [
-                "digital electronics"
+                "digital electronics",
+                "digital circuits"
               ]
             },
             {
               "zh": "微机原理与接口技术",
               "en": [
-                "microcomputer principles",
                 "microprocessor systems",
-                "computer interface technology"
+                "microprocessor interfacing",
+                "embedded systems"
               ]
             },
             {
               "zh": "过程控制",
               "en": [
-                "process control"
+                "process control",
+                "process automation"
               ]
             }
           ]
@@ -584,14 +591,14 @@
             {
               "zh": "机器人学",
               "en": [
-                "robotics"
+                "robotics",
+                "introduction to robotics"
               ]
             },
             {
               "zh": "自动控制原理",
               "en": [
                 "automatic control",
-                "automatic control theory",
                 "control systems"
               ]
             },
@@ -599,19 +606,21 @@
               "zh": "传感器技术",
               "en": [
                 "sensor technology",
-                "sensors"
+                "sensors and instrumentation"
               ]
             },
             {
               "zh": "机器视觉",
               "en": [
-                "machine vision"
+                "machine vision",
+                "computer vision"
               ]
             },
             {
               "zh": "嵌入式系统",
               "en": [
-                "embedded systems"
+                "embedded systems",
+                "embedded system design"
               ]
             },
             {
@@ -634,35 +643,35 @@
               "zh": "自动控制原理",
               "en": [
                 "automatic control",
-                "automatic control theory",
                 "control systems"
               ]
             },
             {
               "zh": "信号与系统",
               "en": [
-                "signals and systems"
+                "signals and systems",
+                "signal processing"
               ]
             },
             {
               "zh": "数字信号处理",
               "en": [
                 "digital signal processing",
-                "dsp"
+                "digital signal processing and applications"
               ]
             },
             {
               "zh": "铁路信号基础",
               "en": [
-                "railway signaling",
-                "railway signal"
+                "railway signalling",
+                "railway signalling fundamentals"
               ]
             },
             {
               "zh": "车站信号自动控制",
               "en": [
-                "station signal control",
-                "railway station signaling"
+                "railway station signalling",
+                "station signal control"
               ]
             }
           ]
@@ -699,33 +708,35 @@
             {
               "zh": "数字电子技术",
               "en": [
-                "digital electronics"
+                "digital electronics",
+                "digital circuits"
               ]
             },
             {
               "zh": "电机学",
               "en": [
-                "electric machinery",
-                "electrical machines"
+                "electrical machines",
+                "electric machinery"
               ]
             },
             {
               "zh": "电力系统分析",
               "en": [
-                "power system analysis"
+                "power system analysis",
+                "electrical power systems"
               ]
             },
             {
               "zh": "电力电子技术",
               "en": [
-                "power electronics"
+                "power electronics",
+                "power electronic converters"
               ]
             },
             {
               "zh": "自动控制原理",
               "en": [
                 "automatic control",
-                "automatic control theory",
                 "control systems"
               ]
             }
@@ -749,35 +760,36 @@
             {
               "zh": "电机学",
               "en": [
-                "electric machinery",
-                "electrical machines"
+                "electrical machines",
+                "electric machinery"
               ]
             },
             {
               "zh": "电力系统分析",
               "en": [
-                "power system analysis"
+                "power system analysis",
+                "electrical power systems"
               ]
             },
             {
               "zh": "电力电子技术",
               "en": [
-                "power electronics"
+                "power electronics",
+                "power electronic converters"
               ]
             },
             {
               "zh": "智能电网技术",
               "en": [
-                "smart grid",
-                "smart grid technology"
+                "smart grid technology",
+                "smart grid"
               ]
             },
             {
               "zh": "通信原理",
               "en": [
                 "communication principles",
-                "principles of communication",
-                "communication theory"
+                "communication systems"
               ]
             }
           ]
@@ -793,20 +805,21 @@
               "zh": "自动控制原理",
               "en": [
                 "automatic control",
-                "automatic control theory",
                 "control systems"
               ]
             },
             {
               "zh": "电力电子技术",
               "en": [
-                "power electronics"
+                "power electronics",
+                "power electronic converters"
               ]
             },
             {
               "zh": "嵌入式系统",
               "en": [
-                "embedded systems"
+                "embedded systems",
+                "embedded system design"
               ]
             },
             {
@@ -819,14 +832,15 @@
             {
               "zh": "智能控制",
               "en": [
-                "intelligent control"
+                "intelligent control",
+                "intelligent control systems"
               ]
             },
             {
               "zh": "传感器技术",
               "en": [
                 "sensor technology",
-                "sensors"
+                "sensors and instrumentation"
               ]
             }
           ]
@@ -848,15 +862,15 @@
             {
               "zh": "机械制图",
               "en": [
-                "mechanical drawing",
-                "engineering drawing"
+                "engineering drawing",
+                "mechanical drawing"
               ]
             },
             {
               "zh": "理论力学",
               "en": [
-                "theoretical mechanics",
-                "engineering mechanics"
+                "engineering mechanics",
+                "theoretical mechanics"
               ]
             },
             {
@@ -870,7 +884,7 @@
               "zh": "机械原理",
               "en": [
                 "theory of machines",
-                "mechanical principles"
+                "kinematics and dynamics of machinery"
               ]
             },
             {
@@ -884,7 +898,7 @@
               "zh": "机械制造技术基础",
               "en": [
                 "manufacturing technology",
-                "mechanical manufacturing"
+                "manufacturing processes"
               ]
             },
             {
@@ -907,29 +921,29 @@
             {
               "zh": "汽车构造",
               "en": [
-                "automotive construction",
-                "automobile structure"
+                "automotive engineering fundamentals",
+                "vehicle design and construction"
               ]
             },
             {
               "zh": "汽车理论",
               "en": [
-                "automotive theory",
-                "vehicle dynamics"
+                "vehicle dynamics",
+                "automotive engineering"
               ]
             },
             {
               "zh": "发动机原理",
               "en": [
-                "engine principles",
-                "internal combustion engines"
+                "internal combustion engines",
+                "engine technology"
               ]
             },
             {
               "zh": "汽车设计",
               "en": [
-                "automotive design",
-                "vehicle design"
+                "vehicle design",
+                "automotive design"
               ]
             },
             {
@@ -966,36 +980,35 @@
             {
               "zh": "电工学",
               "en": [
-                "electrical engineering",
-                "electrotechnics"
+                "electrical engineering fundamentals",
+                "electrical circuits"
               ]
             },
             {
               "zh": "传感器技术",
               "en": [
                 "sensor technology",
-                "sensors"
+                "sensors and instrumentation"
               ]
             },
             {
               "zh": "机电一体化技术",
               "en": [
-                "mechatronics"
+                "mechatronics",
+                "mechatronic systems"
               ]
             },
             {
               "zh": "单片机原理及应用",
               "en": [
-                "microcontroller",
-                "single chip microcomputer",
-                "mcu"
+                "microcontrollers",
+                "embedded microcontroller systems"
               ]
             },
             {
               "zh": "自动控制原理",
               "en": [
                 "automatic control",
-                "automatic control theory",
                 "control systems"
               ]
             }
@@ -1020,15 +1033,14 @@
               "zh": "自动控制原理",
               "en": [
                 "automatic control",
-                "automatic control theory",
                 "control systems"
               ]
             },
             {
               "zh": "人工智能基础",
               "en": [
-                "artificial intelligence",
-                "introduction to artificial intelligence"
+                "introduction to artificial intelligence",
+                "artificial intelligence"
               ]
             },
             {
@@ -1041,7 +1053,8 @@
             {
               "zh": "生产计划与控制",
               "en": [
-                "production planning and control"
+                "production planning and control",
+                "operations planning and control"
               ]
             },
             {
@@ -1079,7 +1092,7 @@
               "zh": "高等代数",
               "en": [
                 "advanced algebra",
-                "higher algebra"
+                "linear algebra"
               ]
             },
             {
@@ -1093,14 +1106,14 @@
               "zh": "数理统计",
               "en": [
                 "mathematical statistics",
-                "statistics"
+                "statistical inference"
               ]
             },
             {
               "zh": "常微分方程",
               "en": [
                 "ordinary differential equations",
-                "ode"
+                "differential equations"
               ]
             },
             {
@@ -1114,7 +1127,7 @@
               "zh": "实变函数",
               "en": [
                 "real analysis",
-                "real variable functions"
+                "real variables"
               ]
             }
           ]
@@ -1138,35 +1151,35 @@
               "zh": "高等代数",
               "en": [
                 "advanced algebra",
-                "higher algebra"
+                "linear algebra"
               ]
             },
             {
               "zh": "数值分析",
               "en": [
-                "numerical analysis"
+                "numerical analysis",
+                "numerical methods"
               ]
             },
             {
               "zh": "数据结构",
               "en": [
-                "data structure",
                 "data structures",
-                "dsa"
+                "data structures and algorithms"
               ]
             },
             {
               "zh": "算法设计与分析",
               "en": [
-                "algorithm design",
-                "algorithms",
-                "design and analysis of algorithms"
+                "design and analysis of algorithms",
+                "algorithms"
               ]
             },
             {
               "zh": "运筹学",
               "en": [
-                "operations research"
+                "operations research",
+                "optimisation and operations research"
               ]
             },
             {
@@ -1196,34 +1209,35 @@
               "zh": "高等代数",
               "en": [
                 "advanced algebra",
-                "higher algebra"
+                "linear algebra"
               ]
             },
             {
               "zh": "概率论与数理统计",
               "en": [
                 "probability and statistics",
-                "probability theory and mathematical statistics"
+                "probability and mathematical statistics"
               ]
             },
             {
               "zh": "数据结构",
               "en": [
-                "data structure",
                 "data structures",
-                "dsa"
+                "data structures and algorithms"
               ]
             },
             {
               "zh": "数据挖掘",
               "en": [
-                "data mining"
+                "data mining",
+                "statistical learning"
               ]
             },
             {
               "zh": "机器学习",
               "en": [
-                "machine learning"
+                "machine learning",
+                "machine learning for finance"
               ]
             }
           ]
@@ -1253,19 +1267,21 @@
               "zh": "数理统计",
               "en": [
                 "mathematical statistics",
-                "statistics"
+                "statistical inference"
               ]
             },
             {
               "zh": "回归分析",
               "en": [
-                "regression analysis"
+                "regression analysis",
+                "applied regression analysis"
               ]
             },
             {
               "zh": "时间序列分析",
               "en": [
-                "time series analysis"
+                "time series analysis",
+                "time series"
               ]
             },
             {
@@ -1278,14 +1294,15 @@
             {
               "zh": "抽样调查",
               "en": [
-                "sampling",
-                "sample survey"
+                "sampling theory",
+                "survey sampling"
               ]
             },
             {
               "zh": "统计计算",
               "en": [
-                "statistical computing"
+                "statistical computing",
+                "computational statistics"
               ]
             }
           ]
@@ -1309,33 +1326,35 @@
               "zh": "数理统计",
               "en": [
                 "mathematical statistics",
-                "statistics"
+                "statistical inference"
               ]
             },
             {
               "zh": "回归分析",
               "en": [
-                "regression analysis"
+                "regression analysis",
+                "applied regression analysis"
               ]
             },
             {
               "zh": "数据挖掘",
               "en": [
-                "data mining"
+                "data mining",
+                "statistical learning"
               ]
             },
             {
               "zh": "统计软件应用",
               "en": [
                 "statistical software",
-                "applied statistical software"
+                "statistical computing"
               ]
             },
             {
               "zh": "抽样调查",
               "en": [
-                "sampling",
-                "sample survey"
+                "sampling theory",
+                "survey sampling"
               ]
             }
           ]
@@ -1359,32 +1378,35 @@
               "zh": "数理统计",
               "en": [
                 "mathematical statistics",
-                "statistics"
+                "statistical inference"
               ]
             },
             {
               "zh": "微观经济学",
               "en": [
-                "microeconomics"
+                "microeconomics",
+                "microeconomic theory"
               ]
             },
             {
               "zh": "宏观经济学",
               "en": [
-                "macroeconomics"
+                "macroeconomics",
+                "macroeconomic theory"
               ]
             },
             {
               "zh": "计量经济学",
               "en": [
-                "econometrics"
+                "econometrics",
+                "financial econometrics"
               ]
             },
             {
               "zh": "国民经济核算",
               "en": [
                 "national accounts",
-                "national economic accounting"
+                "national accounting"
               ]
             }
           ]
@@ -1406,43 +1428,50 @@
             {
               "zh": "微观经济学",
               "en": [
-                "microeconomics"
+                "microeconomics",
+                "microeconomic theory"
               ]
             },
             {
               "zh": "宏观经济学",
               "en": [
-                "macroeconomics"
+                "macroeconomics",
+                "macroeconomic theory"
               ]
             },
             {
               "zh": "计量经济学",
               "en": [
-                "econometrics"
+                "econometrics",
+                "financial econometrics"
               ]
             },
             {
               "zh": "政治经济学",
               "en": [
-                "political economy"
+                "political economy",
+                "political economics"
               ]
             },
             {
               "zh": "中级微观经济学",
               "en": [
-                "intermediate microeconomics"
+                "intermediate microeconomics",
+                "advanced microeconomics"
               ]
             },
             {
               "zh": "中级宏观经济学",
               "en": [
-                "intermediate macroeconomics"
+                "intermediate macroeconomics",
+                "advanced macroeconomics"
               ]
             },
             {
               "zh": "经济学说史",
               "en": [
-                "history of economic thought"
+                "history of economic thought",
+                "history of economics"
               ]
             }
           ]
@@ -1457,38 +1486,43 @@
             {
               "zh": "微观经济学",
               "en": [
-                "microeconomics"
+                "microeconomics",
+                "microeconomic theory"
               ]
             },
             {
               "zh": "宏观经济学",
               "en": [
-                "macroeconomics"
+                "macroeconomics",
+                "macroeconomic theory"
               ]
             },
             {
               "zh": "计量经济学",
               "en": [
-                "econometrics"
+                "econometrics",
+                "financial econometrics"
               ]
             },
             {
               "zh": "数字经济学",
               "en": [
                 "digital economics",
-                "digital economy"
+                "economics of digitalisation"
               ]
             },
             {
               "zh": "大数据分析",
               "en": [
-                "big data analytics"
+                "big data analytics",
+                "data analytics"
               ]
             },
             {
               "zh": "平台经济学",
               "en": [
-                "platform economics"
+                "platform economics",
+                "economics of platforms"
               ]
             }
           ]
@@ -1503,37 +1537,43 @@
             {
               "zh": "微观经济学",
               "en": [
-                "microeconomics"
+                "microeconomics",
+                "microeconomic theory"
               ]
             },
             {
               "zh": "宏观经济学",
               "en": [
-                "macroeconomics"
+                "macroeconomics",
+                "macroeconomic theory"
               ]
             },
             {
               "zh": "国民经济管理学",
               "en": [
-                "national economic management"
+                "national economic management",
+                "macroeconomic management"
               ]
             },
             {
               "zh": "计量经济学",
               "en": [
-                "econometrics"
+                "econometrics",
+                "financial econometrics"
               ]
             },
             {
               "zh": "财政学",
               "en": [
-                "public finance"
+                "public finance",
+                "public economics"
               ]
             },
             {
               "zh": "产业经济学",
               "en": [
-                "industrial economics"
+                "industrial economics",
+                "industrial organisation"
               ]
             }
           ]
@@ -1556,13 +1596,15 @@
             {
               "zh": "微观经济学",
               "en": [
-                "microeconomics"
+                "microeconomics",
+                "microeconomic theory"
               ]
             },
             {
               "zh": "宏观经济学",
               "en": [
-                "macroeconomics"
+                "macroeconomics",
+                "macroeconomic theory"
               ]
             },
             {
@@ -1575,26 +1617,29 @@
             {
               "zh": "国际金融",
               "en": [
-                "international finance"
+                "international finance",
+                "international monetary economics"
               ]
             },
             {
               "zh": "金融市场学",
               "en": [
-                "financial markets"
+                "financial markets",
+                "financial markets and institutions"
               ]
             },
             {
               "zh": "投资学",
               "en": [
                 "investments",
-                "investment"
+                "investment analysis"
               ]
             },
             {
               "zh": "公司金融",
               "en": [
-                "corporate finance"
+                "corporate finance",
+                "corporate financial management"
               ]
             }
           ]
@@ -1617,32 +1662,37 @@
             {
               "zh": "金融工程学",
               "en": [
-                "financial engineering"
+                "financial engineering",
+                "quantitative methods in finance"
               ]
             },
             {
               "zh": "衍生金融工具",
               "en": [
                 "derivatives",
-                "financial derivatives"
+                "financial derivatives",
+                "options and futures"
               ]
             },
             {
               "zh": "计量经济学",
               "en": [
-                "econometrics"
+                "econometrics",
+                "financial econometrics"
               ]
             },
             {
               "zh": "随机过程",
               "en": [
-                "stochastic processes"
+                "stochastic processes",
+                "stochastic calculus"
               ]
             },
             {
               "zh": "金融风险管理",
               "en": [
-                "financial risk management"
+                "financial risk management",
+                "risk management"
               ]
             }
           ]
@@ -1665,36 +1715,36 @@
             {
               "zh": "数据结构",
               "en": [
-                "data structure",
                 "data structures",
-                "dsa"
+                "data structures and algorithms"
               ]
             },
             {
               "zh": "数据库原理",
               "en": [
-                "database",
                 "database systems",
-                "databases"
+                "database management systems"
               ]
             },
             {
               "zh": "区块链技术",
               "en": [
-                "blockchain",
-                "blockchain technology"
+                "blockchain technology",
+                "blockchain"
               ]
             },
             {
               "zh": "机器学习",
               "en": [
-                "machine learning"
+                "machine learning",
+                "machine learning for finance"
               ]
             },
             {
               "zh": "金融风险管理",
               "en": [
-                "financial risk management"
+                "financial risk management",
+                "risk management"
               ]
             }
           ]
@@ -1711,39 +1761,42 @@
               "zh": "投资学",
               "en": [
                 "investments",
-                "investment"
+                "investment analysis"
               ]
             },
             {
               "zh": "证券投资分析",
               "en": [
-                "securities investment analysis",
-                "security analysis"
+                "security analysis",
+                "portfolio management"
               ]
             },
             {
               "zh": "金融市场学",
               "en": [
-                "financial markets"
+                "financial markets",
+                "financial markets and institutions"
               ]
             },
             {
               "zh": "公司金融",
               "en": [
-                "corporate finance"
+                "corporate finance",
+                "corporate financial management"
               ]
             },
             {
               "zh": "资产评估",
               "en": [
                 "asset valuation",
-                "asset appraisal"
+                "corporate valuation"
               ]
             },
             {
               "zh": "宏观经济学",
               "en": [
-                "macroeconomics"
+                "macroeconomics",
+                "macroeconomic theory"
               ]
             }
           ]
@@ -1765,39 +1818,43 @@
             {
               "zh": "财政学",
               "en": [
-                "public finance"
+                "public finance",
+                "public economics"
               ]
             },
             {
               "zh": "税收学",
               "en": [
                 "taxation",
-                "tax science"
+                "principles of taxation"
               ]
             },
             {
               "zh": "政府预算管理",
               "en": [
-                "government budget",
-                "government budgeting"
+                "government budgeting",
+                "public budgeting"
               ]
             },
             {
               "zh": "微观经济学",
               "en": [
-                "microeconomics"
+                "microeconomics",
+                "microeconomic theory"
               ]
             },
             {
               "zh": "宏观经济学",
               "en": [
-                "macroeconomics"
+                "macroeconomics",
+                "macroeconomic theory"
               ]
             },
             {
               "zh": "公共经济学",
               "en": [
-                "public economics"
+                "public economics",
+                "public sector economics"
               ]
             }
           ]
@@ -1813,14 +1870,15 @@
             {
               "zh": "税收学原理",
               "en": [
-                "principles of taxation"
+                "principles of taxation",
+                "taxation"
               ]
             },
             {
               "zh": "中国税制",
               "en": [
-                "chinese tax system",
-                "china tax system"
+                "taxation",
+                "chinese taxation"
               ]
             },
             {
@@ -1840,7 +1898,8 @@
             {
               "zh": "财政学",
               "en": [
-                "public finance"
+                "public finance",
+                "public economics"
               ]
             },
             {
@@ -1877,7 +1936,8 @@
             {
               "zh": "国际经济学",
               "en": [
-                "international economics"
+                "international economics",
+                "international economic relations"
               ]
             },
             {
@@ -1890,7 +1950,8 @@
             {
               "zh": "国际金融",
               "en": [
-                "international finance"
+                "international finance",
+                "international monetary economics"
               ]
             },
             {
@@ -1919,13 +1980,15 @@
             {
               "zh": "微观经济学",
               "en": [
-                "microeconomics"
+                "microeconomics",
+                "microeconomic theory"
               ]
             },
             {
               "zh": "宏观经济学",
               "en": [
-                "macroeconomics"
+                "macroeconomics",
+                "macroeconomic theory"
               ]
             },
             {
@@ -1952,8 +2015,8 @@
             {
               "zh": "流通经济学",
               "en": [
-                "circulation economics",
-                "economics of distribution"
+                "economics of distribution",
+                "circulation economics"
               ]
             }
           ]
@@ -1984,19 +2047,22 @@
             {
               "zh": "微观经济学",
               "en": [
-                "microeconomics"
+                "microeconomics",
+                "microeconomic theory"
               ]
             },
             {
               "zh": "宏观经济学",
               "en": [
-                "macroeconomics"
+                "macroeconomics",
+                "macroeconomic theory"
               ]
             },
             {
               "zh": "组织行为学",
               "en": [
-                "organizational behavior"
+                "organizational behavior",
+                "organisational behaviour"
               ]
             },
             {
@@ -2009,13 +2075,15 @@
             {
               "zh": "财务管理",
               "en": [
-                "financial management"
+                "financial management",
+                "corporate finance"
               ]
             },
             {
               "zh": "战略管理",
               "en": [
-                "strategic management"
+                "strategic management",
+                "business strategy"
               ]
             }
           ]
@@ -2032,26 +2100,29 @@
             {
               "zh": "基础会计学",
               "en": [
-                "basic accounting",
-                "accounting principles"
+                "accounting principles",
+                "introduction to accounting"
               ]
             },
             {
               "zh": "中级财务会计",
               "en": [
-                "intermediate financial accounting"
+                "intermediate financial accounting",
+                "intermediate accounting"
               ]
             },
             {
               "zh": "高级财务会计",
               "en": [
-                "advanced financial accounting"
+                "advanced financial accounting",
+                "advanced accounting"
               ]
             },
             {
               "zh": "成本会计",
               "en": [
-                "cost accounting"
+                "cost accounting",
+                "cost management"
               ]
             },
             {
@@ -2065,13 +2136,14 @@
               "zh": "审计学",
               "en": [
                 "auditing",
-                "audit"
+                "audit and assurance"
               ]
             },
             {
               "zh": "财务管理",
               "en": [
-                "financial management"
+                "financial management",
+                "corporate finance"
               ]
             }
           ]
@@ -2087,13 +2159,15 @@
             {
               "zh": "财务管理",
               "en": [
-                "financial management"
+                "financial management",
+                "corporate finance"
               ]
             },
             {
               "zh": "中级财务会计",
               "en": [
-                "intermediate financial accounting"
+                "intermediate financial accounting",
+                "intermediate accounting"
               ]
             },
             {
@@ -2106,21 +2180,22 @@
             {
               "zh": "公司金融",
               "en": [
-                "corporate finance"
+                "corporate finance",
+                "corporate financial management"
               ]
             },
             {
               "zh": "投资学",
               "en": [
                 "investments",
-                "investment"
+                "investment analysis"
               ]
             },
             {
               "zh": "审计学",
               "en": [
                 "auditing",
-                "audit"
+                "audit and assurance"
               ]
             }
           ]
@@ -2144,20 +2219,22 @@
             {
               "zh": "消费者行为学",
               "en": [
-                "consumer behavior"
+                "consumer behavior",
+                "consumer behaviour"
               ]
             },
             {
               "zh": "市场调查与预测",
               "en": [
-                "market research and forecasting",
-                "marketing research"
+                "marketing research",
+                "market research and forecasting"
               ]
             },
             {
               "zh": "品牌管理",
               "en": [
-                "brand management"
+                "brand management",
+                "brand strategy"
               ]
             },
             {
@@ -2170,7 +2247,8 @@
             {
               "zh": "广告学",
               "en": [
-                "advertising"
+                "advertising",
+                "advertising and promotion"
               ]
             }
           ]
@@ -2187,7 +2265,8 @@
             {
               "zh": "国际商务",
               "en": [
-                "international business"
+                "international business",
+                "international business management"
               ]
             },
             {
@@ -2207,8 +2286,8 @@
             {
               "zh": "跨国公司管理",
               "en": [
-                "multinational corporation management",
-                "multinational management"
+                "multinational management",
+                "international management"
               ]
             },
             {
@@ -2221,7 +2300,8 @@
             {
               "zh": "跨文化管理",
               "en": [
-                "cross-cultural management"
+                "cross-cultural management",
+                "intercultural management"
               ]
             }
           ]
@@ -2244,39 +2324,43 @@
             {
               "zh": "行政管理学",
               "en": [
-                "public administration",
-                "administrative management"
+                "administrative management",
+                "public administration"
               ]
             },
             {
               "zh": "公共政策学",
               "en": [
-                "public policy"
+                "public policy",
+                "public policy analysis"
               ]
             },
             {
               "zh": "政治学原理",
               "en": [
-                "principles of political science",
-                "political science"
+                "political science",
+                "principles of political science"
               ]
             },
             {
               "zh": "公共经济学",
               "en": [
-                "public economics"
+                "public economics",
+                "public sector economics"
               ]
             },
             {
               "zh": "组织行为学",
               "en": [
-                "organizational behavior"
+                "organizational behavior",
+                "organisational behaviour"
               ]
             },
             {
               "zh": "社会研究方法",
               "en": [
-                "social research methods"
+                "social research methods",
+                "research methods in social sciences"
               ]
             }
           ]
@@ -2292,39 +2376,43 @@
             {
               "zh": "公共管理学",
               "en": [
-                "public management"
+                "public management",
+                "public administration"
               ]
             },
             {
               "zh": "行政管理学",
               "en": [
-                "public administration",
-                "administrative management"
+                "administrative management",
+                "public administration"
               ]
             },
             {
               "zh": "公共政策学",
               "en": [
-                "public policy"
+                "public policy",
+                "public policy analysis"
               ]
             },
             {
               "zh": "公共经济学",
               "en": [
-                "public economics"
+                "public economics",
+                "public sector economics"
               ]
             },
             {
               "zh": "社会研究方法",
               "en": [
-                "social research methods"
+                "social research methods",
+                "research methods in social sciences"
               ]
             },
             {
               "zh": "非营利组织管理",
               "en": [
-                "nonprofit organization management",
-                "non-profit management"
+                "nonprofit management",
+                "non-profit organisation management"
               ]
             }
           ]
@@ -2347,31 +2435,36 @@
             {
               "zh": "劳动经济学",
               "en": [
-                "labor economics"
+                "labor economics",
+                "labour economics"
               ]
             },
             {
               "zh": "社会保险",
               "en": [
-                "social insurance"
+                "social insurance",
+                "social insurance and welfare"
               ]
             },
             {
               "zh": "公共管理学",
               "en": [
-                "public management"
+                "public management",
+                "public administration"
               ]
             },
             {
               "zh": "社会政策",
               "en": [
-                "social policy"
+                "social policy",
+                "social policy analysis"
               ]
             },
             {
               "zh": "人力资源管理",
               "en": [
-                "human resource management"
+                "human resource management",
+                "human resources management"
               ]
             }
           ]
@@ -2402,43 +2495,50 @@
             {
               "zh": "宪法学",
               "en": [
-                "constitutional law"
+                "constitutional law",
+                "constitutional and administrative law"
               ]
             },
             {
               "zh": "民法学",
               "en": [
-                "civil law"
+                "civil law",
+                "law of obligations"
               ]
             },
             {
               "zh": "刑法学",
               "en": [
-                "criminal law"
+                "criminal law",
+                "criminal law and justice"
               ]
             },
             {
               "zh": "行政法学",
               "en": [
-                "administrative law"
+                "administrative law",
+                "public law"
               ]
             },
             {
               "zh": "民事诉讼法学",
               "en": [
-                "civil procedure law"
+                "civil procedure",
+                "civil litigation"
               ]
             },
             {
               "zh": "刑事诉讼法学",
               "en": [
-                "criminal procedure law"
+                "criminal procedure",
+                "criminal litigation"
               ]
             },
             {
               "zh": "商法学",
               "en": [
-                "commercial law"
+                "commercial law",
+                "company law"
               ]
             }
           ]
@@ -2454,37 +2554,43 @@
             {
               "zh": "知识产权法",
               "en": [
-                "intellectual property law"
+                "intellectual property law",
+                "intellectual property"
               ]
             },
             {
               "zh": "民法学",
               "en": [
-                "civil law"
+                "civil law",
+                "law of obligations"
               ]
             },
             {
               "zh": "专利法",
               "en": [
-                "patent law"
+                "patent law",
+                "patents and intellectual property"
               ]
             },
             {
               "zh": "商标法",
               "en": [
-                "trademark law"
+                "trademark law",
+                "trade mark law"
               ]
             },
             {
               "zh": "著作权法",
               "en": [
-                "copyright law"
+                "copyright law",
+                "copyright and related rights"
               ]
             },
             {
               "zh": "竞争法",
               "en": [
-                "competition law"
+                "competition law",
+                "antitrust law"
               ]
             }
           ]
@@ -2500,38 +2606,43 @@
             {
               "zh": "国际法",
               "en": [
-                "international law"
+                "international law",
+                "public international law"
               ]
             },
             {
               "zh": "国际经济法",
               "en": [
-                "international economic law"
+                "international economic law",
+                "international investment law"
               ]
             },
             {
               "zh": "国际贸易法",
               "en": [
-                "international trade law"
+                "international trade law",
+                "world trade law"
               ]
             },
             {
               "zh": "民法学",
               "en": [
-                "civil law"
+                "civil law",
+                "law of obligations"
               ]
             },
             {
               "zh": "商法学",
               "en": [
-                "commercial law"
+                "commercial law",
+                "company law"
               ]
             },
             {
               "zh": "世界贸易组织法",
               "en": [
-                "wto law",
-                "world trade organization law"
+                "world trade organization law",
+                "law of the world trade organization"
               ]
             }
           ]
@@ -2555,25 +2666,29 @@
               "zh": "教育学原理",
               "en": [
                 "principles of education",
-                "pedagogy"
+                "pedagogy",
+                "foundations of education"
               ]
             },
             {
               "zh": "教育心理学",
               "en": [
-                "educational psychology"
+                "educational psychology",
+                "psychology of education"
               ]
             },
             {
               "zh": "中国教育史",
               "en": [
-                "history of chinese education"
+                "history of chinese education",
+                "history of education in china"
               ]
             },
             {
               "zh": "外国教育史",
               "en": [
-                "history of foreign education"
+                "history of foreign education",
+                "history of western education"
               ]
             },
             {
@@ -2586,7 +2701,8 @@
             {
               "zh": "教育研究方法",
               "en": [
-                "educational research methods"
+                "educational research methods",
+                "research methods in education"
               ]
             }
           ]
@@ -2610,26 +2726,28 @@
               "zh": "学前儿童发展心理学",
               "en": [
                 "child development",
-                "early childhood development psychology"
+                "developmental psychology in early childhood"
               ]
             },
             {
               "zh": "幼儿园课程",
               "en": [
-                "kindergarten curriculum",
-                "early childhood curriculum"
+                "early childhood curriculum",
+                "curriculum in early childhood education"
               ]
             },
             {
               "zh": "学前儿童健康教育",
               "en": [
-                "early childhood health education"
+                "early childhood health education",
+                "health and wellbeing in early childhood"
               ]
             },
             {
               "zh": "学前教育研究方法",
               "en": [
-                "early childhood education research methods"
+                "research methods in early childhood education",
+                "early childhood research methods"
               ]
             }
           ]
@@ -2645,26 +2763,29 @@
             {
               "zh": "教育技术学导论",
               "en": [
-                "educational technology",
-                "introduction to educational technology"
+                "introduction to educational technology",
+                "educational technology"
               ]
             },
             {
               "zh": "教学设计",
               "en": [
-                "instructional design"
+                "instructional design",
+                "learning design"
               ]
             },
             {
               "zh": "教育心理学",
               "en": [
-                "educational psychology"
+                "educational psychology",
+                "psychology of education"
               ]
             },
             {
               "zh": "多媒体技术",
               "en": [
-                "multimedia technology"
+                "multimedia technology",
+                "educational multimedia"
               ]
             },
             {
@@ -2677,7 +2798,8 @@
             {
               "zh": "教育统计与测量",
               "en": [
-                "educational statistics and measurement"
+                "educational statistics and measurement",
+                "educational measurement and evaluation"
               ]
             }
           ]
@@ -2706,13 +2828,15 @@
             {
               "zh": "实验心理学",
               "en": [
-                "experimental psychology"
+                "experimental psychology",
+                "research methods in psychology"
               ]
             },
             {
               "zh": "发展心理学",
               "en": [
-                "developmental psychology"
+                "developmental psychology",
+                "psychology of development"
               ]
             },
             {
@@ -2732,13 +2856,15 @@
             {
               "zh": "社会心理学",
               "en": [
-                "social psychology"
+                "social psychology",
+                "social and cultural psychology"
               ]
             },
             {
               "zh": "认知心理学",
               "en": [
-                "cognitive psychology"
+                "cognitive psychology",
+                "cognition and perception"
               ]
             }
           ]
@@ -2761,13 +2887,15 @@
             {
               "zh": "实验心理学",
               "en": [
-                "experimental psychology"
+                "experimental psychology",
+                "research methods in psychology"
               ]
             },
             {
               "zh": "发展心理学",
               "en": [
-                "developmental psychology"
+                "developmental psychology",
+                "psychology of development"
               ]
             },
             {
@@ -2780,19 +2908,22 @@
             {
               "zh": "咨询心理学",
               "en": [
-                "counseling psychology"
+                "counseling psychology",
+                "counselling psychology"
               ]
             },
             {
               "zh": "变态心理学",
               "en": [
-                "abnormal psychology"
+                "abnormal psychology",
+                "psychopathology"
               ]
             },
             {
               "zh": "人格心理学",
               "en": [
-                "personality psychology"
+                "personality psychology",
+                "psychology of personality"
               ]
             }
           ]
@@ -2814,7 +2945,8 @@
             {
               "zh": "现代汉语",
               "en": [
-                "modern chinese"
+                "modern chinese",
+                "contemporary chinese"
               ]
             },
             {
@@ -2827,27 +2959,29 @@
             {
               "zh": "中国古代文学",
               "en": [
-                "ancient chinese literature",
-                "classical chinese literature"
+                "classical chinese literature",
+                "ancient chinese literature"
               ]
             },
             {
               "zh": "中国现当代文学",
               "en": [
-                "modern and contemporary chinese literature"
+                "modern and contemporary chinese literature",
+                "modern chinese literature"
               ]
             },
             {
               "zh": "外国文学",
               "en": [
-                "foreign literature",
-                "world literature"
+                "world literature",
+                "foreign literature"
               ]
             },
             {
               "zh": "文学理论",
               "en": [
-                "literary theory"
+                "literary theory",
+                "theory of literature"
               ]
             },
             {
@@ -2872,7 +3006,8 @@
             {
               "zh": "现代汉语",
               "en": [
-                "modern chinese"
+                "modern chinese",
+                "contemporary chinese"
               ]
             },
             {
@@ -2892,20 +3027,22 @@
             {
               "zh": "第二语言习得",
               "en": [
-                "second language acquisition"
+                "second language acquisition",
+                "second language learning"
               ]
             },
             {
               "zh": "跨文化交际",
               "en": [
-                "intercultural communication"
+                "intercultural communication",
+                "cross-cultural communication"
               ]
             },
             {
               "zh": "汉语教学法",
               "en": [
-                "chinese language teaching methods",
-                "teaching chinese as a foreign language"
+                "teaching chinese as a foreign language",
+                "chinese language teaching methods"
               ]
             }
           ]
@@ -2921,7 +3058,8 @@
             {
               "zh": "现代汉语",
               "en": [
-                "modern chinese"
+                "modern chinese",
+                "contemporary chinese"
               ]
             },
             {
@@ -2941,14 +3079,15 @@
             {
               "zh": "汉语史",
               "en": [
-                "history of chinese language"
+                "history of the chinese language",
+                "history of chinese"
               ]
             },
             {
               "zh": "文字学",
               "en": [
                 "chinese philology",
-                "grammatology"
+                "chinese writing system"
               ]
             },
             {
@@ -2987,7 +3126,8 @@
             {
               "zh": "英语听力",
               "en": [
-                "english listening"
+                "english listening",
+                "listening comprehension"
               ]
             },
             {
@@ -3007,20 +3147,22 @@
             {
               "zh": "英美文学",
               "en": [
-                "english and american literature",
-                "british and american literature"
+                "british and american literature",
+                "english and american literature"
               ]
             },
             {
               "zh": "语言学导论",
               "en": [
-                "introduction to linguistics"
+                "introduction to linguistics",
+                "linguistics"
               ]
             },
             {
               "zh": "翻译理论与实践",
               "en": [
-                "translation theory and practice"
+                "translation theory and practice",
+                "translation studies"
               ]
             }
           ]
@@ -3037,7 +3179,8 @@
             {
               "zh": "翻译理论与实践",
               "en": [
-                "translation theory and practice"
+                "translation theory and practice",
+                "translation studies"
               ]
             },
             {
@@ -3051,13 +3194,14 @@
               "zh": "口译",
               "en": [
                 "interpreting",
-                "interpretation"
+                "consecutive interpreting"
               ]
             },
             {
               "zh": "跨文化交际",
               "en": [
-                "intercultural communication"
+                "intercultural communication",
+                "cross-cultural communication"
               ]
             },
             {
@@ -3093,7 +3237,8 @@
             {
               "zh": "商务英语写作",
               "en": [
-                "business english writing"
+                "business english writing",
+                "business writing"
               ]
             },
             {
@@ -3106,7 +3251,8 @@
             {
               "zh": "商务口译",
               "en": [
-                "business interpreting"
+                "business interpreting",
+                "business interpretation"
               ]
             },
             {
@@ -3143,13 +3289,15 @@
             {
               "zh": "高级日语",
               "en": [
-                "advanced japanese"
+                "advanced japanese",
+                "japanese language proficiency"
               ]
             },
             {
               "zh": "日语听力",
               "en": [
-                "japanese listening"
+                "japanese listening",
+                "japanese listening comprehension"
               ]
             },
             {
@@ -3162,13 +3310,15 @@
             {
               "zh": "日本文学",
               "en": [
-                "japanese literature"
+                "japanese literature",
+                "modern japanese literature"
               ]
             },
             {
               "zh": "日语翻译",
               "en": [
-                "japanese translation"
+                "japanese translation",
+                "japanese translation and interpreting"
               ]
             }
           ]
@@ -3197,33 +3347,36 @@
             {
               "zh": "新闻采访与写作",
               "en": [
-                "news gathering and writing",
-                "news reporting and writing"
+                "news reporting and writing",
+                "news gathering and writing"
               ]
             },
             {
               "zh": "新闻编辑",
               "en": [
-                "news editing"
+                "news editing",
+                "editing and production"
               ]
             },
             {
               "zh": "新闻评论",
               "en": [
+                "opinion writing",
                 "news commentary"
               ]
             },
             {
               "zh": "中国新闻史",
               "en": [
-                "history of chinese journalism"
+                "history of chinese journalism",
+                "history of journalism"
               ]
             },
             {
               "zh": "传播学概论",
               "en": [
                 "introduction to communication",
-                "communication studies"
+                "communication theory"
               ]
             },
             {
@@ -3248,26 +3401,28 @@
               "zh": "传播学概论",
               "en": [
                 "introduction to communication",
-                "communication studies"
+                "communication theory"
               ]
             },
             {
               "zh": "大众传播理论",
               "en": [
-                "mass communication theory"
+                "mass communication theory",
+                "theories of mass communication"
               ]
             },
             {
               "zh": "媒介研究",
               "en": [
                 "media studies",
-                "media research"
+                "media analysis"
               ]
             },
             {
               "zh": "人际传播",
               "en": [
-                "interpersonal communication"
+                "interpersonal communication",
+                "human communication"
               ]
             },
             {
@@ -3275,13 +3430,14 @@
               "en": [
                 "online communication",
                 "internet communication",
-                "network communication"
+                "digital communication"
               ]
             },
             {
               "zh": "传播研究方法",
               "en": [
-                "communication research methods"
+                "communication research methods",
+                "research methods in communication"
               ]
             }
           ]
@@ -3297,21 +3453,22 @@
             {
               "zh": "广告学概论",
               "en": [
-                "introduction to advertising"
+                "introduction to advertising",
+                "principles of advertising"
               ]
             },
             {
               "zh": "广告策划",
               "en": [
                 "advertising planning",
-                "advertising campaign"
+                "advertising campaign planning"
               ]
             },
             {
               "zh": "广告创意",
               "en": [
-                "advertising creativity",
-                "creative advertising"
+                "creative advertising",
+                "advertising creative strategy"
               ]
             },
             {
@@ -3324,13 +3481,15 @@
             {
               "zh": "品牌传播",
               "en": [
-                "brand communication"
+                "brand communication",
+                "brand management"
               ]
             },
             {
               "zh": "消费者行为学",
               "en": [
-                "consumer behavior"
+                "consumer behavior",
+                "consumer behaviour"
               ]
             }
           ]
@@ -3348,26 +3507,28 @@
               "zh": "网络传播学",
               "en": [
                 "internet communication studies",
-                "network communication studies"
+                "online communication studies"
               ]
             },
             {
               "zh": "新媒体概论",
               "en": [
                 "introduction to new media",
-                "new media"
+                "new media studies"
               ]
             },
             {
               "zh": "数字媒体技术",
               "en": [
-                "digital media technology"
+                "digital media technology",
+                "digital media production"
               ]
             },
             {
               "zh": "数据新闻",
               "en": [
-                "data journalism"
+                "data journalism",
+                "data-driven journalism"
               ]
             },
             {
@@ -3380,8 +3541,8 @@
             {
               "zh": "社交媒体运营",
               "en": [
-                "social media operation",
-                "social media management"
+                "social media management",
+                "social media strategy"
               ]
             }
           ]
@@ -3403,8 +3564,8 @@
             {
               "zh": "平面构成",
               "en": [
-                "graphic composition",
-                "plane composition"
+                "design fundamentals",
+                "graphic composition"
               ]
             },
             {
@@ -3417,7 +3578,7 @@
             {
               "zh": "图形创意",
               "en": [
-                "graphic creativity",
+                "graphic design",
                 "creative graphics"
               ]
             },
@@ -3425,25 +3586,28 @@
               "zh": "字体设计",
               "en": [
                 "typography",
-                "typeface design"
+                "type design"
               ]
             },
             {
               "zh": "版式设计",
               "en": [
-                "layout design"
+                "layout design",
+                "page layout"
               ]
             },
             {
               "zh": "品牌形象设计",
               "en": [
-                "brand identity design"
+                "brand identity design",
+                "corporate identity design"
               ]
             },
             {
               "zh": "包装设计",
               "en": [
-                "packaging design"
+                "packaging design",
+                "package design"
               ]
             }
           ]
@@ -3460,35 +3624,36 @@
             {
               "zh": "设计素描",
               "en": [
-                "design sketch",
-                "design drawing"
+                "design drawing",
+                "design sketch"
               ]
             },
             {
               "zh": "室内设计原理",
               "en": [
-                "interior design principles",
-                "interior design"
+                "interior design",
+                "interior design principles"
               ]
             },
             {
               "zh": "景观设计基础",
               "en": [
                 "landscape design",
-                "landscape architecture basics"
+                "landscape architecture fundamentals"
               ]
             },
             {
               "zh": "建筑制图",
               "en": [
-                "architectural drawing"
+                "architectural drawing",
+                "architectural drafting"
               ]
             },
             {
               "zh": "装饰材料与构造",
               "en": [
-                "decorative materials and construction",
-                "finishing materials and construction"
+                "finishing materials and construction",
+                "decorative materials and construction"
               ]
             },
             {
@@ -3511,32 +3676,36 @@
             {
               "zh": "数字图像处理",
               "en": [
-                "digital image processing"
+                "digital image processing",
+                "digital imaging"
               ]
             },
             {
               "zh": "动画设计",
               "en": [
-                "animation design"
+                "animation",
+                "computer animation"
               ]
             },
             {
               "zh": "交互设计",
               "en": [
-                "interaction design"
+                "interaction design",
+                "interactive media design"
               ]
             },
             {
               "zh": "视频编辑",
               "en": [
-                "video editing"
+                "video editing",
+                "digital video production"
               ]
             },
             {
               "zh": "三维建模",
               "en": [
                 "3d modeling",
-                "three-dimensional modeling"
+                "three-dimensional modelling"
               ]
             },
             {
@@ -3565,19 +3734,22 @@
             {
               "zh": "建筑设计",
               "en": [
-                "architectural design"
+                "architectural design",
+                "design studio"
               ]
             },
             {
               "zh": "建筑构造",
               "en": [
-                "building construction"
+                "building construction",
+                "construction technology"
               ]
             },
             {
               "zh": "建筑物理",
               "en": [
-                "building physics"
+                "building physics",
+                "building science"
               ]
             },
             {
@@ -3590,20 +3762,22 @@
             {
               "zh": "城市规划原理",
               "en": [
-                "urban planning principles",
-                "principles of urban planning"
+                "principles of urban planning",
+                "urban planning principles"
               ]
             },
             {
               "zh": "建筑结构",
               "en": [
-                "building structures"
+                "building structures",
+                "structural systems"
               ]
             },
             {
               "zh": "建筑制图",
               "en": [
-                "architectural drawing"
+                "architectural drawing",
+                "architectural drafting"
               ]
             }
           ]
@@ -3620,41 +3794,43 @@
             {
               "zh": "城市规划原理",
               "en": [
-                "urban planning principles",
-                "principles of urban planning"
+                "principles of urban planning",
+                "urban planning principles"
               ]
             },
             {
               "zh": "城市设计",
               "en": [
-                "urban design"
+                "urban design",
+                "city design"
               ]
             },
             {
               "zh": "城市地理学",
               "en": [
-                "urban geography"
+                "urban geography",
+                "urban and regional geography"
               ]
             },
             {
               "zh": "城市道路交通规划",
               "en": [
-                "urban road and traffic planning",
-                "urban transportation planning"
+                "urban transportation planning",
+                "urban transport planning"
               ]
             },
             {
               "zh": "城乡规划管理与法规",
               "en": [
-                "urban and rural planning management and regulations",
-                "planning law"
+                "planning law",
+                "urban and rural planning management and regulations"
               ]
             },
             {
               "zh": "规划制图",
               "en": [
-                "planning cartography",
-                "planning drawing"
+                "planning drawing",
+                "planning graphics"
               ]
             }
           ]
@@ -3683,34 +3859,36 @@
             {
               "zh": "结构力学",
               "en": [
+                "structural analysis",
                 "structural mechanics"
               ]
             },
             {
               "zh": "土力学",
               "en": [
-                "soil mechanics"
+                "soil mechanics",
+                "geotechnical engineering"
               ]
             },
             {
               "zh": "混凝土结构设计原理",
               "en": [
                 "reinforced concrete design",
-                "concrete structure design"
+                "concrete structures"
               ]
             },
             {
               "zh": "钢结构",
               "en": [
                 "steel structures",
-                "steel structure"
+                "steel design"
               ]
             },
             {
               "zh": "土木工程施工",
               "en": [
-                "civil engineering construction",
-                "construction technology"
+                "construction technology",
+                "construction management"
               ]
             },
             {
@@ -3733,13 +3911,15 @@
             {
               "zh": "水力学",
               "en": [
-                "hydraulics"
+                "hydraulics",
+                "fluid mechanics"
               ]
             },
             {
               "zh": "给水工程",
               "en": [
-                "water supply engineering"
+                "water supply engineering",
+                "water supply systems"
               ]
             },
             {
@@ -3752,20 +3932,22 @@
             {
               "zh": "水质工程学",
               "en": [
-                "water quality engineering"
+                "water quality engineering",
+                "water and wastewater treatment"
               ]
             },
             {
               "zh": "泵与泵站",
               "en": [
-                "pumps and pumping stations"
+                "pumps and pumping stations",
+                "pumping stations"
               ]
             },
             {
               "zh": "水处理生物学",
               "en": [
-                "water treatment biology",
-                "biological water treatment"
+                "biological water treatment",
+                "water treatment biology"
               ]
             }
           ]
@@ -3781,32 +3963,36 @@
             {
               "zh": "流体力学",
               "en": [
-                "fluid mechanics"
+                "fluid mechanics",
+                "thermofluids"
               ]
             },
             {
               "zh": "工程热力学",
               "en": [
-                "engineering thermodynamics"
+                "engineering thermodynamics",
+                "thermodynamics"
               ]
             },
             {
               "zh": "传热学",
               "en": [
-                "heat transfer"
+                "heat transfer",
+                "heat and mass transfer"
               ]
             },
             {
               "zh": "暖通空调",
               "en": [
-                "hvac",
-                "heating ventilation and air conditioning"
+                "heating ventilation and air conditioning",
+                "air conditioning and refrigeration"
               ]
             },
             {
               "zh": "建筑环境学",
               "en": [
-                "building environment"
+                "building environment",
+                "building performance"
               ]
             },
             {
@@ -3842,39 +4028,43 @@
             {
               "zh": "材料物理",
               "en": [
-                "materials physics"
+                "materials physics",
+                "physics of materials"
               ]
             },
             {
               "zh": "材料化学",
               "en": [
-                "materials chemistry"
+                "materials chemistry",
+                "chemistry of materials"
               ]
             },
             {
               "zh": "固体物理",
               "en": [
-                "solid state physics"
+                "solid state physics",
+                "condensed matter physics"
               ]
             },
             {
               "zh": "材料力学性能",
               "en": [
-                "mechanical properties of materials"
+                "mechanical properties of materials",
+                "mechanical behaviour of materials"
               ]
             },
             {
               "zh": "材料分析方法",
               "en": [
-                "materials analysis methods",
-                "materials characterization"
+                "materials characterization",
+                "materials analysis methods"
               ]
             },
             {
               "zh": "金属材料学",
               "en": [
                 "metallic materials",
-                "metal materials"
+                "metal materials science"
               ]
             }
           ]
@@ -3890,26 +4080,29 @@
             {
               "zh": "高分子化学",
               "en": [
-                "polymer chemistry"
+                "polymer chemistry",
+                "polymer synthesis"
               ]
             },
             {
               "zh": "高分子物理",
               "en": [
-                "polymer physics"
+                "polymer physics",
+                "physics of polymers"
               ]
             },
             {
               "zh": "高分子材料成型加工",
               "en": [
                 "polymer processing",
-                "polymer molding"
+                "plastics processing"
               ]
             },
             {
               "zh": "聚合物表征",
               "en": [
-                "polymer characterization"
+                "polymer characterization",
+                "characterisation of polymers"
               ]
             },
             {
@@ -3939,29 +4132,29 @@
             {
               "zh": "金属学与热处理",
               "en": [
-                "metallurgy and heat treatment",
-                "physical metallurgy"
+                "physical metallurgy",
+                "metallurgy and heat treatment"
               ]
             },
             {
               "zh": "金属材料学",
               "en": [
                 "metallic materials",
-                "metal materials"
+                "metal materials science"
               ]
             },
             {
               "zh": "材料分析测试方法",
               "en": [
-                "materials analysis and testing",
-                "materials testing methods"
+                "materials testing methods",
+                "materials analysis and testing"
               ]
             },
             {
               "zh": "金属腐蚀与防护",
               "en": [
-                "metal corrosion and protection",
-                "corrosion and protection"
+                "corrosion and protection",
+                "metal corrosion and protection"
               ]
             }
           ]
