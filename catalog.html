@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考公专业目录对照 · fuhe-tool</title>
+<meta name="description" content="税务系统2026年度考试录用公务员专业参考目录查询：60类专业分类、835个专业。留学回国人员可以留服学历认证的专业报考。">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="container">
+    <span class="brand">fuhe-tool</span>
+    <a href="index.html">首页</a>
+    <a href="tool.html">匹配工具</a>
+    <a href="catalog.html" class="active">考公目录</a>
+    <a href="sop.html">复核 SOP</a>
+    <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero" style="padding:40px 0 36px;">
+  <div class="container">
+    <h1>考公专业目录对照</h1>
+    <p class="sub">税务系统 2026 年度考试录用公务员专业参考目录：<span id="stat">60 类专业 / 835 个专业</span>。
+      输入你的认证专业名，查它属于哪个招录专业类别。</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="card">
+      <h2>查询专业</h2>
+      <div class="flex mb">
+        <input type="text" id="searchInput" placeholder="输入专业名，如：计算机科学与技术 / 会计学" style="flex:1;min-width:240px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <button class="btn" id="btnSearch">查询</button>
+        <button class="btn ghost" id="btnClear">显示全部</button>
+      </div>
+      <p class="muted small" id="status">正在加载目录数据……</p>
+      <div id="results"></div>
+    </div>
+
+    <div class="card">
+      <h2>留学回国人员报考口径（官方原文）</h2>
+      <ol id="policyList"></ol>
+    </div>
+
+    <div class="warn">
+      本目录为<strong>税务系统</strong>招录编制（2026 年度）。海关、海事等其他系统和各省公务员招录有各自的专业参考目录，
+      报考前请以目标岗位的招录公告为准。
+    </div>
+    <div class="disclaimer">
+      数据来源：<a href="https://www.chinatax.gov.cn/chinatax/n896543r/c5243601/content.html" target="_blank" rel="noopener">国家税务总局《税务系统2026年度考试录用公务员相关事项通知》</a>（2025-10-14）。
+      本页仅供查询参考，不构成报考建议。
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>fuhe-tool · MIT 开源 · <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub 仓库</a></p>
+  </div>
+</footer>
+
+<script src="assets/js/catalog.js"></script>
+</body>
+</html>
