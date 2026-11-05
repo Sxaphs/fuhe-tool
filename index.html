@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>fuhe-tool · 留学生学历认证复核自助工具</title>
+<meta name="description" content="留学生学历学位认证专业名称复核自助工具箱：课程表匹配可复核专业、复核 SOP 科普、课程对比文档生成。仅供参考，以留服中心审核为准。">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="container">
+    <span class="brand">fuhe-tool</span>
+    <a href="index.html" class="active">首页</a>
+    <a href="tool.html">匹配工具</a>
+    <a href="sop.html">复核 SOP</a>
+    <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <h1>留学认证复核，自己先搞清楚</h1>
+    <p class="sub">你的国外专业能复核成国内哪个专业？需要准备什么材料？对比文档怎么写？
+      上传课程表，工具帮你匹配；按 SOP 走流程，材料自己也能备齐。</p>
+    <div class="cta">
+      <a class="btn" href="tool.html">开始匹配 →</a>
+      <a class="btn ghost" href="sop.html">先看复核 SOP</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <h2>三步自助流程</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="num">1</span>
+        <h3>上传课程表</h3>
+        <p>把国外成绩单上的课程名称粘贴或上传，工具对照国内专业核心课程给出候选专业与重合度。</p>
+      </div>
+      <div class="step">
+        <span class="num">2</span>
+        <h3>确认目标专业</h3>
+        <p>结合你报考岗位的《专业参考目录》，确定要改名的国内专业名称（必须对应国内真实专业）。</p>
+      </div>
+      <div class="step">
+        <span class="num">3</span>
+        <h3>生成对比文档</h3>
+        <p>用开源 CLI 搜集目标高校培养方案，生成课程对比表与说明文档，按 SOP 提交复核申请。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="card">
+      <h2>为什么要做专业名称复核？</h2>
+      <p>国外学历认证报告上的专业名称，可能与国内公务员/事业单位报考用的《专业参考目录》不一致。
+        例如国外 <code>Computer Science</code> 认证为"计算机科学"，而目录中为"计算机科学与技术"，就无法按对应专业报考。</p>
+      <p>教育部留学服务中心提供【认证复核】服务：申请人提交国外课程成绩单 + 与国内某高校专业培养方案的<strong>课程对比说明</strong>，
+        申请将认证报告上的专业名称改名为国内目录中的专业名。<strong>改名必须对应国内真实存在的专业名，不能自定义。</strong></p>
+      <p class="muted small">本工具不提供任何"包过"承诺——复核能否通过，取决于专业相近度、材料质量与留服审核标准。详见 <a href="sop.html">复核 SOP</a>。</p>
+    </div>
+
+    <div class="card">
+      <h2>常见问题</h2>
+      <h3>Q：任何人都能申请复核吗？</h3>
+      <p>已取得国外学历学位认证的人员，对认证结果中的专业名称有异议或需对应国内专业目录的，可申请复核。具体条件以留服中心现行规定为准。</p>
+      <h3>Q：复核收费吗？</h3>
+      <p>以留服中心官方公示为准（详见 <a href="sop.html">SOP 页面</a>的"费用"一节）。请注意甄别任何"付费包过"的宣传。</p>
+      <h3>Q：课程匹配度不高怎么办？</h3>
+      <p>匹配结果只是线索。你可以补充更多课程关键词、更换候选专业，或使用 <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">CLI 工具</a> 深入搜集某所高校的培养方案做人工比对。</p>
+    </div>
+
+    <div class="disclaimer">
+      ⚠️ <strong>免责声明</strong>：本工具仅提供信息检索、课程匹配参考与文档整理辅助，不承诺、不保证复核结果；
+      专业名称复核以教育部留学服务中心（cscse.edu.cn）审核为准；专业目录以国家公务员局《专业参考目录》和教育部《普通高等学校本科专业目录》正式发布版为准。
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>fuhe-tool · MIT 开源 · <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub 仓库</a></p>
+    <p>官方数据源与引用见 <a href="sop.html">SOP 页面</a> 底部。</p>
+  </div>
+</footer>
+</body>
+</html>

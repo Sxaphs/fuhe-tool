@@ -1,0 +1,13 @@
+{
+  "name": "fuhe-tool-cli",
+  "version": "0.1.0",
+  "description": "留学学历认证复核自助 CLI：高校培养方案搜集与课程对比文档生成",
+  "type": "module",
+  "bin": { "fuhe": "fuhe.mjs" },
+  "scripts": {
+    "research": "node fuhe.mjs research",
+    "report": "node fuhe.mjs report"
+  },
+  "engines": { "node": ">=18" },
+  "license": "MIT"
+}
