@@ -39,6 +39,11 @@ fuhe-tool/
 ├── cli/
 │   ├── fuhe.mjs        # 零依赖 CLI：research / report
 │   └── package.json
+├── scripts/
+│   ├── update-catalog.mjs     # 抓取税务系统公务员专业参考目录 → data/civil-service-catalog.json
+│   ├── validate-data.mjs      # 种子数据质量校验
+│   ├── test-match.mjs         # 匹配算法单元测试
+│   └── integration-test.mjs   # 真实数据集成测试
 └── research/           # 调研资料存档（事实与来源）
 ```
 
@@ -55,6 +60,17 @@ node cli/fuhe.mjs report --major 计算机科学与技术 --school 清华大学 
 ```
 
 不配置 LLM 环境变量时，`report` 会输出标准模板，人工补充对比说明即可。
+
+## 数据更新与维护（零依赖脚本）
+
+```bash
+node scripts/update-catalog.mjs   # 抓取税务系统公务员专业参考目录（每年新通知发布后改 URL 重跑）
+node scripts/validate-data.mjs    # 校验种子数据结构
+node scripts/test-match.mjs       # 匹配算法单元测试
+node scripts/integration-test.mjs # 用真实数据跑匹配用例
+```
+
+维护日历（详见 [research/sources.md](research/sources.md)）：每年 3–4 月跟教育部本科专业目录、9–10 月跟新年度国考各系统专业目录，每季度核对留服中心通知公告。
 
 ## 数据说明与贡献
 
