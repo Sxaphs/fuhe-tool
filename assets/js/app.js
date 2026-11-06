@@ -116,9 +116,22 @@
     box.innerHTML = html;
   }
 
+  async function matchCourses(courses) {
+    try {
+      const res = await fetch(DATA_URL);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const results = matchAll(courses, data);
+      render(results, courses);
+      return results.length;
+    } catch (e) {
+      $('results').innerHTML = '<div class="warn">种子数据文件 <code>data/majors.seed.json</code> 加载失败。本地预览请用静态服务器（如 <code>npx serve</code>）打开，或直接访问在线版。</div>';
+      throw e;
+    }
+  }
+
   async function run() {
-    const text = $('courseInput').value;
-    const courses = parseCourses(text);
+    const courses = parseCourses($('courseInput').value);
     if (!courses.length) {
       $('status').textContent = '请先粘贴课程或载入示例。';
       $('results').innerHTML = '';
@@ -126,46 +139,61 @@
     }
     $('status').textContent = '已解析 ' + courses.length + ' 门课程，正在匹配……';
     try {
-      const res = await fetch(DATA_URL);
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
-      const results = matchAll(courses, data);
-      render(results, courses);
-      $('status').textContent = '完成：解析 ' + courses.length + ' 门课程，命中 ' + results.length + ' 个候选专业。';
+      const n = await matchCourses(courses);
+      $('status').textContent = '完成：解析 ' + courses.length + ' 门课程，命中 ' + n + ' 个候选专业。';
     } catch (e) {
       $('status').textContent = '数据加载失败：' + e.message;
-      $('results').innerHTML = '<div class="warn">种子数据文件 <code>data/majors.seed.json</code> 加载失败。本地预览请用静态服务器（如 <code>npx serve</code>）打开，或直接访问在线版。</div>';
     }
   }
 
-  /* ---- 成绩单 PDF 解析（共享模块 assets/js/pdf-parse.js，纯本地） ---- */
-  async function handlePdf(file) {
-    $('status').textContent = '正在本地解析 PDF（不会上传任何数据）……';
+  /* ---- 成绩单上传：单文件（PDF/CSV/TXT）→ 展示识别结果 → 用户确认/修改 → 匹配 ---- */
+  async function handleTranscript(file) {
+    const name = String(file.name || '').toLowerCase();
+    $('reviewArea').style.display = '';
+    $('reviewStatus').textContent = '正在本地解析（不会上传任何数据）……';
     try {
-      const courses = await window.FuhePdf.parseCourseListFromPdf(file);
-      $('courseInput').value = courses.join('\n');
-      run();
-      $('status').textContent = 'PDF 解析完成：提取 ' + courses.length + ' 门候选课程（请在输入框中人工核对，可编辑后重新解析）。';
+      let courses;
+      if (name.endsWith('.pdf')) {
+        courses = await window.FuhePdf.parseCourseListFromPdf(file);
+      } else {
+        courses = window.FuhePdf.parseCsvText(await file.text());
+      }
+      $('reviewInput').value = courses.join('\n');
+      $('reviewStatus').textContent = '✅ 识别到 ' + courses.length + ' 门课程——请在下方确认。可以直接编辑（增、删、改课程名），确认后点「开始匹配」。';
+      $('results').innerHTML = '';
     } catch (e) {
-      $('status').textContent = 'PDF 解析失败：' + e.message;
+      $('reviewStatus').textContent = '解析失败：' + e.message + '（可点「手动粘贴课程」录入）';
     }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     $('btnParse').addEventListener('click', run);
-    $('btnSample').addEventListener('click', () => { $('courseInput').value = SAMPLE; run(); });
-    $('btnClear').addEventListener('click', () => { $('courseInput').value = ''; $('results').innerHTML = ''; $('status').textContent = '等待输入……'; });
-    $('fileCsv').addEventListener('change', (ev) => {
-      const f = ev.target.files[0];
-      if (!f) return;
-      const reader = new FileReader();
-      reader.onload = () => { $('courseInput').value = String(reader.result || ''); run(); };
-      reader.readAsText(f);
+    $('btnSample').addEventListener('click', () => {
+      $('pasteArea').style.display = '';
+      $('btnShowPaste').style.display = 'none';
+      $('courseInput').value = SAMPLE;
+      run();
     });
-    $('btnPdf').addEventListener('click', () => $('filePdf').click());
-    $('filePdf').addEventListener('change', (ev) => {
+    $('btnClear').addEventListener('click', () => { $('courseInput').value = ''; $('results').innerHTML = ''; $('status').textContent = '等待输入……'; });
+    $('btnShowPaste').addEventListener('click', () => {
+      $('pasteArea').style.display = '';
+      $('btnShowPaste').style.display = 'none';
+    });
+    $('fileTranscript').addEventListener('change', (ev) => {
       const f = ev.target.files[0];
-      if (f) handlePdf(f);
+      if (f) handleTranscript(f);
+    });
+    $('btnReselect').addEventListener('click', () => $('fileTranscript').click());
+    $('btnConfirm').addEventListener('click', async () => {
+      const courses = parseCourses($('reviewInput').value);
+      if (!courses.length) { alert('课程列表为空，请检查识别结果。'); return; }
+      $('reviewStatus').textContent = '正在匹配 ' + courses.length + ' 门课程……';
+      try {
+        const n = await matchCourses(courses);
+        $('reviewStatus').textContent = '完成：解析 ' + courses.length + ' 门课程，命中 ' + n + ' 个候选专业（要改课程可编辑上方列表后重新点「开始匹配」）。';
+      } catch (e) {
+        $('reviewStatus').textContent = '数据加载失败：' + e.message;
+      }
     });
   });
 })();

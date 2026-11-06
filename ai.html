@@ -62,12 +62,10 @@
         <input type="text" id="major" placeholder="目标复核专业，如：计算机科学与技术" style="flex:2;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
         <input type="text" id="school" placeholder="参考高校（可选），如：清华大学" style="flex:1;min-width:140px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
       </div>
-      <p class="muted small mb">国外课程列表（每行一门；可粘贴、上传 CSV，或上传成绩单 PDF 自动提取）：</p>
+      <p class="muted small mb">国外课程列表：上传成绩单自动识别（识别结果会显示在这里，可直接确认或修改）：</p>
       <textarea id="courses" placeholder="Data Structures and Algorithms&#10;Operating Systems&#10;Computer Networks&#10;Database Systems"></textarea>
       <div class="flex mt mb">
-        <label class="btn ghost small" for="fileCsvAi" style="cursor:pointer;">上传课程 CSV<input type="file" id="fileCsvAi" accept=".csv,.txt" style="display:none;"></label>
-        <button class="btn ghost small" id="btnPdfAi">上传成绩单 PDF</button>
-        <input type="file" id="filePdfAi" accept=".pdf,application/pdf" style="display:none;">
+        <label class="btn ghost small" for="fileTranscriptAi" style="cursor:pointer;">📄 上传成绩单（PDF / CSV / TXT）<input type="file" id="fileTranscriptAi" accept=".pdf,.csv,.txt" style="display:none;"></label>
         <span class="muted small" id="uploadStatus"></span>
       </div>
       <div class="flex mt">

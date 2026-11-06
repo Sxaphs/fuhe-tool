@@ -162,29 +162,25 @@
     $('btnCopy').addEventListener('click', copyResult);
     $('btnExportPdf').addEventListener('click', exportPdf);
 
-    // 课程列表上传（CSV / 成绩单 PDF，本地解析）
-    $('fileCsvAi').addEventListener('change', (ev) => {
+    // 成绩单上传（单文件 PDF/CSV/TXT，本地解析 → 展示识别结果供确认修改）
+    $('fileTranscriptAi').addEventListener('change', (ev) => {
       const f = ev.target.files[0];
       if (!f) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        const list = window.FuhePdf.parseCsvText(String(reader.result || ''));
+      const name = String(f.name || '').toLowerCase();
+      $('uploadStatus').textContent = '正在本地解析（不会上传任何数据）……';
+      const done = (list) => {
         $('courses').value = list.join('\n');
-        $('uploadStatus').textContent = '已从 CSV 载入 ' + list.length + ' 行课程（可编辑）。';
+        $('uploadStatus').textContent = '✅ 识别到 ' + list.length + ' 门课程——已在下方展示，请确认（可直接修改），然后点「生成对比说明」。';
       };
-      reader.readAsText(f);
-    });
-    $('btnPdfAi').addEventListener('click', () => $('filePdfAi').click());
-    $('filePdfAi').addEventListener('change', (ev) => {
-      const f = ev.target.files[0];
-      if (!f) return;
-      $('uploadStatus').textContent = '正在本地解析 PDF……';
-      window.FuhePdf.parseCourseListFromPdf(f).then((list) => {
-        $('courses').value = list.join('\n');
-        $('uploadStatus').textContent = 'PDF 提取 ' + list.length + ' 门候选课程（请人工核对后再生成）。';
-      }).catch((e) => {
-        $('uploadStatus').textContent = '解析失败：' + e.message;
-      });
+      if (name.endsWith('.pdf')) {
+        window.FuhePdf.parseCourseListFromPdf(f).then(done).catch((e) => {
+          $('uploadStatus').textContent = '解析失败：' + e.message;
+        });
+      } else {
+        f.text().then((t) => done(window.FuhePdf.parseCsvText(t))).catch((e) => {
+          $('uploadStatus').textContent = '读取失败：' + e.message;
+        });
+      }
     });
   });
 })();
