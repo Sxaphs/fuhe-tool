@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 助手 · fuhe-tool</title>
+<meta name="description" content="用自己的 AI API Key（DeepSeek/Kimi 等），在浏览器本地生成复核课程对比说明草稿，可导出 PDF。Key 只存本地，不经任何中间服务器。">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="container">
+    <span class="brand">fuhe-tool</span>
+    <a href="index.html">首页</a>
+    <a href="tool.html">匹配工具</a>
+    <a href="catalog.html">考公目录</a>
+    <a href="plan.html">培养方案</a>
+    <a href="ai.html" class="active">AI 助手</a>
+    <a href="sop.html">复核 SOP</a>
+    <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero" style="padding:40px 0 36px;">
+  <div class="container">
+    <h1>AI 助手（本地直连）</h1>
+    <p class="sub">填入你自己的 AI API Key，在浏览器里直接生成「课程对比说明」草稿并导出 PDF。
+      请求从你的浏览器直发所选服务商，<strong>本站无后端、无服务器、不收集任何数据</strong>。</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="card">
+      <h2>第一步：配置你的 API Key</h2>
+      <div class="flex mb">
+        <select id="baseUrl" style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+          <option value="https://api.deepseek.com">DeepSeek（api.deepseek.com）</option>
+          <option value="https://api.moonshot.cn/v1">Moonshot Kimi（api.moonshot.cn）</option>
+          <option value="https://openrouter.ai/api/v1">OpenRouter</option>
+          <option value="custom">自定义地址…</option>
+        </select>
+        <input type="text" id="customBase" placeholder="自定义 OpenAI 兼容接口地址" style="display:none;flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <input type="text" id="model" value="deepseek-chat" placeholder="模型名，如 deepseek-chat" style="flex:1;min-width:160px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+      </div>
+      <div class="flex mb">
+        <input type="password" id="apiKey" placeholder="sk-... 你的 API Key" autocomplete="off" style="flex:1;min-width:240px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <button class="btn" id="btnSave">保存（仅存本机）</button>
+        <button class="btn ghost" id="btnClearKey">清除</button>
+      </div>
+      <div class="warn">
+        🔒 <strong>隐私说明</strong>：Key 只保存在你浏览器的 localStorage（本机），不会上传到本站或任何第三方；
+        生成请求由你的浏览器<strong>直接</strong>发给上面选择的 API 服务商（实测 DeepSeek / Moonshot / OpenRouter 支持浏览器直连）。
+        请在可信设备上使用，用完可点"清除"。
+      </div>
+      <p class="muted small" id="keyStatus"></p>
+    </div>
+
+    <div class="card">
+      <h2>第二步：生成课程对比说明</h2>
+      <div class="flex mb">
+        <input type="text" id="major" placeholder="目标复核专业，如：计算机科学与技术" style="flex:2;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <input type="text" id="school" placeholder="参考高校（可选），如：清华大学" style="flex:1;min-width:140px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+      </div>
+      <p class="muted small mb">国外课程列表（每行一门；可从<a href="tool.html">匹配工具</a>或成绩单直接复制）：</p>
+      <textarea id="courses" placeholder="Data Structures and Algorithms&#10;Operating Systems&#10;Computer Networks&#10;Database Systems"></textarea>
+      <div class="flex mt">
+        <button class="btn" id="btnGenerate">生成对比说明</button>
+        <span class="muted small" id="genStatus"></span>
+      </div>
+    </div>
+
+    <div class="card" id="resultCard" style="display:none;">
+      <h2>生成结果</h2>
+      <textarea id="result" style="min-height:240px;" readonly></textarea>
+      <div class="flex mt">
+        <button class="btn" id="btnCopy">复制全文</button>
+        <button class="btn ghost" id="btnExportPdf">导出 PDF（浏览器另存为）</button>
+      </div>
+      <p class="muted small mt">⚠️ LLM 草稿仅供参考，提交前务必人工核对课程对应关系；最终以留服中心审核为准。</p>
+    </div>
+
+    <div class="disclaimer">
+      本工具不承诺复核结果。生成的说明文字由你选择的 AI 服务商产生，与本项目无关。
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>fuhe-tool · MIT 开源 · <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub 仓库</a></p>
+  </div>
+</footer>
+
+<script src="assets/js/ai.js"></script>
+</body>
+</html>

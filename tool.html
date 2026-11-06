@@ -15,6 +15,7 @@
     <a href="tool.html" class="active">匹配工具</a>
     <a href="catalog.html">考公目录</a>
     <a href="plan.html">培养方案</a>
+    <a href="ai.html">AI 助手</a>
     <a href="sop.html">复核 SOP</a>
     <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
@@ -37,9 +38,11 @@
         <button class="btn ghost" id="btnSample">载入示例</button>
         <button class="btn ghost" id="btnClear">清空</button>
         <label class="btn ghost" for="fileCsv" style="cursor:pointer;">上传 CSV<input type="file" id="fileCsv" accept=".csv,.txt" style="display:none;"></label>
+        <button class="btn ghost" id="btnPdf">上传成绩单 PDF</button>
+        <input type="file" id="filePdf" accept=".pdf,application/pdf" style="display:none;">
       </div>
       <textarea id="courseInput" placeholder="每行一门课程，例如：&#10;Data Structures and Algorithms&#10;Operating Systems&#10;Computer Networks&#10;Database Systems&#10;Software Engineering"></textarea>
-      <p class="muted small" id="status">等待输入……</p>
+      <p class="muted small" id="status">等待输入……（支持直接粘贴课程、上传 CSV，或上传成绩单 PDF 自动提取课程名）</p>
     </div>
 
     <div id="results"></div>
@@ -61,6 +64,7 @@
   </div>
 </footer>
 
+<script src="assets/vendor/pdf.min.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
