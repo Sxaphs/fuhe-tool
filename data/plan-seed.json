@@ -1,0 +1,63 @@
+{
+  "version": "2026-11",
+  "updated": "2026-11-06",
+  "schools": [
+    "清华大学",
+    "北京大学",
+    "浙江大学",
+    "上海交通大学",
+    "复旦大学",
+    "南京大学",
+    "中国科学技术大学",
+    "华中科技大学",
+    "武汉大学",
+    "西安交通大学",
+    "哈尔滨工业大学",
+    "同济大学"
+  ],
+  "entries": [
+    {
+      "major": "计算机科学与技术",
+      "school": "清华大学",
+      "title": "清华大学计算机科学与技术专业本科培养方案（教学计划 PDF）",
+      "url": "https://www.tsinghua.edu.cn/jxjywj/bksjywj/28-1-jisuanji.pdf",
+      "kind": "pdf"
+    },
+    {
+      "major": "计算机科学与技术",
+      "school": "清华大学",
+      "title": "清华大学 · 计算机科学与技术 培养方案（检索收录）",
+      "url": "https://www.tsinghua.edu.cn/jxjywj/bkzy2022/zxzy/29-1.pdf",
+      "kind": "pdf"
+    },
+    {
+      "major": "计算机科学与技术",
+      "school": "北京大学",
+      "title": "北京大学 · 计算机科学与技术 培养方案（检索收录）",
+      "url": "https://www.ece.pku.edu.cn/__local/1/5F/68/E1EA4087A32C03F6B6151EBE625_F31C3F89_2DF18.pdf?e=.pdf",
+      "kind": "pdf"
+    },
+    {
+      "major": "计算机科学与技术",
+      "school": "北京大学",
+      "title": "北京大学 · 计算机科学与技术 培养方案（检索收录）",
+      "url": "https://cs.bit.edu.cn/docs/2024-12/bb4aef8b87814526a51ffe10f337ff98.pdf",
+      "kind": "pdf"
+    },
+    {
+      "major": "电子信息工程",
+      "school": "清华大学",
+      "title": "清华大学 · 电子信息工程 培养方案（检索收录）",
+      "url": "https://www.tsinghua.edu.cn/jxjywj/bksjywj/22-dianzi.pdf",
+      "kind": "pdf"
+    },
+    {
+      "major": "电子信息工程",
+      "school": "清华大学",
+      "title": "清华大学 · 电子信息工程 培养方案（检索收录）",
+      "url": "https://www.tsinghua.edu.cn/jxjywj/bkzy2023/zxzy/23.pdf",
+      "kind": "pdf"
+    }
+  ],
+  "note": "链接来自公开搜索引擎检索结果，仅供参考，使用前请核对高校官网来源与年份；欢迎 PR 补充，或运行 scripts/build-plan-seed.mjs 重新生成。"
+}

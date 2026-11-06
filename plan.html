@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>培养方案查询 · fuhe-tool</title>
+<meta name="description" content="输入你想复核的专业名和专业代码，查看核心课程参考、已收录的高校培养方案链接，并一键搜索各校培养方案。">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="container">
+    <span class="brand">fuhe-tool</span>
+    <a href="index.html">首页</a>
+    <a href="tool.html">匹配工具</a>
+    <a href="catalog.html">考公目录</a>
+    <a href="plan.html" class="active">培养方案</a>
+    <a href="sop.html">复核 SOP</a>
+    <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero" style="padding:40px 0 36px;">
+  <div class="container">
+    <h1>培养方案查询</h1>
+    <p class="sub">输入你想复核成的国内专业（可选填专业代码），工具给出该专业的核心课程参考、
+      已收录的高校培养方案链接，并生成一键搜索入口——这是写"课程对比说明"的材料来源。</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="card">
+      <h2>第一步：输入目标专业</h2>
+      <div class="flex mb">
+        <input type="text" id="majorInput" placeholder="专业名，如：计算机科学与技术" style="flex:2;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <input type="text" id="codeInput" placeholder="专业代码（可选），如：080901" style="flex:1;min-width:140px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <button class="btn" id="btnQuery">查询</button>
+      </div>
+      <p class="muted small" id="status">正在加载数据……</p>
+    </div>
+
+    <div id="results"></div>
+
+    <div class="warn">
+      培养方案链接来自公开检索结果，<strong>使用前请核对高校官网来源与年份</strong>；课程信息仅供参考，最终以高校官方培养方案为准。
+      需要自动下载多所高校的原始页面/PDF，请使用开源 CLI：<code>node cli/fuhe.mjs research --major 专业名 --schools 学校1,学校2</code>。
+    </div>
+    <div class="disclaimer">
+      ⚠️ 本工具不承诺复核结果；材料质量以留服中心审核为准。
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>fuhe-tool · MIT 开源 · <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub 仓库</a></p>
+  </div>
+</footer>
+
+<script src="assets/js/plan.js"></script>
+</body>
+</html>

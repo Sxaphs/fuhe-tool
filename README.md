@@ -10,6 +10,7 @@
 |---|---|---|
 | 匹配工具 | 粘贴/上传课程表 → 匹配可复核的国内专业（按课程重合度排序） | [tool.html](tool.html)（在线版） |
 | 考公目录 | 税务系统 2026 公务员专业参考目录查询（60 类 / 835 专业）+ 留学回国人员报考口径 | [catalog.html](catalog.html) |
+| 培养方案 | 输入目标专业 + 专业代码 → 核心课程参考、已收录培养方案链接、一键搜索各校培养方案 | [plan.html](plan.html) |
 | SOP 科普 | 什么是认证复核、流程、材料、费用、常见问题 | [sop.html](sop.html) |
 | 开源 CLI | 自动搜集 985/211 高校培养方案 → 生成课程对比文档 | [cli/](cli/) |
 
@@ -29,18 +30,23 @@ fuhe-tool/
 ├── sop.html            # 复核 SOP 科普页
 ├── tool.html           # 课程表匹配工具
 ├── catalog.html        # 考公专业目录对照（税务系统 2026）
+├── plan.html           # 培养方案查询（核心课程 + 收录链接 + 一键搜索）
 ├── assets/
 │   ├── css/style.css
 │   ├── js/app.js       # 匹配逻辑（纯前端，数据在本地浏览器处理）
-│   └── js/catalog.js   # 考公目录查询逻辑
+│   ├── js/catalog.js   # 考公目录查询逻辑
+│   └── js/plan.js      # 培养方案查询逻辑
 ├── data/
 │   ├── majors.seed.json           # 专业目录种子数据（社区维护，欢迎 PR）
-│   └── civil-service-catalog.json # 税务系统2026公务员专业参考目录（60类/835专业）
+│   ├── civil-service-catalog.json # 税务系统2026公务员专业参考目录（60类/835专业）
+│   ├── major-codes.json           # 教育部2025本科专业目录代码（74个种子专业的代码）
+│   └── plan-seed.json             # 已收录的高校培养方案链接（欢迎 PR 补充）
 ├── cli/
 │   ├── fuhe.mjs        # 零依赖 CLI：research / report
 │   └── package.json
 ├── scripts/
 │   ├── update-catalog.mjs     # 抓取税务系统公务员专业参考目录 → data/civil-service-catalog.json
+│   ├── build-plan-seed.mjs    # 检索并收录高校培养方案链接 → data/plan-seed.json
 │   ├── validate-data.mjs      # 种子数据质量校验
 │   ├── test-match.mjs         # 匹配算法单元测试
 │   └── integration-test.mjs   # 真实数据集成测试
@@ -65,6 +71,7 @@ node cli/fuhe.mjs report --major 计算机科学与技术 --school 清华大学 
 
 ```bash
 node scripts/update-catalog.mjs   # 抓取税务系统公务员专业参考目录（每年新通知发布后改 URL 重跑）
+node scripts/build-plan-seed.mjs  # 检索收录高校培养方案链接（可自行增删专业/学校后重跑）
 node scripts/validate-data.mjs    # 校验种子数据结构
 node scripts/test-match.mjs       # 匹配算法单元测试
 node scripts/integration-test.mjs # 用真实数据跑匹配用例

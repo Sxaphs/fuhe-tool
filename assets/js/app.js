@@ -105,7 +105,7 @@
       html += '<div class="card result-card">'
         + '<div class="cover"><div><span class="badge">' + esc(r.cat) + '</span><strong style="font-size:1.1rem;">' + esc(r.name) + '</strong>'
         + (r.aliases.length ? '<span class="muted small">　常见国外名：' + esc(r.aliases.join(' / ')) + '</span>' : '')
-        + '</div><div class="bar-wrap"><span class="small muted">重合度</span><div class="bar"><i style="width:' + Math.min(r.coverage, 100) + '%"></i></div><strong>' + r.coverage + '%</strong></div><a class="small" href="catalog.html?q=' + encodeURIComponent(r.name) + '">考公目录核对 →</a></div>'
+        + '</div><div class="bar-wrap"><span class="small muted">重合度</span><div class="bar"><i style="width:' + Math.min(r.coverage, 100) + '%"></i></div><strong>' + r.coverage + '%</strong></div><span class="flex"><a class="small" href="catalog.html?q=' + encodeURIComponent(r.name) + '">考公目录核对 →</a><a class="small" href="plan.html?major=' + encodeURIComponent(r.name) + '">查培养方案 →</a></span></div>'
         + '<div class="mt"><span class="muted small">匹配到的核心课程：</span>'
         + (r.matched.length ? r.matched.map((m) => '<span class="chip hit">' + esc(m) + '</span>').join('') : '<span class="chip miss">无直接匹配</span>')
         + '</div>'
