@@ -44,7 +44,7 @@
   }
 
   function parseCsvText(text) {
-    return String(text || '').split(/[\n,，;；、\t\r]+).map((s) => s.trim()).filter(Boolean);
+    return String(text || '').split(/[\n,，;；、\t\r]+/).map((s) => s.trim()).filter(Boolean);
   }
 
   window.FuhePdf = { parseCourseListFromPdf, parseCsvText };
