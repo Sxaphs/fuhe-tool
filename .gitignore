@@ -4,3 +4,4 @@ report/
 *.log
 .DS_Store
 .env
+npm-cache-tmp/

@@ -58,6 +58,22 @@
       </div>
     </div>
 
+    <div class="card" id="step2Card" style="display:none;">
+      <h2>第二步：选择你想复核的目标专业</h2>
+      <div class="flex mb">
+        <input list="majorList" id="majorSelect" placeholder="输入或选择国内专业名，如：计算机科学与技术" style="flex:1;min-width:240px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <datalist id="majorList"></datalist>
+        <button class="btn" id="btnMatchSchool">匹配学校课表 →</button>
+      </div>
+      <p class="muted small" id="recommendWrap" style="display:none;">推荐专业（按课程匹配度，点击可直接选用）：<span id="recommendChips"></span></p>
+    </div>
+
+    <div class="card" id="step3Card" style="display:none;">
+      <h2>第三步：学校培养方案匹配</h2>
+      <p class="muted small" id="schoolStatus"></p>
+      <div id="schoolResults"></div>
+    </div>
+
     <div id="results"></div>
 
     <div class="warn">

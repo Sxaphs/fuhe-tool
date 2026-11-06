@@ -139,6 +139,10 @@
     if (cfg.apiKey) { $('apiKey').value = cfg.apiKey; }
     refreshKeyStatus();
 
+    // 从其他页面带入专业（如 tool.html?major= / 匹配结果的跳转）
+    const q = new URLSearchParams(location.search);
+    if (q.get('major')) $('major').value = q.get('major');
+
     $('baseUrl').addEventListener('change', () => {
       const v = $('baseUrl').value;
       $('customBase').style.display = v === 'custom' ? '' : 'none';
