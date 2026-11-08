@@ -24,6 +24,7 @@
   let seedCache = null;
   let planCoursesCache = null;
   let confirmedCourses = [];
+  let lastTranscriptFile = null;
 
   async function getSeed() {
     if (seedCache) return seedCache;
@@ -335,6 +336,7 @@
   async function handleTranscript(file) {
     const name = String(file.name || '').toLowerCase();
     const isImage = /\.(png|jpe?g|webp|bmp|gif|heic|heif)$/.test(name) || String(file.type || '').startsWith('image/');
+    lastTranscriptFile = file;
     $('reviewArea').style.display = '';
     $('reviewStatus').textContent = isImage
       ? '正在本地 OCR 识别截图（首次使用需加载识别组件，约几秒）……'
@@ -375,6 +377,27 @@
       if (f) handleTranscript(f);
     });
     $('btnReselect').addEventListener('click', () => $('fileTranscript').click());
+    $('btnAiOcr').addEventListener('click', async () => {
+      if (!lastTranscriptFile) { alert('请先上传成绩单文件'); return; }
+      let cfg = {};
+      try { cfg = JSON.parse(localStorage.getItem('fuhe-ai-config') || '{}'); } catch (e) { /* ignore */ }
+      if (!cfg.apiKey || !cfg.base) {
+        if (confirm('需要先在「AI 助手」页配置 API Key（图片会直发你配置的服务商）。现在去配置？')) location.href = 'ai.html';
+        return;
+      }
+      if (!cfg.visionModel) {
+        alert('当前配置缺少视觉模型名。请到「AI 助手」页填写视觉模型（DeepSeek 暂无视觉模型，请用 Moonshot 或 OpenRouter）。');
+        return;
+      }
+      $('reviewStatus').textContent = 'AI 识别中（图片直发你配置的服务商，本站不中转）……';
+      try {
+        const courses = await window.FuhePdf.parseViaVisionApi(lastTranscriptFile);
+        $('reviewInput').value = courses.join('\n');
+        $('reviewStatus').textContent = '✅ AI 识别到 ' + courses.length + ' 门课程——请核对后点「开始匹配」。';
+      } catch (e) {
+        $('reviewStatus').textContent = 'AI 识别失败：' + e.message;
+      }
+    });
     $('btnConfirm').addEventListener('click', async () => {
       const courses = parseCourses($('reviewInput').value);
       if (!courses.length) { alert('课程列表为空，请检查识别结果。'); return; }

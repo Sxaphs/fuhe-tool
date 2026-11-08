@@ -44,6 +44,10 @@
         <input type="text" id="model" value="deepseek-chat" placeholder="模型名，如 deepseek-chat" style="flex:1;min-width:160px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
       </div>
       <div class="flex mb">
+        <input type="text" id="visionModel" placeholder="视觉模型名（截图识别用），如 moonshot-v1-8k-vision-preview" style="flex:1;min-width:260px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+      </div>
+      <p class="muted small mb">视觉模型用于成绩单截图识别：<strong>DeepSeek 暂无视觉模型</strong>；Moonshot 填 <code>moonshot-v1-8k-vision-preview</code>；OpenRouter 填 <code>qwen/qwen2.5-vl-72b-instruct</code>（切换服务商会自动带出）。</p>
+      <div class="flex mb">
         <input type="password" id="apiKey" placeholder="sk-... 你的 API Key" autocomplete="off" style="flex:1;min-width:240px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
         <button class="btn" id="btnSave">保存（仅存本机）</button>
         <button class="btn ghost" id="btnClearKey">清除</button>
@@ -66,6 +70,7 @@
       <textarea id="courses" placeholder="Data Structures and Algorithms&#10;Operating Systems&#10;Computer Networks&#10;Database Systems"></textarea>
       <div class="flex mt mb">
         <label class="btn ghost small" for="fileTranscriptAi" style="cursor:pointer;">📄 上传成绩单（PDF / 图片 / CSV / TXT）<input type="file" id="fileTranscriptAi" accept=".pdf,.csv,.txt,.png,.jpg,.jpeg,.webp,.bmp,image/*" style="display:none;"></label>
+        <button class="btn ghost small" id="btnAiOcrAi">🤖 AI 识别（更准）</button>
         <span class="muted small" id="uploadStatus"></span>
       </div>
       <div class="flex mt">

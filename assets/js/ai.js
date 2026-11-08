@@ -11,6 +11,12 @@
     'https://openrouter.ai/api/v1': 'deepseek/deepseek-chat'
   };
 
+  const VISION_PRESETS = {
+    'https://api.deepseek.com': '',
+    'https://api.moonshot.cn/v1': 'moonshot-v1-8k-vision-preview',
+    'https://openrouter.ai/api/v1': 'qwen/qwen2.5-vl-72b-instruct'
+  };
+
   function loadConfig() {
     try {
       return JSON.parse(localStorage.getItem(STORE_KEY)) || {};
@@ -34,7 +40,8 @@
     const base = baseSel === 'custom' ? $('customBase').value.trim().replace(/\/+$/, '') : baseSel;
     const key = $('apiKey').value.trim() || (loadConfig().apiKey || '');
     const model = $('model').value.trim() || loadConfig().model || 'deepseek-chat';
-    return { base, key, model };
+    const visionModel = $('visionModel').value.trim() || (loadConfig().visionModel || '');
+    return { base, key, model, visionModel };
   }
 
   async function generate() {
@@ -137,6 +144,7 @@
       $('model').value = cfg.model || '';
     }
     if (cfg.apiKey) { $('apiKey').value = cfg.apiKey; }
+    if (cfg.visionModel) { $('visionModel').value = cfg.visionModel; }
     refreshKeyStatus();
 
     // 从其他页面带入专业（如 tool.html?major= / 匹配结果的跳转）
@@ -147,12 +155,13 @@
       const v = $('baseUrl').value;
       $('customBase').style.display = v === 'custom' ? '' : 'none';
       if (v !== 'custom' && PRESETS[v]) $('model').value = PRESETS[v];
+      if (v !== 'custom' && VISION_PRESETS[v] !== undefined) $('visionModel').value = VISION_PRESETS[v];
     });
 
     $('btnSave').addEventListener('click', () => {
-      const { base, key, model } = getApi();
+      const { base, key, model, visionModel } = getApi();
       if (!base || !key) { alert('请填写接口地址和 Key'); return; }
-      saveConfig({ base, key, model });
+      saveConfig({ base, key, model, visionModel });
       refreshKeyStatus();
       alert('已保存到本机浏览器（localStorage）');
     });
@@ -167,9 +176,11 @@
     $('btnExportPdf').addEventListener('click', exportPdf);
 
     // 成绩单上传（PDF/图片/CSV/TXT 单入口，本地解析 → 展示识别结果供确认修改）
+    let lastFileAi = null;
     $('fileTranscriptAi').addEventListener('change', (ev) => {
       const f = ev.target.files[0];
       if (!f) return;
+      lastFileAi = f;
       const name = String(f.name || '').toLowerCase();
       const isImage = /\.(png|jpe?g|webp|bmp|gif|heic|heif)$/.test(name) || String(f.type || '').startsWith('image/');
       $('uploadStatus').textContent = isImage
@@ -177,10 +188,31 @@
         : '正在本地解析（不会上传任何数据；若为图片型 PDF 会自动转 OCR，首次较慢）……';
       window.FuhePdf.parseTranscript(f).then((list) => {
         $('courses').value = list.join('\n');
-        $('uploadStatus').textContent = '✅ 识别到 ' + list.length + ' 门课程——已在下方展示，请确认（可直接修改），然后点「生成对比说明」。';
+        $('uploadStatus').textContent = '✅ 识别到 ' + list.length + ' 门课程——已在下方展示，请确认（可直接修改），然后点「生成对比说明」。识别不准可点「AI 识别」。';
       }).catch((e) => {
         $('uploadStatus').textContent = '解析失败：' + e.message;
       });
+    });
+    $('btnAiOcrAi').addEventListener('click', async () => {
+      if (!lastFileAi) { alert('请先上传成绩单文件'); return; }
+      const cfg = loadConfig();
+      if (!cfg.apiKey || !cfg.base) {
+        if (confirm('需要先在本页配置并保存 API Key。现在去配置？')) $('apiKey').focus();
+        return;
+      }
+      if (!cfg.visionModel) {
+        alert('未配置视觉模型名——DeepSeek 暂无视觉模型，请在「视觉模型」栏填 moonshot-v1-8k-vision-preview 或 OpenRouter 的 qwen/qwen2.5-vl-72b-instruct 并保存。');
+        $('visionModel').focus();
+        return;
+      }
+      $('uploadStatus').textContent = 'AI 识别中（图片直发你配置的服务商）……';
+      try {
+        const list = await window.FuhePdf.parseViaVisionApi(lastFileAi);
+        $('courses').value = list.join('\n');
+        $('uploadStatus').textContent = '✅ AI 识别到 ' + list.length + ' 门课程——请确认后点「生成对比说明」。';
+      } catch (e) {
+        $('uploadStatus').textContent = 'AI 识别失败：' + e.message;
+      }
     });
   });
 })();
