@@ -166,25 +166,21 @@
     $('btnCopy').addEventListener('click', copyResult);
     $('btnExportPdf').addEventListener('click', exportPdf);
 
-    // 成绩单上传（单文件 PDF/CSV/TXT，本地解析 → 展示识别结果供确认修改）
+    // 成绩单上传（PDF/图片/CSV/TXT 单入口，本地解析 → 展示识别结果供确认修改）
     $('fileTranscriptAi').addEventListener('change', (ev) => {
       const f = ev.target.files[0];
       if (!f) return;
       const name = String(f.name || '').toLowerCase();
-      $('uploadStatus').textContent = '正在本地解析（不会上传任何数据）……';
-      const done = (list) => {
+      const isImage = /\.(png|jpe?g|webp|bmp|gif|heic|heif)$/.test(name) || String(f.type || '').startsWith('image/');
+      $('uploadStatus').textContent = isImage
+        ? '正在本地 OCR 识别截图（首次使用需加载识别组件，约几秒）……'
+        : '正在本地解析（不会上传任何数据）……';
+      window.FuhePdf.parseTranscript(f).then((list) => {
         $('courses').value = list.join('\n');
         $('uploadStatus').textContent = '✅ 识别到 ' + list.length + ' 门课程——已在下方展示，请确认（可直接修改），然后点「生成对比说明」。';
-      };
-      if (name.endsWith('.pdf')) {
-        window.FuhePdf.parseCourseListFromPdf(f).then(done).catch((e) => {
-          $('uploadStatus').textContent = '解析失败：' + e.message;
-        });
-      } else {
-        f.text().then((t) => done(window.FuhePdf.parseCsvText(t))).catch((e) => {
-          $('uploadStatus').textContent = '读取失败：' + e.message;
-        });
-      }
+      }).catch((e) => {
+        $('uploadStatus').textContent = '解析失败：' + e.message;
+      });
     });
   });
 })();

@@ -334,15 +334,13 @@
 
   async function handleTranscript(file) {
     const name = String(file.name || '').toLowerCase();
+    const isImage = /\.(png|jpe?g|webp|bmp|gif|heic|heif)$/.test(name) || String(file.type || '').startsWith('image/');
     $('reviewArea').style.display = '';
-    $('reviewStatus').textContent = '正在本地解析（不会上传任何数据）……';
+    $('reviewStatus').textContent = isImage
+      ? '正在本地 OCR 识别截图（首次使用需加载识别组件，约几秒）……'
+      : '正在本地解析（不会上传任何数据）……';
     try {
-      let courses;
-      if (name.endsWith('.pdf')) {
-        courses = await window.FuhePdf.parseCourseListFromPdf(file);
-      } else {
-        courses = window.FuhePdf.parseCsvText(await file.text());
-      }
+      const courses = await window.FuhePdf.parseTranscript(file);
       $('reviewInput').value = courses.join('\n');
       $('reviewStatus').textContent = '✅ 识别到 ' + courses.length + ' 门课程——请在下方确认。可以直接编辑（增、删、改课程名），确认后点「开始匹配」。';
       $('results').innerHTML = '';

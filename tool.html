@@ -34,9 +34,10 @@
     <div class="card">
       <h2>第一步：上传成绩单（自动识别课程）</h2>
       <div class="flex mb">
-        <label class="btn" for="fileTranscript" style="cursor:pointer;">📄 上传成绩单（PDF / CSV / TXT）<input type="file" id="fileTranscript" accept=".pdf,.csv,.txt" style="display:none;"></label>
+        <label class="btn" for="fileTranscript" style="cursor:pointer;">📄 上传成绩单（PDF / 图片 / CSV / TXT）<input type="file" id="fileTranscript" accept=".pdf,.csv,.txt,.png,.jpg,.jpeg,.webp,.bmp,image/*" style="display:none;"></label>
         <button class="btn ghost" id="btnShowPaste">没有电子版？手动粘贴课程</button>
       </div>
+      <p class="muted small mb">手机截图（图片）也可以：会在本地 OCR 识别出课程，识别后请务必核对一遍。</p>
 
       <div id="pasteArea" style="display:none;">
         <textarea id="courseInput" placeholder="每行一门课程，例如：&#10;Data Structures and Algorithms&#10;Operating Systems&#10;Computer Networks&#10;Database Systems"></textarea>
