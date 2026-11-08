@@ -46,7 +46,9 @@
     const T = await loadTesseract();
     return T.createWorker('chi_sim+eng', 1, {
       workerPath: VENDOR + 'worker.min.js',
-      corePath: VENDOR + 'tesseract-core-simd.wasm.js',
+      // OEM=1(LSTM_ONLY) 时浏览器 worker 直接加载 corePath 指向的文件，
+      // 必须用 LSTM 版本，否则核心函数缺失（v5 worker 不会自动替换）
+      corePath: VENDOR + 'tesseract-core-simd-lstm.wasm.js',
       langPath: VENDOR + 'lang'
     });
   }
