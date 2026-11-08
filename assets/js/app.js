@@ -338,7 +338,7 @@
     $('reviewArea').style.display = '';
     $('reviewStatus').textContent = isImage
       ? '正在本地 OCR 识别截图（首次使用需加载识别组件，约几秒）……'
-      : '正在本地解析（不会上传任何数据）……';
+      : '正在本地解析（不会上传任何数据；若为图片型 PDF 会自动转 OCR，首次较慢）……';
     try {
       const courses = await window.FuhePdf.parseTranscript(file);
       $('reviewInput').value = courses.join('\n');

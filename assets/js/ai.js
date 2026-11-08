@@ -174,7 +174,7 @@
       const isImage = /\.(png|jpe?g|webp|bmp|gif|heic|heif)$/.test(name) || String(f.type || '').startsWith('image/');
       $('uploadStatus').textContent = isImage
         ? '正在本地 OCR 识别截图（首次使用需加载识别组件，约几秒）……'
-        : '正在本地解析（不会上传任何数据）……';
+        : '正在本地解析（不会上传任何数据；若为图片型 PDF 会自动转 OCR，首次较慢）……';
       window.FuhePdf.parseTranscript(f).then((list) => {
         $('courses').value = list.join('\n');
         $('uploadStatus').textContent = '✅ 识别到 ' + list.length + ' 门课程——已在下方展示，请确认（可直接修改），然后点「生成对比说明」。';
