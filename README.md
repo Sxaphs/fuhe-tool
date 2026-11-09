@@ -84,6 +84,19 @@ node scripts/integration-test.mjs # 用真实数据跑匹配用例
 
 维护日历（详见 [research/sources.md](research/sources.md)）：每年 3–4 月跟教育部本科专业目录、9–10 月跟新年度国考各系统专业目录，每季度核对留服中心通知公告。
 
+## 产品宣传片
+
+产品介绍视频用 [huashu-motion](https://github.com/alchaincyf/huashu-motion)（让 coding agent 直出产品发布片的开源 skill）制作，完整简报见 [docs/product-brief.md](docs/product-brief.md)——含产品档案、三个创作方向、品牌色、镜头清单和红线（不得出现"包过"类承诺）。
+
+启动提示词（复制给你的 agent）：
+
+```
+用 huashu-motion 给 fuhe-tool 做一支 30-40 秒的产品介绍片：
+产品档案在仓库 docs/product-brief.md，先 om grab 抓 https://sxaphs.github.io/fuhe-tool/
+的真实界面素材，按简报出三个方向关键帧让我选，选定后按节奏单成片，
+结尾展示 GitHub 仓库地址。不需要找我做任何确认，全程独立完成。
+```
+
 ## 数据说明与贡献
 
 - `data/majors.seed.json` 为**种子数据**：仅覆盖留学生最常复核的部分专业类，课程关键词供粗略匹配，不保证完整与最新；
