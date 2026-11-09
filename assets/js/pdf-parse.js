@@ -8,21 +8,38 @@
   const VENDOR = 'assets/vendor/tesseract/';
   const AI_CONFIG_KEY = 'fuhe-ai-config';
 
-  const BLOCK_WORDS = /transcript|成绩单|university|universit|semester|gpa|grade point|credit|unit|year\s*20|term\b|course code|page\s*\d|issued|official|dean|registrar|student|total|average|毕业|姓名|学号|学期|平均|学分绩|成绩单|课程编号|共\s*\d|页\s*\d/i;
+  const BLOCK_WORDS = /masterarbeit|thesis|dissertation|kernbereich|wahlpflicht|pflichtbereich|erg[aä]nzungsbereich|core\s+\w{2,12}\s+(area|economics|business)|compulsory|elective|\bmodule\b|\bmodul\b|semester|\bnote\b|\bgrade\b|\blp\b|\bcp\b|\bcredit|born|geboren|\bprof\b|\bdr\b|universit|examination|prufung|prüfung|zeugnis|transcript|成绩单|论文|总学分|平均|page\s*\d|出生|毕业|姓名|学号/i;
+
+  const TRAIL = /[\s,;，]+(?:\d{1,2}(?:[.,]\d{1,2})?|Pass|Merit|Distinction|Fail|HD|DI|CR|PS|FL|EX|PP|GPA\s*\d[\d.]*|学分|LP|CP|ECTS)\s*$/gi;
 
   function extractCoursesFromPdfLines(rawLines) {
+    const hasPipe = rawLines.filter((l) => String(l || '').includes('|')).length >= 3;
     const out = [];
     const seen = new Set();
-    for (let raw of rawLines) {
-      let t = String(raw || '').trim();
+    for (let i = 0; i < rawLines.length; i++) {
+      let t = String(rawLines[i] || '').trim();
       if (!t) continue;
-      t = t.replace(/^[A-Z]{2,6}\s*\d{2,4}[A-Z]?\s*/, '');
-      t = t.replace(/[\s,;，]+(A\+?|A-|B\+?|B-|C\+?|C-|D\+?|D-|F|P|HD|DI|CR|PS|FL|Pass|Merit|Distinction|Fail|EX|W|S)\s*$/i, '');
-      t = t.replace(/[\s,;，]+\d{1,3}(\.\d{1,2})?\s*$/, '');
-      t = t.replace(/[\s,;，]+\d{1,2}\s*学分\s*$/u, '');
-      t = t.trim();
-      if (t.length < 3 || t.length > 80) continue;
+      const parts = t.split('|');
+      const isPipe = parts.length > 1;
+      if (isPipe) {
+        t = parts[parts.length - 1].trim(); // 表格型成绩单：课程名列在最后一栏
+      } else if (hasPipe) {
+        continue; // 表格型文档中，无 | 的行（人名/标题/说明）跳过
+      }
       if (BLOCK_WORDS.test(t)) continue;
+      t = t.replace(/^[A-Z]{2,6}\s*\d{2,4}[A-Z]?\s*/, '');
+      for (let k = 0; k < 5; k++) {
+        t = t.replace(/[\s:：,，;；]+$/, '');
+        t = t.replace(/\s+[a-z]\s*$/i, '');
+        t = t.replace(TRAIL, '');
+      }
+      // 课程名跨行：以 & 结尾则并入下一行
+      if (t.endsWith('&') && i + 1 < rawLines.length) {
+        i++;
+        t = t.slice(0, -1).trim() + ' ' + String(rawLines[i] || '').trim();
+      }
+      t = t.replace(/^[_\-–—\s]+|[_\-–—\s]+$/g, '').trim();
+      if (t.length < 3 || t.length > 60) continue;
       if (!/^[A-Za-z\u4e00-\u9fa5]/.test(t)) continue;
       if (!seen.has(t)) { seen.add(t); out.push(t); }
     }
@@ -169,7 +186,9 @@
 
     const content = [{
       type: 'text',
-      text: '这是国外成绩单的截图。请提取其中的课程列表：只输出课程名（英文原文），每行一门；忽略课程代码、学分、成绩、表头和无关文字。只输出课程名列表，不要任何解释或编号。'
+      text: '这是国外成绩单的截图。请只提取其中的【课程列表】：每行输出一门课程的英文课程名，不要输出任何其他内容。'
+        + '必须排除：姓名、出生日期、论文题目（如 Master Thesis）、分类标题（如 Core Area/Compulsory/Elective）、学校与学位信息、分数、学分、表头。'
+        + '课程名通常带课程代码、分数或学分，请去掉这些，只保留课程名本身。只输出课程名列表，每行一门，不要编号、解释或 markdown。'
     }];
     for (const c of canvases) {
       content.push({ type: 'image_url', image_url: { url: c.toDataURL('image/jpeg', 0.85) } });
