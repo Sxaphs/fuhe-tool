@@ -152,11 +152,25 @@
   }
 
   /* ---------- 课程 → 学校课表匹配（双语桥接） ---------- */
-  function buildBridge(entry) {
+  function buildBridgeFor(seed, found) {
     const map = {};
-    for (const cc of ((entry && entry.coreCourses) || [])) {
-      const e = typeof cc === 'string' ? { zh: cc, en: [] } : cc;
-      map[normalize(e.zh)] = e.en || [];
+    const add = (coreCourses) => {
+      for (const cc of (coreCourses || [])) {
+        const e = typeof cc === 'string' ? { zh: cc, en: [] } : cc;
+        const key = normalize(e.zh);
+        if (key && !map[key]) map[key] = e.en || [];
+      }
+    };
+    if (found && found.kind === 'grad') {
+      // 研究生学科没有自己的 coreCourses：聚合相关本科专业的核心课程作为中英桥
+      const related = (found.entry && found.entry.related) || [];
+      for (const cat of (seed.categories || [])) {
+        for (const m of cat.majors) {
+          if (related.includes(m.name)) add(m.coreCourses);
+        }
+      }
+    } else if (found && found.entry) {
+      add(found.entry.coreCourses);
     }
     return map;
   }
@@ -226,14 +240,17 @@
     return window.FuhePdf.parseCsvText(await file.text());
   }
 
-  /* ---------- AI 自动查找各校培养方案核心课程（结构化 JSON） ---------- */
-  async function aiFindSchoolCourses(majorName, kind, subs) {
+  /* ---------- AI 自动查找各校培养方案核心课程 + 语义匹配（结构化 JSON） ---------- */
+  async function aiFindSchoolCourses(majorName, kind, subs, courses) {
     const cfg = getConfig();
     if (!cfg.apiKey || !cfg.base || !cfg.model) return [];
     const kindText = kind === 'grad' ? '研究生一级学科' : '本科专业';
     const subText = (subs && subs.length) ? '（其二级学科包括：' + subs.slice(0, 8).join('、') + '）' : '';
-    const prompt = '你是国内高校课程设置专家。请给出4所985/211高校的「' + majorName + '」' + kindText + subText + '培养方案的核心专业课程清单。'
-      + '严格只输出JSON数组（不要markdown代码块、不要解释文字）：[{"school":"学校全名","courses":["课程1","课程2"]}]，每校12~20门核心专业课程，课程名用国内通行名称。';
+    const prompt = '你是国内高校课程设置专家。请给出4所985/211高校的「' + majorName + '」' + kindText + subText + '培养方案的核心专业课程清单，'
+      + '并对【国外课程】中的每一门课程判断它与该校哪门课程对应。严格只输出JSON数组（不要markdown代码块、不要解释文字）：\n'
+      + '[{"school":"学校全名","courses":["课程1","课程2"],"matched":["对应上的国外课程原名1"]}]\n'
+      + '要求：courses 每校12~20门核心专业课程，课程名用国内通行名称；matched 数组中的课程名必须与【国外课程】中的名称逐字一致，只放确实与该培养方案对应的课程（按课程内容语义判断，不要只按名字猜）。\n'
+      + '【国外课程】\n' + courses.join('\n');
     try {
       const res = await fetch(cfg.base.replace(/\/+$/, '') + '/chat/completions', {
         method: 'POST',
@@ -250,7 +267,12 @@
       }
       if (!Array.isArray(arr)) throw new Error('AI 返回格式无法解析');
       return arr.filter((e) => e && e.school && Array.isArray(e.courses) && e.courses.length)
-        .map((e) => ({ school: String(e.school), courses: e.courses.map((c) => String(c)).filter(Boolean), year: '', source: '', kind: 'AI整理' }));
+        .map((e) => ({
+          school: String(e.school),
+          courses: e.courses.map((c) => String(c)).filter(Boolean),
+          matched: Array.isArray(e.matched) ? e.matched.map((c) => String(c)) : [],
+          year: '', source: '', kind: 'AI整理'
+        }));
     } catch (e) {
       console.warn('AI 查找学校课程失败：', e.message);
       return [];
@@ -268,8 +290,12 @@
       rows.push({ school: e.school, year: e.year || '', hits, total: e.courses.length, source: e.source, kind: '收录' });
     }
     for (const e of aiEntries) {
-      const hits = matchSchoolCourses(courses, e.courses, bridge);
-      rows.push({ school: e.school, year: '', hits, total: e.courses.length, source: '', kind: 'AI整理' });
+      // AI 语义匹配优先；返回里没有 matched 字段时退回本地关键词匹配
+      const matchedSet = new Set((e.matched || []).map(normalize));
+      const aiHits = matchedSet.size
+        ? courses.filter((c) => matchedSet.has(normalize(c)))
+        : matchSchoolCourses(courses, e.courses, bridge);
+      rows.push({ school: e.school, year: '', hits: aiHits, total: e.courses.length, source: '', kind: 'AI整理', aiMatched: matchedSet.size > 0 });
     }
     if (uploadPlanCourses && uploadPlanCourses.length) {
       const hits = matchSchoolCourses(courses, uploadPlanCourses, bridge);
@@ -286,7 +312,7 @@
         html += '<tr><td><strong>' + esc(r.school) + '</strong> ' + badge + (r.year ? '<span class="muted small">（' + esc(r.year) + '）</span>' : '') + '</td>'
           + '<td><div class="bar" style="width:110px;display:inline-block;vertical-align:middle;margin-right:6px;"><i style="width:' + cov + '%"></i></div>' + cov + '%</td>'
           + '<td>' + r.hits.length + ' / ' + r.total + '</td>'
-          + '<td class="small">' + (r.source ? '<a href="' + esc(r.source) + '" target="_blank" rel="noopener">培养方案 ↗</a>' : (r.kind === 'AI整理' ? 'AI 整理，建议官网核对' : '—')) + '</td></tr>';
+          + '<td class="small">' + (r.source ? '<a href="' + esc(r.source) + '" target="_blank" rel="noopener">培养方案 ↗</a>' : (r.kind === 'AI整理' ? (r.aiMatched ? 'AI 语义匹配，建议官网核对' : 'AI 整理，建议官网核对') : '—')) + '</td></tr>';
         if (r.hits.length) html += '<tr><td colspan="4" class="small muted">命中课程：' + r.hits.map(esc).join('、') + '</td></tr>';
       }
       html += '</table>';
@@ -524,25 +550,28 @@
           $('step3Badge').textContent = '⚠️ 培养方案解析失败：' + e.message;
         }
       }
-      // AI 自动整理各校课程
+      // AI 自动整理各校课程 + 语义匹配
       let aiEntries = [];
       if (getConfig().apiKey && getConfig().base && getConfig().model) {
-        $('step3Badge').textContent = 'AI 正在整理各校课程……';
-        aiEntries = await aiFindSchoolCourses(majorName, found ? found.kind : 'undergrad', found && found.subs ? found.subs : []);
+        $('step3Badge').textContent = 'AI 正在整理各校课程并语义匹配……';
+        aiEntries = await aiFindSchoolCourses(majorName, found ? found.kind : 'undergrad', found && found.subs ? found.subs : [], courses);
       }
       const curatedCount = ((planCourses.entries || []).filter((e) => e.major === majorName)).length;
       const totalSources = curatedCount + aiEntries.length + (uploadPlanCourses.length ? 1 : 0);
       $('step3Badge').textContent = totalSources ? ('✅ ' + totalSources + ' 个来源') : '⚠️ 未收录，请上传或一键搜索';
-      renderStep3(courses, found ? found.entry : null, majorName, uploadPlanCourses, planSeed, planCourses, aiEntries);
+      // 双语桥：研究生学科聚合相关本科专业核心课程（修复 0 重合问题）
+      const bridge = buildBridgeFor(seed, found);
+      renderStep3(courses, bridge, majorName, uploadPlanCourses, planSeed, planCourses, aiEntries);
 
       // 学校行汇总（供报告）
-      const bridge = buildBridge(found ? found.entry : null);
       const schoolRows = [];
       for (const e of ((planCourses.entries || []).filter((x) => x.major === majorName))) {
         schoolRows.push({ school: e.school, total: e.courses.length, hits: matchSchoolCourses(courses, e.courses, bridge) });
       }
       for (const e of aiEntries) {
-        schoolRows.push({ school: e.school, total: e.courses.length, hits: matchSchoolCourses(courses, e.courses, bridge) });
+        const matchedSet = new Set((e.matched || []).map(normalize));
+        const hits = matchedSet.size ? courses.filter((c) => matchedSet.has(normalize(c))) : matchSchoolCourses(courses, e.courses, bridge);
+        schoolRows.push({ school: e.school, total: e.courses.length, hits });
       }
       if (uploadPlanCourses.length) {
         schoolRows.push({ school: '你上传的培养方案', total: uploadPlanCourses.length, hits: matchSchoolCourses(courses, uploadPlanCourses, bridge) });
