@@ -1,4 +1,5 @@
-/* fuhe-tool 主流水线：配置 → 上传 → 一键分析（识别 → 匹配专业 → 找培养方案 → 出报告）
+/* fuhe-tool 主流水线：配置 → 上传 → 一键分析
+ * 识别成绩单 → 匹配专业（本科专业 + 研究生学科）→ 找学校培养方案（收录数据 + AI 自动整理 + 用户上传）→ 标准化复核建议报告
  * 全部本地处理；AI 请求直发用户配置的服务商。
  */
 (function () {
@@ -7,6 +8,7 @@
   const $ = (id) => document.getElementById(id);
   const AI_KEY = 'fuhe-ai-config';
   const DATA_URL = 'data/majors.seed.json';
+  const GRAD_URL = 'data/graduate-majors.json';
   const PLAN_COURSES_URL = 'data/plan-courses.json';
   const PLAN_SEED_URL = 'data/plan-seed.json';
   const CODES_URL = 'data/major-codes.json';
@@ -37,17 +39,18 @@
     };
   }
 
-  /* ---------- 数据缓存 ---------- */
-  let seedCache = null, planCoursesCache = null, planSeedCache = null, codesCache = null;
+  /* ---------- 数据缓存（只存 Promise，一律 await 消费） ---------- */
+  let seedP = null, gradP = null, planCoursesP = null, planSeedP = null, codesP = null;
   async function getJson(url) {
     const res = await fetch(url);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     return res.json();
   }
-  const getSeed = () => seedCache || (seedCache = getJson(DATA_URL));
-  const getPlanCourses = () => planCoursesCache || (planCoursesCache = getJson(PLAN_COURSES_URL).catch(() => ({ entries: [] })));
-  const getPlanSeed = () => planSeedCache || (planSeedCache = getJson(PLAN_SEED_URL).catch(() => ({ schools: SCHOOLS, entries: [] })));
-  const getCodes = () => codesCache || (codesCache = getJson(CODES_URL).catch(() => null));
+  const getSeed = () => seedP || (seedP = getJson(DATA_URL));
+  const getGrad = () => gradP || (gradP = getJson(GRAD_URL).catch(() => ({ disciplines: [] })));
+  const getPlanCourses = () => planCoursesP || (planCoursesP = getJson(PLAN_COURSES_URL).catch(() => ({ entries: [] })));
+  const getPlanSeed = () => planSeedP || (planSeedP = getJson(PLAN_SEED_URL).catch(() => ({ schools: SCHOOLS, entries: [] })));
+  const getCodes = () => codesP || (codesP = getJson(CODES_URL).catch(() => null));
 
   /* ---------- 工具 ---------- */
   function normalize(s) { return String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ''); }
@@ -56,18 +59,27 @@
     return String(text || '').split(/[\n,，;；、\t\r]+/).map((s) => s.trim()).filter((s) => s.length >= 2);
   }
 
-  function findMajor(seed, name) {
-    if (!seed || !seed.categories) return null;
+  /* 查找目标专业：先本科种子库，再研究生学科库 */
+  function findMajorAny(seed, gradData, name) {
     const n = String(name || '').trim();
-    for (const cat of seed.categories) {
-      for (const m of cat.majors) {
-        if (m.name === n) return { major: m, cat: cat.category };
+    if (seed && seed.categories) {
+      for (const cat of seed.categories) {
+        for (const m of cat.majors) {
+          if (m.name === n) return { name: m.name, cat: cat.category, kind: 'undergrad', code: '', entry: m };
+        }
+      }
+    }
+    if (gradData && gradData.disciplines) {
+      for (const d of gradData.disciplines) {
+        if (d.name === n || (d.subs || []).includes(n)) {
+          return { name: d.name, cat: '研究生学科', kind: 'grad', code: d.code, entry: d, subs: d.subs || [] };
+        }
       }
     }
     return null;
   }
 
-  /* ---------- 匹配（课程 → 候选专业） ---------- */
+  /* ---------- 匹配（课程 → 候选本科专业） ---------- */
   function matchAll(courses, data) {
     const ncourses = courses.map(normalize);
     const results = [];
@@ -105,10 +117,10 @@
     return results;
   }
 
-  /* ---------- 学校课表匹配（桥接双语关键词） ---------- */
-  function buildBridge(majorEntry) {
+  /* ---------- 课程 → 学校课表匹配（双语桥接） ---------- */
+  function buildBridge(entry) {
     const map = {};
-    for (const cc of (majorEntry.coreCourses || [])) {
+    for (const cc of ((entry && entry.coreCourses) || [])) {
       const e = typeof cc === 'string' ? { zh: cc, en: [] } : cc;
       map[normalize(e.zh)] = e.en || [];
     }
@@ -138,7 +150,7 @@
     return hits;
   }
 
-  /* ---------- 成绩单识别（自动选路：文字层 → AI 视觉 → 本地 OCR） ---------- */
+  /* ---------- 成绩单识别（自动选路） ---------- */
   async function parseTranscriptAuto(file) {
     const cfg = loadConfig();
     const name = String(file.name || '').toLowerCase();
@@ -152,7 +164,8 @@
         return { courses: await window.FuhePdf.parseCourseListFromPdf(file), method: 'PDF 文字层提取' + (hasVision ? '' : '（或本地 OCR）') };
       } catch (e) {
         if (hasVision) {
-          try { return { courses: await window.FuhePdf.parseViaVisionApi(file), method: 'AI 视觉识别（' + cfg.visionModel + '）' }; } catch (e2) { throw new Error(e2.message); }
+          try { return { courses: await window.FuhePdf.parseViaVisionApi(file), method: 'AI 视觉识别（' + cfg.visionModel + '）' }; }
+          catch (e2) { throw new Error(e2.message); }
         }
         throw e;
       }
@@ -160,15 +173,14 @@
     if (isImage) {
       if (hasVision) {
         try { return { courses: await window.FuhePdf.parseViaVisionApi(file), method: 'AI 视觉识别（' + cfg.visionModel + '）' }; }
-        catch (e) { /* 视觉失败回落本地 OCR */ }
+        catch (e) { /* 回落本地 OCR */ }
       }
       try { return { courses: await window.FuhePdf.parseImageViaOcr(file), method: '本地 OCR（德语+英语+中文）' }; }
-      catch (e) { throw new Error('截图识别失败：' + e.message + (hasVision ? '' : '。提示：配置视觉模型（Moonshot/OpenRouter）可大幅提升识别率')); }
+      catch (e) { throw new Error('截图识别失败：' + e.message + (hasVision ? '' : '。提示：配置视觉模型可大幅提升识别率')); }
     }
     return { courses: window.FuhePdf.parseCsvText(await file.text()), method: '文本解析' };
   }
 
-  /* ---------- 培养方案解析（用户上传） ---------- */
   async function parsePlanAuto(file) {
     const name = String(file.name || '').toLowerCase();
     const type = String(file.type || '');
@@ -180,17 +192,50 @@
     return window.FuhePdf.parseCsvText(await file.text());
   }
 
-  /* ---------- 第 3 步：学校培养方案匹配 ---------- */
-  function renderStep3(courses, majorEntry, majorName, uploadPlanCourses, planSeed, planCoursesData) {
-    const bridge = buildBridge(majorEntry || { coreCourses: [] });
+  /* ---------- AI 自动查找各校培养方案核心课程（结构化 JSON） ---------- */
+  async function aiFindSchoolCourses(majorName, kind, subs) {
+    const cfg = getConfig();
+    if (!cfg.apiKey || !cfg.base || !cfg.model) return [];
+    const kindText = kind === 'grad' ? '研究生一级学科' : '本科专业';
+    const subText = (subs && subs.length) ? '（其二级学科包括：' + subs.slice(0, 8).join('、') + '）' : '';
+    const prompt = '你是国内高校课程设置专家。请给出4所985/211高校的「' + majorName + '」' + kindText + subText + '培养方案的核心专业课程清单。'
+      + '严格只输出JSON数组（不要markdown代码块、不要解释文字）：[{"school":"学校全名","courses":["课程1","课程2"]}]，每校12~20门核心专业课程，课程名用国内通行名称。';
+    try {
+      const res = await fetch(cfg.base.replace(/\/+$/, '') + '/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + cfg.apiKey },
+        body: JSON.stringify({ model: cfg.model, messages: [{ role: 'user', content: prompt }], temperature: 0.2, max_tokens: 2500 })
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const j = await res.json();
+      const text = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '';
+      let arr = null;
+      try { arr = JSON.parse(text); } catch (e) {
+        const m = text.match(/\[[\s\S]*\]/);
+        if (m) { try { arr = JSON.parse(m[0]); } catch (e2) { /* ignore */ } }
+      }
+      if (!Array.isArray(arr)) throw new Error('AI 返回格式无法解析');
+      return arr.filter((e) => e && e.school && Array.isArray(e.courses) && e.courses.length)
+        .map((e) => ({ school: String(e.school), courses: e.courses.map((c) => String(c)).filter(Boolean), year: '', source: '', kind: 'AI整理' }));
+    } catch (e) {
+      console.warn('AI 查找学校课程失败：', e.message);
+      return [];
+    }
+  }
+
+  /* ---------- 第 3 步：学校培养方案匹配（标准化表格） ---------- */
+  function renderStep3(courses, bridge, majorName, uploadPlanCourses, planSeed, planCoursesData, aiEntries) {
     const planEntries = ((planCoursesData && planCoursesData.entries) || []).filter((e) => e.major === majorName);
     const linkEntries = (planSeed && planSeed.entries || []).filter((e) => e.major === majorName);
 
-    let html = '';
     const rows = [];
     for (const e of planEntries) {
       const hits = matchSchoolCourses(courses, e.courses, bridge);
       rows.push({ school: e.school, year: e.year || '', hits, total: e.courses.length, source: e.source, kind: '收录' });
+    }
+    for (const e of aiEntries) {
+      const hits = matchSchoolCourses(courses, e.courses, bridge);
+      rows.push({ school: e.school, year: '', hits, total: e.courses.length, source: '', kind: 'AI整理' });
     }
     if (uploadPlanCourses && uploadPlanCourses.length) {
       const hits = matchSchoolCourses(courses, uploadPlanCourses, bridge);
@@ -198,19 +243,24 @@
     }
     rows.sort((a, b) => (b.hits.length / Math.max(b.total, 1)) - (a.hits.length / Math.max(a.total, 1)));
 
+    let html = '';
     if (rows.length) {
       html += '<table><tr><th>学校 / 来源</th><th>课程重合度</th><th>匹配课程数</th><th>来源</th></tr>';
       for (const r of rows) {
         const cov = r.total ? Math.round(r.hits.length / r.total * 100) : 0;
-        html += '<tr><td><strong>' + esc(r.school) + '</strong>' + (r.year ? '<span class="muted small">（' + esc(r.year) + '）</span>' : '') + (r.kind === '上传' ? '<span class="badge">用户上传</span>' : '') + '</td>'
+        const badge = r.kind === '上传' ? '<span class="badge">用户上传</span>' : (r.kind === 'AI整理' ? '<span class="badge" style="background:#fef3c7;color:#92400e;">AI 整理</span>' : '<span class="badge">已收录</span>');
+        html += '<tr><td><strong>' + esc(r.school) + '</strong> ' + badge + (r.year ? '<span class="muted small">（' + esc(r.year) + '）</span>' : '') + '</td>'
           + '<td><div class="bar" style="width:110px;display:inline-block;vertical-align:middle;margin-right:6px;"><i style="width:' + cov + '%"></i></div>' + cov + '%</td>'
           + '<td>' + r.hits.length + ' / ' + r.total + '</td>'
-          + '<td class="small">' + (r.source ? '<a href="' + esc(r.source) + '" target="_blank" rel="noopener">培养方案 ↗</a>' : '—') + '</td></tr>';
+          + '<td class="small">' + (r.source ? '<a href="' + esc(r.source) + '" target="_blank" rel="noopener">培养方案 ↗</a>' : (r.kind === 'AI整理' ? 'AI 整理，建议官网核对' : '—')) + '</td></tr>';
         if (r.hits.length) html += '<tr><td colspan="4" class="small muted">命中课程：' + r.hits.map(esc).join('、') + '</td></tr>';
       }
       html += '</table>';
+      if (aiEntries.length) {
+        html += '<p class="muted small">⚠️ 「AI 整理」的课程清单由模型生成，可能与实际培养方案有出入——作为参考，正式申报前请到官网核对（一键搜索见下）。</p>';
+      }
     } else {
-      html += '<div class="warn">⚠️ 该专业暂未收录任何学校的课表数据。<br>'
+      html += '<div class="warn">⚠️ 该专业暂未收录学校课表数据，AI 也未能整理。<br>'
         + '① 建议直接在上方「📎 上传目标学校培养方案」上传文件后重新分析；<br>'
         + '② 或通过下方一键搜索去各校官网下载培养方案：</div>';
     }
@@ -219,7 +269,7 @@
       for (const e of linkEntries) html += '<li><a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.school) + ' · ' + esc(majorName) + (e.kind === 'pdf' ? '（PDF）' : '') + '</a></li>';
       html += '</ul>';
     }
-    html += '<p class="muted small mt">一键搜索各校培养方案（' + majorName + '）：</p>';
+    html += '<p class="muted small mt">一键搜索各校培养方案（' + esc(majorName) + '）：</p>';
     const schools = (planSeed && planSeed.schools && planSeed.schools.length) ? planSeed.schools : SCHOOLS;
     for (const s of schools.slice(0, 6)) {
       const bd = 'https://www.baidu.com/s?wd=' + encodeURIComponent(s + ' ' + majorName + ' 培养方案');
@@ -229,52 +279,113 @@
     $('step3Body').innerHTML = html;
   }
 
+  /* ---------- 逐门课程对照表（报告核心） ---------- */
+  function buildComparisonTable(courses, schoolRows) {
+    // 找匹配最好的学校，生成 国外课程 → 国内课程 对照
+    const best = schoolRows.slice().sort((a, b) => b.hits.length - a.hits.length)[0];
+    if (!best) return { md: '', rows: [] };
+    const ncourses = courses.map(normalize);
+    const table = [];
+    for (const c of courses) {
+      const nc = normalize(c);
+      let hit = '';
+      for (const k of best.hits) {
+        const nk = normalize(k);
+        if (nc === nk || nc.includes(nk) || nk.includes(nc)) { hit = k; break; }
+      }
+      table.push({ course: c, target: hit || '—', school: best.school });
+    }
+    const md = '| 国外课程 | 对应国内课程 | 来源学校 | 匹配说明 |\n|---|---|---|---|\n'
+      + table.map((r) => '| ' + r.course + ' | ' + (r.target === '—' ? '（待人工对照）' : r.target) + ' | ' + r.school + ' | ' + (r.target === '—' ? '建议人工核对培养方案' : '课程名称对应') + ' |').join('\n');
+    return { md, rows: table };
+  }
+
   /* ---------- 第 4 步：报告 ---------- */
-  async function generateReport(courses, majorName, catName, step3Summary) {
+  async function generateReport(courses, majorName, catName, codeText, schoolRows, comparisonTable) {
     const cfg = getConfig();
-    $('reportBody').innerHTML = '<p class="muted">正在生成复核建议……</p>';
+    $('reportBody').innerHTML = '<p class="muted">正在生成复核建议报告……</p>';
+    const bestLine = schoolRows.length
+      ? schoolRows.slice().sort((a, b) => b.hits.length / Math.max(b.total, 1) - a.hits.length / Math.max(a.total, 1))[0]
+      : null;
+    const summary = schoolRows.length
+      ? schoolRows.map((r) => r.school + '：' + r.hits.length + '/' + r.total + ' 门匹配' + (r.hits.length ? '（' + r.hits.join('、') + '）' : '')).join('\n')
+      : '暂无学校课表数据';
+
     let report = '';
     if (cfg.apiKey && cfg.base && cfg.model) {
       try {
-        const prompt = '你是留学学历认证复核顾问。请基于以下信息，生成一份中文《复核建议报告》：\n'
-          + '【目标复核专业】' + majorName + (catName ? '（' + catName + '）' : '') + '\n'
-          + '【国外成绩单课程】\n' + courses.join('\n') + '\n'
-          + '【学校培养方案匹配情况】\n' + step3Summary + '\n'
-          + '要求：1) 课程对比分析：逐类说明国外课程与目标专业核心课程的对应关系；2) 建议选择哪所学校的培养方案作为对比依据及理由；3) 复核材料清单与提交流程要点（认证书、成绩单、课程对比说明、目标高校培养方案等，PDF 单文件 1M 以下）；4) 风险提示（复核免费、12 个月内申请、仅 1 次机会、最终以留服中心审核为准）。不承诺结果，不出现"包过"。用 markdown 输出。';
+        const prompt = '你是留学学历认证复核顾问。基于以下信息生成中文《复核建议报告》，用 markdown 输出，结构固定为：\n'
+          + '## 一、目标专业\n' + majorName + (catName ? '（' + catName + (codeText ? ' · ' + codeText : '') + '）' : '') + '\n'
+          + '## 二、课程对应表\n请用 markdown 表格：| 国外课程 | 对应国内课程 | 来源学校 | 匹配说明 |，逐门列出；没有对应课程的写「待人工对照」。\n'
+          + '## 三、推荐选校\n结合重合度说明哪所学校培养方案最适合作为对比依据及理由。\n'
+          + '## 四、材料清单\n认证书、成绩单（PDF 单文件 1M 以下）、课程对比说明、目标高校培养方案来源等。\n'
+          + '## 五、风险提示\n复核免费、认证结果出具之日起 12 个月内申请、仅 1 次机会；不承诺结果，最终以留服中心审核为准。\n\n'
+          + '【国外课程】\n' + courses.join('\n') + '\n\n【学校课表匹配】\n' + summary + '\n\n【参考对照表】\n' + comparisonTable.md + '\n'
+          + '【最优学校】' + (bestLine ? bestLine.school : '无') + '\n\n要求：表格必须完整逐门列出；语气客观；不出现"保证通过""包过"。';
         const res = await fetch(cfg.base.replace(/\/+$/, '') + '/chat/completions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + cfg.apiKey },
-          body: JSON.stringify({ model: cfg.model, messages: [{ role: 'user', content: prompt }], temperature: 0.3, max_tokens: 2500 })
+          body: JSON.stringify({ model: cfg.model, messages: [{ role: 'user', content: prompt }], temperature: 0.3, max_tokens: 3000 })
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const j = await res.json();
         report = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '';
       } catch (e) {
-        report = 'AI 生成失败（' + e.message + '），以下为模板报告。\n\n';
+        report = '';
+        console.warn('AI 报告生成失败：', e.message);
       }
     }
     if (!report) {
-      report = '（未配置文本模型，以下为模板报告）\n\n';
-      report += '# 复核建议报告（模板）\n\n';
-      report += '## 一、目标复核专业\n\n' + majorName + (catName ? '（' + catName + '）' : '') + '\n\n';
-      report += '## 二、国外课程清单（共 ' + courses.length + ' 门）\n\n' + courses.map((c) => '- ' + c).join('\n') + '\n\n';
-      report += '## 三、学校培养方案匹配\n\n' + step3Summary + '\n\n';
-      report += '## 四、申报材料自查清单\n\n- [ ] 国外学历学位认证书（原件扫描件）\n- [ ] 国外高校官方成绩单（PDF、单文件 1M 以下）\n- [ ] 课程对比说明（对照目标高校培养方案逐门说明）\n- [ ] 目标高校《培养方案》来源说明（官网链接或文件）\n- [ ] 复核原因说明（为什么复核、改哪个专业名）\n\n';
-      report += '## 五、注意事项\n\n1. 改名目标必须是国内专业目录中真实存在的专业名，不能自定义；\n2. 复核免费、认证结果出具之日起 12 个月内申请、仅 1 次机会；\n3. 报考事业单位自 2024-10-25 起官方建议无需复核（人社部发〔2024〕57 号）；\n4. 本报告仅供申报参考，最终以留服中心审核为准。\n';
+      report = '# 复核建议报告（模板）\n\n'
+        + '## 一、目标专业\n\n' + majorName + (catName ? '（' + catName + (codeText ? ' · ' + codeText : '') + '）' : '') + '\n\n'
+        + '## 二、课程对应表\n\n' + comparisonTable.md + '\n\n'
+        + '## 三、推荐选校\n\n' + (bestLine ? '建议以「' + bestLine.school + '」的培养方案作为课程对比依据（重合度最高：' + bestLine.hits.length + '/' + bestLine.total + ' 门课程匹配）。' : '暂无学校课表数据，请上传目标学校培养方案。') + '\n\n'
+        + '## 四、材料清单\n\n- 国外学历学位认证书（原件扫描件）\n- 国外高校官方成绩单（PDF、单文件 1M 以下）\n- 课程对比说明（对照目标高校培养方案逐门说明）\n- 目标高校《培养方案》来源说明（官网链接或文件）\n- 复核原因说明\n\n'
+        + '## 五、风险提示\n\n1. 改名目标必须是国内专业目录中真实存在的专业名；\n2. 复核免费、认证结果出具之日起 12 个月内申请、仅 1 次机会；\n3. 报考事业单位自 2024-10-25 起官方建议无需复核；\n4. 本报告仅供申报参考，最终以留服中心审核为准。\n';
     }
-    // 简单 markdown → html
-    let html = report
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/^### (.*)$/gm, '<h3>$1</h3>')
-      .replace(/^## (.*)$/gm, '<h2>$1</h2>')
-      .replace(/^# (.*)$/gm, '<h2>$1</h2>')
-      .replace(/^- \[ \] /gm, '☐ ')
-      .replace(/^- /gm, '• ')
-      .replace(/^(\d+)\. /gm, '$1. ')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    html = '<div style="white-space:pre-wrap;line-height:1.9;">' + html + '</div>';
-    $('reportBody').innerHTML = html;
+    $('reportBody').innerHTML = mdToHtml(report);
+  }
+
+  /* markdown → HTML（支持表格） */
+  function mdToHtml(md) {
+    const lines = String(md).split('\n');
+    const out = [];
+    let i = 0;
+    while (i < lines.length) {
+      const line = lines[i];
+      if (/^\|.*\|$/.test(line.trim()) && i + 1 < lines.length && /^\|[\s:|-]+\|$/.test(lines[i + 1].trim())) {
+        // 表格块
+        const header = line.trim().split('|').slice(1, -1).map((s) => s.trim());
+        const rows = [];
+        i += 2;
+        while (i < lines.length && /^\|.*\|$/.test(lines[i].trim())) {
+          rows.push(lines[i].trim().split('|').slice(1, -1).map((s) => s.trim()));
+          i++;
+        }
+        let t = '<table><tr>' + header.map((h) => '<th>' + esc(h) + '</th>').join('') + '</tr>';
+        for (const r of rows) {
+          t += '<tr>' + header.map((_, idx) => '<td>' + esc(r[idx] || '') + '</td>').join('') + '</tr>';
+        }
+        out.push(t + '</table>');
+        continue;
+      }
+      if (/^#{1,3} /.test(line)) {
+        const level = line.match(/^#+/)[0].length;
+        out.push('<h' + Math.min(level + 1, 4) + '>' + esc(line.replace(/^#+\s*/, '')) + '</h' + Math.min(level + 1, 4) + '>');
+      } else if (/^[-*] \[ \] /.test(line)) {
+        out.push('<div>☐ ' + esc(line.replace(/^[-*] \[ \] /, '')) + '</div>');
+      } else if (/^[-*] /.test(line)) {
+        out.push('<div>• ' + esc(line.replace(/^[-*] /, '')) + '</div>');
+      } else if (/^\d+\. /.test(line)) {
+        out.push('<div>' + esc(line) + '</div>');
+      } else if (line.trim() === '') {
+        out.push('<div style="height:8px;"></div>');
+      } else {
+        out.push('<div>' + esc(line).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') + '</div>');
+      }
+      i++;
+    }
+    return '<div style="white-space:normal;line-height:1.8;">' + out.join('') + '</div>';
   }
 
   function exportPdf() {
@@ -284,7 +395,9 @@
     const w = window.open('', '_blank');
     if (!w) { alert('请允许弹窗'); return; }
     w.document.write('<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>' + esc(major) + ' 复核建议报告</title>'
-      + '<style>body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.8;max-width:760px;margin:32px auto;padding:0 24px;color:#111;}h1,h2{border-bottom:1px solid #ddd;padding-bottom:6px;}h1{font-size:20px;}</style></head><body>'
+      + '<style>body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.8;max-width:780px;margin:32px auto;padding:0 24px;color:#111;}'
+      + 'h1,h2{border-bottom:1px solid #ddd;padding-bottom:6px;}h1{font-size:20px;}'
+      + 'table{width:100%;border-collapse:collapse;margin:12px 0;}th,td{border:1px solid #ccc;padding:6px 8px;font-size:13px;text-align:left;}th{background:#f2f4f7;}</style></head><body>'
       + '<h1>' + esc(major) + ' 复核建议报告</h1>'
       + '<div>' + $('reportBody').innerHTML + '</div>'
       + '<p style="font-size:12px;color:#888;border-top:1px solid #ddd;padding-top:8px;">本文档由 fuhe-tool 生成，仅供申报参考，不承诺复核结果；最终以教育部留学服务中心审核为准。</p>'
@@ -310,24 +423,36 @@
       $('step1Method').textContent = r1.method;
       $('step1Badge').textContent = '✅ ' + courses.length + ' 门课程';
 
-      // 第 2 步：复核专业
+      // 第 2 步：复核专业（本科 + 研究生学科）
       const seed = await getSeed();
-      const found = findMajor(seed, majorName);
+      const gradData = await getGrad();
+      const found = findMajorAny(seed, gradData, majorName);
+      let codeText = '';
       if (found) {
-        const codes = await getCodes();
-        const code = codes && codes.majors && codes.majors[found.major.name] ? codes.majors[found.major.name] : '';
-        $('step2Badge').textContent = '✅ ' + found.major.name + '（' + found.cat + (code ? ' · ' + code : '') + '）';
+        if (found.kind === 'grad') {
+          codeText = found.code;
+          $('step2Badge').textContent = '✅ ' + found.name + '（研究生学科 · ' + found.code + '）';
+        } else {
+          const codes = await getCodes();
+          const code = codes && codes.majors && codes.majors[found.name] ? codes.majors[found.name] : '';
+          codeText = code;
+          $('step2Badge').textContent = '✅ ' + found.name + '（' + found.cat + (code ? ' · ' + code : '') + '）';
+        }
       } else if (majorName) {
         $('step2Badge').textContent = '⚠️ 未在收录库中找到，按你输入的专业名继续';
       } else {
         $('step2Badge').textContent = '⚠️ 未选择专业';
       }
+
       const recs = matchAll(courses, seed);
       let step2Html = '';
       if (!found && majorName) {
-        step2Html += '<div class="warn">「' + esc(majorName) + '」不在 74 个常见专业库中。请确认名称是否为国内专业全名；也可从下方推荐中选择。</div>';
+        step2Html += '<div class="warn">「' + esc(majorName) + '」不在收录库中（含 74 个本科专业与研究生学科目录）。请确认名称；也可从下方推荐中选择。</div>';
       }
-      step2Html += '<p class="muted small">按课程匹配度的候选专业（点击可直接替换上方目标专业并重新分析）：</p>';
+      if (found && found.kind === 'grad' && found.subs && found.subs.length) {
+        step2Html += '<p class="muted small">二级学科：' + found.subs.map(esc).join('、') + '</p>';
+      }
+      step2Html += '<p class="muted small">按课程匹配度的候选专业（点击替换目标专业后重新分析）：</p>';
       step2Html += recs.slice(0, 6).map((r) =>
         '<span class="chip" style="cursor:pointer;" data-pick="' + esc(r.name) + '">' + esc(r.name) + '（' + r.coverage + '%）</span>').join(' ');
       step2Html += '<span class="chip"><a href="catalog.html?q=' + encodeURIComponent(majorName || (recs[0] && recs[0].name) || '') + '" target="_blank" rel="noopener">考公目录核对 ↗</a></span>';
@@ -341,7 +466,7 @@
         });
       });
 
-      // 第 3 步：学校培养方案
+      // 第 3 步：学校培养方案（收录 + AI 自动整理 + 用户上传）
       $('step3Badge').textContent = '查找中……';
       const planCourses = await getPlanCourses();
       const planSeed = await getPlanSeed();
@@ -349,34 +474,37 @@
       if (planFile) {
         try {
           uploadPlanCourses = await parsePlanAuto(planFile);
-          $('step3Badge').textContent = '✅ 已解析你上传的培养方案（' + uploadPlanCourses.length + ' 门课程）';
         } catch (e) {
           $('step3Badge').textContent = '⚠️ 培养方案解析失败：' + e.message;
         }
       }
-      const entries = (planCourses.entries || []).filter((e) => e.major === majorName);
-      if (entries.length || uploadPlanCourses.length) {
-        $('step3Badge').textContent = '✅ ' + (entries.length + (uploadPlanCourses.length ? 1 : 0)) + ' 个来源';
-      } else {
-        $('step3Badge').textContent = '⚠️ 未收录，请上传或一键搜索';
+      // AI 自动整理各校课程
+      let aiEntries = [];
+      if (getConfig().apiKey && getConfig().base && getConfig().model) {
+        $('step3Badge').textContent = 'AI 正在整理各校课程……';
+        aiEntries = await aiFindSchoolCourses(majorName, found ? found.kind : 'undergrad', found && found.subs ? found.subs : []);
       }
-      renderStep3(courses, found ? found.major : null, majorName, uploadPlanCourses, planSeed, planCourses);
+      const curatedCount = ((planCourses.entries || []).filter((e) => e.major === majorName)).length;
+      const totalSources = curatedCount + aiEntries.length + (uploadPlanCourses.length ? 1 : 0);
+      $('step3Badge').textContent = totalSources ? ('✅ ' + totalSources + ' 个来源') : '⚠️ 未收录，请上传或一键搜索';
+      renderStep3(courses, found ? found.entry : null, majorName, uploadPlanCourses, planSeed, planCourses, aiEntries);
 
-      // 第 4 步：报告
-      const step3SummaryText = (() => {
-        const txt = [];
-        for (const e of entries) {
-          const hits = matchSchoolCourses(courses, e.courses, buildBridge(found ? found.major : { coreCourses: [] }));
-          txt.push(e.school + '：' + hits.length + '/' + e.courses.length + ' 门课程匹配' + (hits.length ? '（' + hits.join('、') + '）' : ''));
-        }
-        if (uploadPlanCourses.length) {
-          const hits = matchSchoolCourses(courses, uploadPlanCourses, buildBridge(found ? found.major : { coreCourses: [] }));
-          txt.push('用户上传培养方案：' + hits.length + '/' + uploadPlanCourses.length + ' 门课程匹配' + (hits.length ? '（' + hits.join('、') + '）' : ''));
-        }
-        if (!txt.length) txt.push('暂无学校课表数据（可上传培养方案或一键搜索）');
-        return txt.join('\n');
-      })();
-      await generateReport(courses, majorName, found ? found.cat : '', step3SummaryText);
+      // 学校行汇总（供报告）
+      const bridge = buildBridge(found ? found.entry : null);
+      const schoolRows = [];
+      for (const e of ((planCourses.entries || []).filter((x) => x.major === majorName))) {
+        schoolRows.push({ school: e.school, total: e.courses.length, hits: matchSchoolCourses(courses, e.courses, bridge) });
+      }
+      for (const e of aiEntries) {
+        schoolRows.push({ school: e.school, total: e.courses.length, hits: matchSchoolCourses(courses, e.courses, bridge) });
+      }
+      if (uploadPlanCourses.length) {
+        schoolRows.push({ school: '你上传的培养方案', total: uploadPlanCourses.length, hits: matchSchoolCourses(courses, uploadPlanCourses, bridge) });
+      }
+
+      // 第 4 步：报告（标准化表格）
+      const comparisonTable = buildComparisonTable(courses, schoolRows);
+      await generateReport(courses, majorName, found ? found.cat : '', codeText, schoolRows, comparisonTable);
       $('runStatus').textContent = '✅ 分析完成。可编辑识别课程后点「重新生成建议」。';
       document.getElementById('pipelineResults').scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
@@ -398,7 +526,6 @@
       $('customBase').value = cfg.base;
     }
     if (cfg.apiKey) $('apiKey').value = cfg.apiKey;
-    if (!cfg.base) $('visionModel').value = '';
 
     $('baseUrl').addEventListener('change', () => {
       const v = $('baseUrl').value;
@@ -429,9 +556,10 @@
     });
     $('btnExportPdf').addEventListener('click', exportPdf);
 
-    // 专业候选列表
+    // 专业候选列表：本科专业 + 研究生学科
     try {
       const seed = await getSeed();
+      const grad = await getGrad();
       const dl = $('majorList');
       for (const cat of seed.categories) {
         for (const m of cat.majors) {
@@ -441,6 +569,12 @@
           dl.appendChild(opt);
         }
       }
-    } catch (e) { /* 数据加载失败时页面其余功能仍可用 */ }
+      for (const d of (grad.disciplines || [])) {
+        const opt = document.createElement('option');
+        opt.value = d.name;
+        opt.label = d.name + '（研究生学科 · ' + d.code + '）';
+        dl.appendChild(opt);
+      }
+    } catch (e) { /* 数据加载失败不影响其他功能 */ }
   });
 })();
