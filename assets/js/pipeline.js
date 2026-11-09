@@ -56,10 +56,10 @@
     return String(text || '').split(/[\n,，;；、\t\r]+/).map((s) => s.trim()).filter((s) => s.length >= 2);
   }
 
-  function findMajor(name) {
-    if (!seedCache) return null;
+  function findMajor(seed, name) {
+    if (!seed || !seed.categories) return null;
     const n = String(name || '').trim();
-    for (const cat of seedCache.categories) {
+    for (const cat of seed.categories) {
       for (const m of cat.majors) {
         if (m.name === n) return { major: m, cat: cat.category };
       }
@@ -181,9 +181,9 @@
   }
 
   /* ---------- 第 3 步：学校培养方案匹配 ---------- */
-  function renderStep3(courses, majorEntry, majorName, uploadPlanCourses, planSeed) {
+  function renderStep3(courses, majorEntry, majorName, uploadPlanCourses, planSeed, planCoursesData) {
     const bridge = buildBridge(majorEntry || { coreCourses: [] });
-    const planEntries = ((planCoursesCache && planCoursesCache.entries) || []).filter((e) => e.major === majorName);
+    const planEntries = ((planCoursesData && planCoursesData.entries) || []).filter((e) => e.major === majorName);
     const linkEntries = (planSeed && planSeed.entries || []).filter((e) => e.major === majorName);
 
     let html = '';
@@ -312,7 +312,7 @@
 
       // 第 2 步：复核专业
       const seed = await getSeed();
-      const found = findMajor(majorName);
+      const found = findMajor(seed, majorName);
       if (found) {
         const codes = await getCodes();
         const code = codes && codes.majors && codes.majors[found.major.name] ? codes.majors[found.major.name] : '';
@@ -360,7 +360,7 @@
       } else {
         $('step3Badge').textContent = '⚠️ 未收录，请上传或一键搜索';
       }
-      renderStep3(courses, found ? found.major : null, majorName, uploadPlanCourses, planSeed);
+      renderStep3(courses, found ? found.major : null, majorName, uploadPlanCourses, planSeed, planCourses);
 
       // 第 4 步：报告
       const step3SummaryText = (() => {
