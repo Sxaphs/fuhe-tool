@@ -86,14 +86,27 @@ node scripts/integration-test.mjs # 用真实数据跑匹配用例
 
 ## 产品宣传片
 
-产品介绍视频用 [huashu-motion](https://github.com/alchaincyf/huashu-motion)（让 coding agent 直出产品发布片的开源 skill）制作，完整简报见 [docs/product-brief.md](docs/product-brief.md)——含产品档案、三个创作方向、品牌色、镜头清单和红线（不得出现"包过"类承诺）。
+产品介绍视频用 [huashu-motion](https://github.com/alchaincyf/huashu-motion)（让 coding agent 直出产品发布片的开源 skill）制作，完整简报见 [docs/product-brief.md](docs/product-brief.md)——含产品档案、三个创作方向（含 depth 方向）、品牌色、场景/节奏清单与内容红线。
+
+本机安装位置与入口：
+
+```bash
+# skill 本体
+D:\daily_update\.agents\skills\huashu-motion\
+
+# Windows 下 om 命令（shell 包装在 git-bash 用，PowerShell 直接用 Node 入口）
+node D:\daily_update\.agents\skills\huashu-motion\cli\om.js doctor
+# 或：npx huashu-motion doctor
+```
+
+环境状态（`om doctor` 实测）：Node 24 ✓、Chrome ✓；FFmpeg 缺 libx264/libopus 等编码器，**渲染 MP4 前需换成完整版 FFmpeg**；Windows 渲染一律 `--workers 2`。
 
 启动提示词（复制给你的 agent）：
 
 ```
 用 huashu-motion 给 fuhe-tool 做一支 30-40 秒的产品介绍片：
 产品档案在仓库 docs/product-brief.md，先 om grab 抓 https://sxaphs.github.io/fuhe-tool/
-的真实界面素材，按简报出三个方向关键帧让我选，选定后按节奏单成片，
+的真实界面素材，按简报出三个方向关键帧让我选，选定后写 treatment.md 再成片，
 结尾展示 GitHub 仓库地址。不需要找我做任何确认，全程独立完成。
 ```
 
