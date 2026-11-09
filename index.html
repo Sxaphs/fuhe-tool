@@ -70,8 +70,12 @@
       <div class="card">
         <div class="cover"><div><h2 style="margin:0;">第 1 步 · 成绩单识别结果</h2></div>
           <span class="muted small" id="step1Badge"></span></div>
-        <p class="muted small mt">识别方式：<span id="step1Method"></span>。如有识别错误请直接编辑，然后点下方「重新生成建议」。</p>
-        <textarea id="coursesOutput" style="min-height:160px;"></textarea>
+        <p class="muted small mt">识别方式：<span id="step1Method"></span>。下表可直接编辑——改课程名、删行、加行，然后点「重新生成建议」。</p>
+        <table id="coursesTable" style="width:100%;">
+          <thead><tr><th style="width:44px;">#</th><th>课程名（可直接编辑）</th><th style="width:70px;">操作</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="flex mt"><button class="btn ghost small" id="btnAddCourse">＋ 添加一行</button></div>
       </div>
 
       <div class="card">

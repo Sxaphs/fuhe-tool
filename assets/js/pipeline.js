@@ -59,6 +59,40 @@
     return String(text || '').split(/[\n,，;；、\t\r]+/).map((s) => s.trim()).filter((s) => s.length >= 2);
   }
 
+  /* ---------- 课程表格（确认/编辑界面） ---------- */
+  function renderCoursesTable(courses) {
+    const tbody = $('coursesTable').querySelector('tbody');
+    tbody.innerHTML = '';
+    courses.forEach((c, i) => tbody.appendChild(buildCourseRow(c, i)));
+  }
+  function buildCourseRow(name, idx) {
+    const tr = document.createElement('tr');
+    const td1 = document.createElement('td');
+    td1.textContent = idx + 1;
+    const td2 = document.createElement('td');
+    const inp = document.createElement('input');
+    inp.value = name;
+    inp.className = 'course-input';
+    inp.style.cssText = 'width:100%;border:1px solid var(--line);border-radius:6px;padding:6px 8px;font:inherit;';
+    td2.appendChild(inp);
+    const td3 = document.createElement('td');
+    const del = document.createElement('button');
+    del.textContent = '删除';
+    del.className = 'btn ghost small';
+    del.addEventListener('click', () => {
+      tr.remove();
+      [...$('coursesTable').querySelector('tbody').children].forEach((r, i) => { r.children[0].textContent = i + 1; });
+    });
+    td3.appendChild(del);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    return tr;
+  }
+  function getCoursesFromTable() {
+    return [...document.querySelectorAll('#coursesTable .course-input')].map((i) => i.value.trim()).filter(Boolean);
+  }
+
   /* 查找目标专业：先本科种子库，再研究生学科库 */
   function findMajorAny(seed, gradData, name) {
     const n = String(name || '').trim();
@@ -316,12 +350,15 @@
       try {
         const prompt = '你是留学学历认证复核顾问。基于以下信息生成中文《复核建议报告》，用 markdown 输出，结构固定为：\n'
           + '## 一、目标专业\n' + majorName + (catName ? '（' + catName + (codeText ? ' · ' + codeText : '') + '）' : '') + '\n'
-          + '## 二、课程对应表\n请用 markdown 表格：| 国外课程 | 对应国内课程 | 来源学校 | 匹配说明 |，逐门列出；没有对应课程的写「待人工对照」。\n'
+          + '## 二、课程对应表\n请用 markdown 表格：| 国外课程 | 对应国内课程 | 来源学校 | 匹配说明 |，必须逐门列出【国外课程】中的每一门课程。'
+          + '你必须利用自身知识，为每门国外课程判断并填写对应的国内「' + majorName + '」培养方案课程（例如 Financial Statement Analysis 可对应「财务报表分析」或「中级财务会计」），'
+          + '「来源学校」填一所开设该课程的代表性985/211高校。给出的本地匹配参考仅供参考，以你的专业判断为准；'
+          + '只有确实无法对应的课程才写「待人工对照」并在匹配说明注明原因，此类不超过总数的 20%。\n'
           + '## 三、推荐选校\n结合重合度说明哪所学校培养方案最适合作为对比依据及理由。\n'
           + '## 四、材料清单\n认证书、成绩单（PDF 单文件 1M 以下）、课程对比说明、目标高校培养方案来源等。\n'
           + '## 五、风险提示\n复核免费、认证结果出具之日起 12 个月内申请、仅 1 次机会；不承诺结果，最终以留服中心审核为准。\n\n'
-          + '【国外课程】\n' + courses.join('\n') + '\n\n【学校课表匹配】\n' + summary + '\n\n【参考对照表】\n' + comparisonTable.md + '\n'
-          + '【最优学校】' + (bestLine ? bestLine.school : '无') + '\n\n要求：表格必须完整逐门列出；语气客观；不出现"保证通过""包过"。';
+          + '【国外课程】\n' + courses.join('\n') + '\n\n【学校课表匹配】\n' + summary + '\n\n【本地匹配参考（仅供参考，以你的判断为准）】\n' + comparisonTable.md + '\n'
+          + '【最优学校】' + (bestLine ? bestLine.school : '无') + '\n\n要求：课程对应表必须逐门列出全部国外课程并尽量给出对应课程名，不要大范围写「待人工对照」；语气客观；不出现"保证通过""包过"。';
         const res = await fetch(cfg.base.replace(/\/+$/, '') + '/chat/completions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + cfg.apiKey },
@@ -410,7 +447,6 @@
   let transcriptFile = null, planFile = null;
 
   async function runPipeline() {
-    const majorName = $('majorSelect').value.trim();
     if (!transcriptFile) { alert('请先上传成绩单'); return; }
     $('runStatus').textContent = '开始分析……';
     $('pipelineResults').style.display = '';
@@ -418,10 +454,20 @@
       // 第 1 步：识别成绩单
       $('step1Badge').textContent = '识别中……';
       const r1 = await parseTranscriptAuto(transcriptFile);
-      const courses = r1.courses;
-      $('coursesOutput').value = courses.join('\n');
+      renderCoursesTable(r1.courses);
       $('step1Method').textContent = r1.method;
-      $('step1Badge').textContent = '✅ ' + courses.length + ' 门课程';
+      $('step1Badge').textContent = '✅ ' + r1.courses.length + ' 门课程';
+      await runAnalysis(r1.courses);
+    } catch (e) {
+      $('runStatus').textContent = '❌ 分析失败：' + e.message;
+      $('step1Badge').textContent = '失败';
+    }
+  }
+
+  /* 第 2-4 步：以给定课程列表跑匹配与报告（重新生成时从可编辑表格取课程） */
+  async function runAnalysis(courses) {
+    const majorName = $('majorSelect').value.trim();
+    try {
 
       // 第 2 步：复核专业（本科 + 研究生学科）
       const seed = await getSeed();
@@ -551,8 +597,17 @@
     });
     $('btnRun').addEventListener('click', runPipeline);
     $('btnRegen').addEventListener('click', () => {
+      const courses = getCoursesFromTable();
+      if (!courses.length) { alert('课程表为空，请先上传成绩单或手动添加课程。'); return; }
       $('runStatus').textContent = '重新生成中……';
-      runPipeline();
+      runAnalysis(courses);
+    });
+    $('btnAddCourse').addEventListener('click', () => {
+      const tbody = $('coursesTable').querySelector('tbody');
+      const idx = tbody.children.length;
+      tbody.appendChild(buildCourseRow('', idx));
+      const inputs = tbody.querySelectorAll('.course-input');
+      if (inputs.length) { inputs[inputs.length - 1].focus(); }
     });
     $('btnExportPdf').addEventListener('click', exportPdf);
 
