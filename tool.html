@@ -2,102 +2,11 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>课程表匹配 · fuhe-tool</title>
-<meta name="description" content="上传或粘贴国外课程表，匹配可复核的国内专业，查看课程重合度。仅供参考。">
-<link rel="stylesheet" href="assets/css/style.css">
+<meta http-equiv="refresh" content="0; url=index.html">
+<title>跳转中…</title>
 </head>
-<body>
-<nav class="nav">
-  <div class="container">
-    <span class="brand">fuhe-tool</span>
-    <a href="index.html">首页</a>
-    <a href="tool.html" class="active">匹配工具</a>
-    <a href="catalog.html">考公目录</a>
-    <a href="plan.html">培养方案</a>
-    <a href="ai.html">AI 助手</a>
-    <a href="sop.html">复核 SOP</a>
-    <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub ↗</a>
-  </div>
-</nav>
-
-<header class="hero" style="padding:40px 0 36px;">
-  <div class="container">
-    <h1>课程表匹配工具</h1>
-    <p class="sub">粘贴你的国外课程名称（每行一门），或上传 CSV 文件，工具对照国内专业核心课程给出候选专业与重合度。
-      所有数据在浏览器本地处理，不上传任何服务器。</p>
-  </div>
-</header>
-
-<section>
-  <div class="container">
-    <div class="card">
-      <h2>第一步：上传成绩单（自动识别课程）</h2>
-      <div class="flex mb">
-        <label class="btn" for="fileTranscript" style="cursor:pointer;">📄 上传成绩单（PDF / 图片 / CSV / TXT）<input type="file" id="fileTranscript" accept=".pdf,.csv,.txt,.png,.jpg,.jpeg,.webp,.bmp,image/*" style="display:none;"></label>
-        <button class="btn ghost" id="btnShowPaste">没有电子版？手动粘贴课程</button>
-      </div>
-      <p class="muted small mb">手机截图（图片）也可以：会在本地 OCR 识别出课程，识别后请务必核对一遍。</p>
-
-      <div id="pasteArea" style="display:none;">
-        <textarea id="courseInput" placeholder="每行一门课程，例如：&#10;Data Structures and Algorithms&#10;Operating Systems&#10;Computer Networks&#10;Database Systems"></textarea>
-        <div class="flex mt">
-          <button class="btn" id="btnParse">解析并匹配</button>
-          <button class="btn ghost" id="btnSample">载入示例</button>
-          <button class="btn ghost" id="btnClear">清空</button>
-        </div>
-        <p class="muted small" id="status">等待输入……</p>
-      </div>
-
-      <div id="reviewArea" style="display:none;">
-        <p class="muted small" id="reviewStatus">正在解析……</p>
-        <textarea id="reviewInput" style="min-height:200px;"></textarea>
-        <div class="flex mt">
-          <button class="btn" id="btnConfirm">确认无误，开始匹配 →</button>
-          <button class="btn ghost" id="btnAiOcr">🤖 AI 识别（更准，需视觉模型 Key）</button>
-          <button class="btn ghost" id="btnReselect">重新上传</button>
-        </div>
-        <p class="muted small mt">本地 OCR 支持德语/英语/中文；识别不准时可点「AI 识别」，用你配置的视觉模型（Moonshot/OpenRouter）重新识别。</p>
-      </div>
-    </div>
-
-    <div class="card" id="step2Card" style="display:none;">
-      <h2>第二步：选择你想复核的目标专业</h2>
-      <div class="flex mb">
-        <input list="majorList" id="majorSelect" placeholder="输入或选择国内专业名，如：计算机科学与技术" style="flex:1;min-width:240px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
-        <datalist id="majorList"></datalist>
-        <button class="btn" id="btnMatchSchool">匹配学校课表 →</button>
-      </div>
-      <p class="muted small" id="recommendWrap" style="display:none;">推荐专业（按课程匹配度，点击可直接选用）：<span id="recommendChips"></span></p>
-    </div>
-
-    <div class="card" id="step3Card" style="display:none;">
-      <h2>第三步：学校培养方案匹配</h2>
-      <p class="muted small" id="schoolStatus"></p>
-      <div id="schoolResults"></div>
-    </div>
-
-    <div id="results"></div>
-
-    <div class="warn">
-      匹配结果仅为<strong>参考线索</strong>：内置数据是社区维护的种子数据，不覆盖全部专业。
-      正式决定前请核对当年官方《专业参考目录》，并到目标高校官网查看培养方案。
-    </div>
-    <div class="disclaimer">
-      ⚠️ 本工具不承诺复核结果；专业名称复核以教育部留学服务中心审核为准。
-      数据文件：<a href="data/majors.seed.json" target="_blank" rel="noopener">majors.seed.json</a>（欢迎到 GitHub 提 PR 完善）。
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <p>fuhe-tool · MIT 开源 · <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub 仓库</a></p>
-  </div>
-</footer>
-
-<script src="assets/vendor/pdf.min.js"></script>
-<script src="assets/js/pdf-parse.js"></script>
-<script src="assets/js/app.js"></script>
+<body style="font-family:sans-serif;padding:40px;">
+<p>匹配功能已合并进主页「一键分析」，正在跳转……</p>
+<p>如果没有自动跳转，请点击 <a href="index.html">fuhe-tool 主页</a>。</p>
 </body>
 </html>

@@ -3,85 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>fuhe-tool · 留学生学历认证复核自助工具</title>
-<meta name="description" content="留学生学历学位认证专业名称复核自助工具箱：课程表匹配可复核专业、复核 SOP 科普、课程对比文档生成。仅供参考，以留服中心审核为准。">
+<title>fuhe-tool · 留学认证复核一条龙工具</title>
+<meta name="description" content="上传成绩单、填写 API Key、选择目标复核专业，一键自动完成：成绩单识别 → 匹配专业 → 查 985/211 培养方案 → 生成复核建议。纯本地处理。">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <nav class="nav">
   <div class="container">
     <span class="brand">fuhe-tool</span>
-    <a href="index.html" class="active">首页</a>
-    <a href="tool.html">匹配工具</a>
+    <a href="index.html" class="active">一键分析</a>
     <a href="catalog.html">考公目录</a>
-    <a href="plan.html">培养方案</a>
-    <a href="ai.html">AI 助手</a>
+    <a href="plan.html">培养方案库</a>
     <a href="sop.html">复核 SOP</a>
     <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
 </nav>
 
-<header class="hero">
+<header class="hero" style="padding:40px 0 32px;">
   <div class="container">
-    <h1>留学认证复核，自己先搞清楚</h1>
-    <p class="sub">你的国外专业能复核成国内哪个专业？需要准备什么材料？对比文档怎么写？
-      上传课程表，工具帮你匹配；按 SOP 走流程，材料自己也能备齐。</p>
-    <div class="cta">
-      <a class="btn" href="tool.html">开始匹配 →</a>
-      <a class="btn ghost" href="catalog.html">查考公专业目录</a>
-      <a class="btn ghost" href="sop.html">先看复核 SOP</a>
-    </div>
+    <h1>留学认证复核 · 一条龙</h1>
+    <p class="sub">三步输入，自动完成识别与建议：① 填 API Key（本地保存）② 上传成绩单、选目标复核专业（可选上传培养方案）③ 一键出报告。
+      全部在浏览器本地处理，Key 与文件不出设备。</p>
   </div>
 </header>
 
 <section>
   <div class="container">
-    <h2>三步自助流程</h2>
-    <div class="steps">
-      <div class="step">
-        <span class="num">1</span>
-        <h3>上传课程表</h3>
-        <p>把国外成绩单上的课程名称粘贴或上传，工具对照国内专业核心课程给出候选专业与重合度。</p>
-      </div>
-      <div class="step">
-        <span class="num">2</span>
-        <h3>确认目标专业</h3>
-        <p>结合你报考岗位的《专业参考目录》确定目标专业名（必须对应国内真实专业）。可直接在<a href="catalog.html">考公目录</a>页查询税务系统 2026 目录。</p>
-      </div>
-      <div class="step">
-        <span class="num">3</span>
-        <h3>生成对比文档</h3>
-        <p>用开源 CLI 搜集目标高校培养方案，生成课程对比表与说明文档，按 SOP 提交复核申请。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
     <div class="card">
-      <h2>为什么要做专业名称复核？</h2>
-      <p>国外学历认证报告上的专业名称，可能与国内公务员/事业单位报考用的《专业参考目录》不一致。
-        例如国外 <code>Computer Science</code> 认证为"计算机科学"，而目录中为"计算机科学与技术"，就无法按对应专业报考。</p>
-      <p>教育部留学服务中心提供【专业领域表述复核】服务：申请人提交国外课程成绩单 + 与国内某高校专业培养方案的<strong>课程对比说明</strong>，
-        申请为认证报告补充一个对标国内学科目录的表述（格式如"计算机科学与技术（电子商贸）"）。<strong>表述必须对标国内真实存在的专业名，不能自定义。</strong></p>
-      <p class="muted small">注意：2024-10-25 起，报考<strong>事业单位</strong>的留学人员官方建议无需再提交复核申请（人社部发〔2024〕57 号）；复核目前主要用于<strong>公务员考试</strong>等场景。详见 <a href="sop.html">复核 SOP</a>。</p>
+      <h2>① 配置你的 API Key</h2>
+      <div class="flex mb">
+        <select id="baseUrl" style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+          <option value="https://api.deepseek.com">DeepSeek（api.deepseek.com）</option>
+          <option value="https://api.moonshot.cn/v1">Moonshot Kimi（api.moonshot.cn）</option>
+          <option value="https://openrouter.ai/api/v1">OpenRouter</option>
+          <option value="custom">自定义地址…</option>
+        </select>
+        <input type="text" id="customBase" placeholder="自定义 OpenAI 兼容接口地址" style="display:none;flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <input type="password" id="apiKey" placeholder="sk-... API Key（仅存本机）" autocomplete="off" style="flex:1;min-width:220px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <button class="btn ghost" id="btnSaveKey">保存</button>
+      </div>
+      <div class="flex mb">
+        <input type="text" id="model" value="deepseek-chat" placeholder="文本模型（生成建议用），如 deepseek-chat" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <input type="text" id="visionModel" placeholder="视觉模型（识别截图用），如 moonshot-v1-8k-vision-preview" style="flex:1;min-width:220px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+      </div>
+      <p class="muted small" id="keyStatus">视觉模型用于截图识别：DeepSeek 暂无视觉模型；Moonshot 用 moonshot-v1-8k-vision-preview；OpenRouter 用 qwen/qwen2.5-vl-72b-instruct（切换服务商自动带出）。未配置视觉模型时，图片会用本地 OCR 兜底。</p>
     </div>
 
     <div class="card">
-      <h2>常见问题</h2>
-      <h3>Q：任何人都能申请复核吗？</h3>
-      <p>已取得国外学历学位认证的人员，对认证结果中的专业名称有异议或需对应国内专业目录的，可申请复核。具体条件以留服中心现行规定为准。</p>
-      <h3>Q：复核收费吗？</h3>
-      <p>首次学历认证费为 360 元/份（官方标准）；复核申请<strong>免费</strong>——《国（境）外学历学位认证办法》第四十四条明确"留服中心不收取复核费用"。
-        注意：复核<strong>仅能申请 1 次</strong>、须在认证结果出具之日起 12 个月内申请。警惕任何"付费包过"的宣传。详见 <a href="sop.html">SOP 页面</a>。</p>
-      <h3>Q：课程匹配度不高怎么办？</h3>
-      <p>匹配结果只是线索。你可以补充更多课程关键词、更换候选专业，或使用 <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">CLI 工具</a> 深入搜集某所高校的培养方案做人工比对。</p>
+      <h2>② 上传材料 & 选择目标</h2>
+      <div class="flex mb">
+        <label class="btn" for="fileTranscript" style="cursor:pointer;">📄 上传成绩单（PDF / 图片 / CSV / TXT）<input type="file" id="fileTranscript" accept=".pdf,.csv,.txt,.png,.jpg,.jpeg,.webp,.bmp,image/*" style="display:none;"></label>
+        <span class="muted small" id="transcriptName">未选择文件</span>
+      </div>
+      <div class="flex mb">
+        <input list="majorList" id="majorSelect" placeholder="目标复核专业（必填），如：计算机科学与技术" style="flex:1;min-width:240px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <datalist id="majorList"></datalist>
+        <label class="btn ghost" for="filePlan" style="cursor:pointer;">📎 上传目标学校培养方案（可选）<input type="file" id="filePlan" accept=".pdf,.png,.jpg,.jpeg,.webp,.bmp,.txt,.csv,image/*" style="display:none;"></label>
+        <span class="muted small" id="planName">未选择</span>
+      </div>
+      <p class="muted small mb">培养方案可选：工具会自动查找已收录的 985/211 课表；找不到时会提示你上传，或提供各校官网一键搜索入口。</p>
+      <button class="btn" id="btnRun" style="font-size:1.05rem;">🚀 开始一键分析</button>
+      <span class="muted small" id="runStatus"></span>
     </div>
 
-    <div class="disclaimer">
-      ⚠️ <strong>免责声明</strong>：本工具仅提供信息检索、课程匹配参考与文档整理辅助，不承诺、不保证复核结果；
-      专业名称复核以教育部留学服务中心（cscse.edu.cn）审核为准；专业目录以国家公务员局《专业参考目录》和教育部《普通高等学校本科专业目录》正式发布版为准。
+    <div id="pipelineResults" style="display:none;">
+      <div class="card">
+        <div class="cover"><div><h2 style="margin:0;">第 1 步 · 成绩单识别结果</h2></div>
+          <span class="muted small" id="step1Badge"></span></div>
+        <p class="muted small mt">识别方式：<span id="step1Method"></span>。如有识别错误请直接编辑，然后点下方「重新生成建议」。</p>
+        <textarea id="coursesOutput" style="min-height:160px;"></textarea>
+      </div>
+
+      <div class="card">
+        <div class="cover"><div><h2 style="margin:0;">第 2 步 · 复核专业</h2></div><span class="muted small" id="step2Badge"></span></div>
+        <div id="step2Body" class="mt"></div>
+      </div>
+
+      <div class="card">
+        <div class="cover"><div><h2 style="margin:0;">第 3 步 · 学校培养方案匹配</h2></div><span class="muted small" id="step3Badge"></span></div>
+        <div id="step3Body" class="mt"></div>
+      </div>
+
+      <div class="card">
+        <div class="cover"><div><h2 style="margin:0;">第 4 步 · 复核建议报告</h2></div>
+          <span class="flex"><button class="btn ghost small" id="btnRegen">重新生成建议</button>
+          <button class="btn small" id="btnExportPdf">导出 PDF</button></span></div>
+        <div id="reportBody" class="mt"></div>
+      </div>
+
+      <div class="disclaimer">⚠️ 全部结果仅供申报参考，不承诺复核结果；最终以教育部留学服务中心审核为准。</div>
     </div>
   </div>
 </section>
@@ -89,8 +99,11 @@
 <footer>
   <div class="container">
     <p>fuhe-tool · MIT 开源 · <a href="https://github.com/Sxaphs/fuhe-tool" target="_blank" rel="noopener">GitHub 仓库</a></p>
-    <p>官方数据源与引用见 <a href="sop.html">SOP 页面</a> 底部。</p>
   </div>
 </footer>
+
+<script src="assets/vendor/pdf.min.js"></script>
+<script src="assets/js/pdf-parse.js"></script>
+<script src="assets/js/pipeline.js"></script>
 </body>
 </html>

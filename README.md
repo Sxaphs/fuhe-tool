@@ -8,43 +8,44 @@
 
 | 模块 | 说明 | 位置 |
 |---|---|---|
-| 匹配工具 | 粘贴/上传课程表（支持 CSV / 成绩单 PDF 本地解析）→ 匹配可复核的国内专业 | [tool.html](tool.html)（在线版） |
+| 一键分析（主页） | 填 API Key + 上传成绩单 + 选目标复核专业（可选上传培养方案）→ 自动完成：成绩单识别（AI 视觉/本地 OCR）→ 专业匹配 → 查 985/211 培养方案（找不到提示上传）→ 生成复核建议报告（可导出 PDF） | [index.html](index.html) |
 | 考公目录 | 税务系统 2026 公务员专业参考目录查询（60 类 / 835 专业）+ 留学回国人员报考口径 | [catalog.html](catalog.html) |
-| 培养方案 | 输入目标专业 + 专业代码 → 核心课程参考、已收录培养方案链接、一键搜索各校培养方案 | [plan.html](plan.html) |
-| AI 助手 | 自带 API Key（DeepSeek/Kimi/OpenRouter），浏览器直连生成课程对比说明，可导出 PDF | [ai.html](ai.html) |
+| 培养方案库 | 输入目标专业 + 专业代码 → 核心课程参考、已收录培养方案链接、一键搜索各校培养方案 | [plan.html](plan.html) |
 | SOP 科普 | 什么是认证复核、流程、材料、费用、常见问题 | [sop.html](sop.html) |
 | 开源 CLI | 自动搜集 985/211 高校培养方案 → 生成课程对比文档 | [cli/](cli/) |
 
 在线使用：<https://sxaphs.github.io/fuhe-tool/>
 
-## 三步自助流程
+## 一条龙流程（主页）
 
-1. **上传课程表**：把你的国外成绩单课程名称粘贴/上传到[匹配工具](tool.html)，得到"可复核专业"候选清单与课程重合度；
-2. **确认目标专业**：结合报考岗位的《专业参考目录》确定要改名的国内专业名；
-3. **生成对比文档**：用 [CLI](cli/) 搜集目标高校培养方案、生成课程对比表与说明文档。
+1. **填配置**：API Key（存本机 localStorage）+ 文本模型 + 视觉模型（截图识别用，DeepSeek 暂无视觉模型，可用 Moonshot/OpenRouter）；
+2. **传材料**：上传成绩单（PDF/图片/CSV/TXT，图片用 AI 视觉识别、未配置时本地三语 OCR 兜底）、选择目标复核专业、可选上传目标学校培养方案；
+3. **一键出报告**：自动匹配专业 → 自动查找已收录的 985/211 课表（未收录会提示上传/一键搜索）→ 生成复核建议报告并导出 PDF。
 
 ## 目录结构
 
 ```
 fuhe-tool/
-├── index.html          # 首页
+├── index.html          # 主页：一条龙分析（配置 → 上传 → 识别 → 匹配 → 报告）
 ├── sop.html            # 复核 SOP 科普页
-├── tool.html           # 课程表匹配工具（支持成绩单 PDF 本地解析）
+├── tool.html / ai.html # 已合并进主页，保留跳转
 ├── catalog.html        # 考公专业目录对照（税务系统 2026）
-├── plan.html           # 培养方案查询（核心课程 + 收录链接 + 一键搜索）
-├── ai.html             # AI 助手（自带 Key 浏览器直连，生成对比说明 / 导出 PDF）
+├── plan.html           # 培养方案库（核心课程 + 收录链接 + 一键搜索）
 ├── assets/
 │   ├── css/style.css
-│   ├── js/app.js       # 匹配逻辑（纯前端，数据在本地浏览器处理）
+│   ├── js/pipeline.js  # 主页流水线（识别/匹配/报告）
+│   ├── js/pdf-parse.js # 共享解析：PDF 文本层 / 图片 OCR / AI 视觉 / CSV
+│   ├── js/app.js       # 旧匹配页逻辑（保留）
 │   ├── js/catalog.js   # 考公目录查询逻辑
-│   ├── js/plan.js      # 培养方案查询逻辑
-│   ├── js/ai.js        # AI 助手逻辑（Key 仅存 localStorage）
-│   └── vendor/         # 本地化的 pdf.js（自托管，无 CDN 依赖）
+│   ├── js/plan.js      # 培养方案库查询逻辑
+│   ├── js/ai.js        # 旧 AI 助手逻辑（保留）
+│   └── vendor/         # 本地化 pdf.js + tesseract.js（自托管，无 CDN 依赖）
 ├── data/
 │   ├── majors.seed.json           # 专业目录种子数据（社区维护，欢迎 PR）
 │   ├── civil-service-catalog.json # 税务系统2026公务员专业参考目录（60类/835专业）
 │   ├── major-codes.json           # 教育部2025本科专业目录代码（74个种子专业的代码）
-│   └── plan-seed.json             # 已收录的高校培养方案链接（欢迎 PR 补充）
+│   ├── plan-seed.json             # 已收录的高校培养方案链接（欢迎 PR 补充）
+│   └── plan-courses.json          # 各校培养方案课程列表（清华/北大 CS 等，欢迎 PR）
 ├── cli/
 │   ├── fuhe.mjs        # 零依赖 CLI：research / report
 │   └── package.json
