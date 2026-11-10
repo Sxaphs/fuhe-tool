@@ -13,15 +13,58 @@
   const PLAN_SEED_URL = 'data/plan-seed.json';
   const CODES_URL = 'data/major-codes.json';
 
-  const PRESETS = {
-    'https://api.deepseek.com': 'deepseek-flash',
-    'https://api.moonshot.cn/v1': 'moonshot-v1-8k',
-    'https://openrouter.ai/api/v1': 'deepseek/deepseek-chat'
-  };
-  const VISION_PRESETS = {
-    'https://api.deepseek.com': '',
-    'https://api.moonshot.cn/v1': 'moonshot-v1-8k-vision-preview',
-    'https://openrouter.ai/api/v1': 'qwen/qwen2.5-vl-72b-instruct'
+  /* 服务商预设（模型清单以 2026-11 官方文档为准，用户仍可自定义） */
+  const PROVIDERS = {
+    deepseek: {
+      label: 'DeepSeek',
+      base: 'https://api.deepseek.com',
+      models: [
+        { id: 'deepseek-flash', label: 'V4.1 Flash（推荐 · 支持视觉）' },
+        { id: 'deepseek-v4-pro', label: 'V4 Pro' }
+      ],
+      vision: [
+        { id: 'deepseek-flash', label: 'V4.1 Flash（多模态）' }
+      ]
+    },
+    kimi: {
+      label: 'Kimi（月之暗面）',
+      base: 'https://api.moonshot.cn/v1',
+      models: [
+        { id: 'kimi-k3.1-pro', label: 'K3.1 Pro（推荐）' },
+        { id: 'kimi-k3', label: 'K3' }
+      ],
+      vision: [
+        { id: 'kimi-k3.1-pro', label: 'K3.1 Pro（多模态）' },
+        { id: 'kimi-k3', label: 'K3（多模态）' }
+      ]
+    },
+    doubao: {
+      label: '豆包（火山方舟）',
+      base: 'https://ark.cn-beijing.volces.com/api/v3',
+      models: [
+        { id: 'doubao-seed-1.6', label: 'Seed 1.6（推荐 · 多模态）' }
+      ],
+      vision: [
+        { id: 'doubao-seed-1.6', label: 'Seed 1.6（多模态）' }
+      ]
+    },
+    openrouter: {
+      label: 'OpenRouter',
+      base: 'https://openrouter.ai/api/v1',
+      models: [
+        { id: 'deepseek/deepseek-v4-flash', label: 'DeepSeek V4.1 Flash' },
+        { id: 'deepseek/deepseek-chat', label: 'DeepSeek Chat' }
+      ],
+      vision: [
+        { id: 'qwen/qwen2.5-vl-72b-instruct', label: 'Qwen2.5-VL-72B' }
+      ]
+    },
+    custom: {
+      label: '自定义服务商',
+      base: '',
+      models: [],
+      vision: []
+    }
   };
   const SCHOOLS = ['清华大学', '北京大学', '浙江大学', '上海交通大学', '复旦大学', '南京大学', '中国科学技术大学', '华中科技大学', '武汉大学', '西安交通大学', '哈尔滨工业大学', '同济大学'];
 
@@ -34,15 +77,30 @@
       return v && typeof v === 'object' && !Array.isArray(v) ? v : {};
     } catch (e) { return {}; }
   }
+  function currentProviderKey() {
+    const k = $('provider').value;
+    return PROVIDERS[k] ? k : 'custom';
+  }
+  /* 模型下拉当前选中值（含自定义文本回退） */
+  function selectedModel(selId, customId, fallback) {
+    const v = $(selId).value;
+    if (v === '__custom__') return $(customId).value.trim() || fallback;
+    return v || fallback;
+  }
   function getConfig() {
-    const baseSel = $('baseUrl').value;
-    const base = baseSel === 'custom' ? $('customBase').value.trim().replace(/\/+$/, '') : baseSel;
+    const saved = loadConfig();
+    const pkey = currentProviderKey();
+    const prov = PROVIDERS[pkey];
+    const base = pkey === 'custom'
+      ? ($('customBase').value.trim().replace(/\/+$/, '') || saved.base || '')
+      : prov.base;
     return {
+      provider: pkey,
       base,
-      apiKey: $('apiKey').value.trim() || loadConfig().apiKey || '',
-      model: $('model').value.trim() || loadConfig().model || 'deepseek-flash',
-      visionModel: $('visionModel').value.trim() || loadConfig().visionModel || '',
-      extraBody: parseExtra($('extraBody').value) || parseExtra(loadConfig().extraBody)
+      apiKey: $('apiKey').value.trim() || saved.apiKey || '',
+      model: selectedModel('model', 'customModel', saved.model || 'deepseek-flash'),
+      visionModel: selectedModel('visionModel', 'customVision', saved.visionModel || ''),
+      extraBody: parseExtra($('extraBody').value) || parseExtra(saved.extraBody)
     };
   }
 
@@ -731,31 +789,83 @@
   /* ---------- 初始化 ---------- */
   document.addEventListener('DOMContentLoaded', async () => {
     const cfg = loadConfig();
-    if (cfg.base && PRESETS[cfg.base]) {
-      $('baseUrl').value = cfg.base;
-      $('model').value = cfg.model || PRESETS[cfg.base];
-      $('visionModel').value = cfg.visionModel || VISION_PRESETS[cfg.base];
-    } else if (cfg.base) {
-      $('baseUrl').value = 'custom';
-      $('customBase').style.display = '';
-      $('customBase').value = cfg.base;
+
+    /* 服务商 → 模型下拉联动 */
+    function fillModelSelects(pkey) {
+      const prov = PROVIDERS[pkey] || PROVIDERS.custom;
+      const mSel = $('model');
+      mSel.innerHTML = '';
+      for (const m of prov.models) {
+        const o = document.createElement('option');
+        o.value = m.id;
+        o.textContent = m.label;
+        mSel.appendChild(o);
+      }
+      const ocm = document.createElement('option');
+      ocm.value = '__custom__';
+      ocm.textContent = '自定义模型 ID…（在高级设置里填）';
+      mSel.appendChild(ocm);
+      const vSel = $('visionModel');
+      vSel.innerHTML = '';
+      for (const m of prov.vision) {
+        const o = document.createElement('option');
+        o.value = m.id;
+        o.textContent = m.label;
+        vSel.appendChild(o);
+      }
+      const ocv = document.createElement('option');
+      ocv.value = '__custom__';
+      ocv.textContent = '自定义视觉模型 ID…（在高级设置里填）';
+      vSel.appendChild(ocv);
+      const none = document.createElement('option');
+      none.value = '';
+      none.textContent = '不用视觉模型（本地 OCR 兜底）';
+      vSel.appendChild(none);
+    }
+
+    /* 恢复已存配置（兼容旧版 base/model 字段） */
+    if (cfg.provider && PROVIDERS[cfg.provider]) {
+      $('provider').value = cfg.provider;
+    } else if (cfg.base === 'https://api.moonshot.cn/v1') {
+      $('provider').value = 'kimi';
+    } else if (cfg.base === 'https://openrouter.ai/api/v1') {
+      $('provider').value = 'openrouter';
+    } else if (cfg.base && cfg.base !== 'https://api.deepseek.com') {
+      $('provider').value = 'custom';
+    }
+    fillModelSelects($('provider').value);
+    if (cfg.model && ![...$('model').options].some((o) => o.value === cfg.model)) {
+      const o = document.createElement('option');
+      o.value = cfg.model;
+      o.textContent = cfg.model + '（已存）';
+      $('model').insertBefore(o, $('model').lastChild);
+    }
+    if (cfg.model) $('model').value = cfg.model;
+    if (cfg.visionModel) {
+      if (![...$('visionModel').options].some((o) => o.value === cfg.visionModel)) {
+        const o = document.createElement('option');
+        o.value = cfg.visionModel;
+        o.textContent = cfg.visionModel + '（已存）';
+        $('visionModel').insertBefore(o, $('visionModel').lastChild);
+      }
+      $('visionModel').value = cfg.visionModel;
     }
     if (cfg.apiKey) $('apiKey').value = cfg.apiKey;
     if (cfg.extraBody) $('extraBody').value = JSON.stringify(cfg.extraBody);
+    if (cfg.base) $('customBase').value = cfg.base;
+    if (cfg.model) $('customModel').value = cfg.model;
+    if (cfg.visionModel) $('customVision').value = cfg.visionModel;
 
-    $('baseUrl').addEventListener('change', () => {
-      const v = $('baseUrl').value;
-      $('customBase').style.display = v === 'custom' ? '' : 'none';
-      if (v !== 'custom') {
-        if (PRESETS[v]) $('model').value = PRESETS[v];
-        $('visionModel').value = VISION_PRESETS[v] || '';
-      }
+    $('provider').addEventListener('change', () => {
+      const pkey = $('provider').value;
+      fillModelSelects(pkey);
+      $('keyStatus').textContent = '已切换服务商：' + (PROVIDERS[pkey] ? PROVIDERS[pkey].label : '自定义') + '。请确认模型选择后点「保存」。';
     });
     $('btnSaveKey').addEventListener('click', () => {
       const c = getConfig();
-      if (!c.base || !c.apiKey) { alert('请填写接口地址和 Key'); return; }
+      if (!c.base || !c.apiKey) { alert('请选择服务商并填写 Key' + (c.base ? '' : '（自定义服务商需在高级设置里填接口地址）')); return; }
       saveConfig(c);
-      $('keyStatus').textContent = '✅ 已保存到本机浏览器。';
+      $('keyStatus').textContent = '✅ 已保存到本机浏览器。文本模型：' + c.model + (c.visionModel ? '；视觉模型：' + c.visionModel : '；视觉：本地 OCR 兜底') + '。';
     });
     $('fileTranscript').addEventListener('change', (ev) => {
       transcriptFile = ev.target.files[0] || null;

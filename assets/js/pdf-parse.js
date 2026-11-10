@@ -184,7 +184,7 @@
   async function parseViaVisionApi(file) {
     const cfg = getAiConfig();
     if (!cfg.base || !cfg.apiKey) throw new Error('未配置 API Key——请先到「AI 助手」页填写并保存');
-    if (!cfg.visionModel) throw new Error('未配置视觉模型——DeepSeek 暂无视觉模型，请用 Moonshot（moonshot-v1-8k-vision-preview）或 OpenRouter（如 qwen/qwen2.5-vl-72b-instruct）');
+    if (!cfg.visionModel) throw new Error('未配置视觉模型——请在「① 配置你的 API Key」的视觉模型下拉中选择（DeepSeek V4.1 Flash / Kimi K3 系列 / 豆包 Seed 均支持视觉），或保持"本地 OCR 兜底"');
     let extra = {};
     try {
       const v = JSON.parse(String(cfg.extraBody || '') || '{}');

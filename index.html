@@ -32,24 +32,30 @@
     <div class="card">
       <h2>① 配置你的 API Key</h2>
       <div class="flex mb">
-        <select id="baseUrl" style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
-          <option value="https://api.deepseek.com">DeepSeek（api.deepseek.com）</option>
-          <option value="https://api.moonshot.cn/v1">Moonshot Kimi（api.moonshot.cn）</option>
-          <option value="https://openrouter.ai/api/v1">OpenRouter</option>
-          <option value="custom">自定义地址…</option>
+        <select id="provider" style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+          <option value="deepseek">DeepSeek</option>
+          <option value="kimi">Kimi（月之暗面）</option>
+          <option value="doubao">豆包（火山方舟）</option>
+          <option value="openrouter">OpenRouter</option>
+          <option value="custom">自定义服务商…</option>
         </select>
-        <input type="text" id="customBase" placeholder="自定义 OpenAI 兼容接口地址" style="display:none;flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
         <input type="password" id="apiKey" placeholder="sk-... API Key（仅存本机）" autocomplete="off" style="flex:1;min-width:220px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
         <button class="btn ghost" id="btnSaveKey">保存</button>
       </div>
       <div class="flex mb">
-        <input type="text" id="model" value="deepseek-flash" placeholder="文本模型（生成建议用），如 deepseek-flash" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
-        <input type="text" id="visionModel" placeholder="视觉模型（识别截图用），如 moonshot-v1-8k-vision-preview" style="flex:1;min-width:220px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <select id="model" title="文本模型（生成建议/整理课表）" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;"></select>
+        <select id="visionModel" title="视觉模型（截图识别）" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;"></select>
       </div>
-      <div class="flex mb">
-        <input type="text" id="extraBody" placeholder='额外请求参数（JSON，可选），如 {"reasoning_effort":"high","thinking":{"type":"enabled"}}' style="flex:1;min-width:260px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
-      </div>
-      <p class="muted small" id="keyStatus">接口不写死：服务商地址、文本模型、视觉模型、额外请求参数均可自定义。API 的三个用途：<strong>视觉模型</strong>→成绩单截图识别；<strong>文本模型</strong>→自动整理各校课表并语义匹配、生成复核建议报告。额外参数会原样合并进请求体（如 DeepSeek 新版 deepseek-flash 的 reasoning_effort/thinking）。</p>
+      <details>
+        <summary class="muted small" style="cursor:pointer;">高级设置（自定义地址 / 自定义模型 ID / 额外请求参数）</summary>
+        <div class="flex mt mb">
+          <input type="text" id="customBase" placeholder="自定义 OpenAI 兼容接口地址（选「自定义服务商」时必填）" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+          <input type="text" id="customModel" placeholder="自定义文本模型 ID（模型下拉选「自定义」时生效）" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+          <input type="text" id="customVision" placeholder="自定义视觉模型 ID（视觉下拉选「自定义」时生效）" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        </div>
+        <input type="text" id="extraBody" placeholder='额外请求参数（JSON，可选），如 {"thinking":{"type":"enabled"},"reasoning_effort":"high"}' style="width:100%;min-width:260px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+      </details>
+      <p class="muted small" id="keyStatus">API 三个用途：视觉模型→成绩单截图识别（不选则本地 OCR 兜底）；文本模型→自动整理各校课表并语义匹配、生成复核建议报告。额外参数原样合并进请求体。</p>
     </div>
 
     <div class="card">
