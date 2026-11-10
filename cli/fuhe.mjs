@@ -32,8 +32,8 @@ function usage() {
 fuhe-tool CLI —— 留学认证复核自助工具（零依赖，Node >= 18）
 
 用法:
-  node fuhe.mjs research --major 计算机科学与技术 --schools 清华大学,北京大学 [--out out]
-      自动搜索各校《培养方案》/课程设置页面，下载原始页面到本地并生成摘要
+  node fuhe.mjs research --major 计算机科学与技术 --schools 清华大学,北京大学 [--code 0812] [--out out]
+      自动搜索各校《培养方案》/课程设置页面，下载原始页面到本地并生成摘要（--code 为学科/专业代码，检索更精准）
   node fuhe.mjs report   --major 计算机科学与技术 --school 清华大学 [--courses "数据结构,操作系统,算法"] [--out report]
       生成课程对比文档（Markdown）；配置 LLM 环境变量后可自动润色"对比说明"段落
 
@@ -134,6 +134,7 @@ function safeName(s) {
 
 async function cmdResearch(argv) {
   const major = getArg(argv, '--major');
+  const code = getArg(argv, '--code');
   const schools = getArg(argv, '--schools').split(/[,，]/).map((s) => s.trim()).filter(Boolean);
   const out = getArg(argv, '--out', DEFAULT_OUT);
   if (!major || !schools.length) {
@@ -141,6 +142,7 @@ async function cmdResearch(argv) {
     usage();
     process.exit(1);
   }
+  const qPrefix = code ? `${code} ` : '';
   const base = path.join(out, 'research', safeName(major));
   await mkdir(base, { recursive: true });
   const allLinks = [];
@@ -149,13 +151,13 @@ async function cmdResearch(argv) {
     let links = [];
     try {
       console.log('[1/2] 搜索培养方案 ...');
-      links = await searchLinks(`${school} ${major} 培养方案`);
+      links = await searchLinks(`${school} ${qPrefix}${major} 培养方案`);
     } catch (e) {
       console.error(`  搜索失败: ${e.message}`);
     }
     if (!links.length) {
       try {
-        links = await searchLinks(`${school} ${major} 课程设置`);
+        links = await searchLinks(`${school} ${qPrefix}${major} 课程设置`);
       } catch { /* ignore */ }
     }
     console.log(`  找到 ${links.length} 条链接`);
@@ -183,7 +185,7 @@ async function cmdResearch(argv) {
         console.error(`    下载失败: ${e.message}`);
       }
     }
-    let md = `# ${school} · ${major} 培养方案检索结果\n\n> 生成时间: ${new Date().toISOString()}\n> 检索关键词: "${school} ${major} 培养方案"\n\n`;
+    let md = `# ${school} · ${major} 培养方案检索结果\n\n> 生成时间: ${new Date().toISOString()}\n> 检索关键词: "${school} ${qPrefix}${major} 培养方案"\n\n`;
     for (const [i, e] of entries.entries()) {
       md += `## 来源 ${i + 1}\n\n- 链接: ${e.link}\n\n### 页面文本摘要（前 1500 字）\n\n\`\`\`\n${e.snippet}\n\`\`\`\n\n`;
     }

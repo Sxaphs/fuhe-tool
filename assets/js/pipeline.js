@@ -287,13 +287,13 @@
     const cfg = getConfig();
     if (!cfg.apiKey || !cfg.base || !cfg.model) return [];
     const kindText = kind === 'grad' ? '研究生一级学科' : '本科专业';
-    const codeText = code ? '（学科代码 ' + code + '）' : '';
+    const codeText = code ? '学科代码 ' + code + ' 的' : '';
     const subText = (subs && subs.length) ? '（其二级学科包括：' + subs.slice(0, 8).join('、') + '）' : '';
     const focusText = focusSub ? '本次用户的目标是其二级学科「' + focusSub + '」，课程清单请侧重覆盖该二级学科的方向课。' : '';
     const siblingText = (siblings && siblings.length)
       ? '【重要】「' + majorName + '」与同门类的其他学科不同，严禁混入以下学科的内容：' + siblings.join('、') + '。课程清单必须体现「' + majorName + '」自身的培养方向。'
       : '';
-    const prompt = '你是国内高校课程设置专家。请给出4所985/211高校的「' + majorName + '」' + codeText + kindText + subText + focusText + siblingText + '培养方案的核心专业课程清单，'
+    const prompt = '你是国内高校课程设置专家。请给出4所985/211高校' + codeText + '「' + majorName + '」' + kindText + subText + focusText + siblingText + '培养方案的核心专业课程清单，'
       + '并对【国外课程】中的每一门课程判断它与该校哪门课程对应。严格只输出JSON数组（不要markdown代码块、不要解释文字）：\n'
       + '[{"school":"学校全名","courses":["课程1","课程2"],"matched":["对应上的国外课程原名1"]}]\n'
       + '要求：courses 每校12~20门核心专业课程，课程名用国内通行名称；matched 数组中的课程名必须与【国外课程】中的名称逐字一致，只放确实与该培养方案对应的课程（按课程内容语义判断，不要只按名字猜）。\n'
@@ -327,7 +327,7 @@
   }
 
   /* ---------- 第 3 步：目标学校培养方案匹配（标准化表格） ---------- */
-  function renderStep3(courses, bridge, displayMajor, matchMajor, planSeed, planCoursesData, aiEntries, level) {
+  function renderStep3(courses, bridge, displayMajor, matchMajor, planSeed, planCoursesData, aiEntries, level, code) {
     const levelOk = (e) => e.major === matchMajor && (!level || !e.level || e.level === level);
     const planEntries = ((planCoursesData && planCoursesData.entries) || []).filter(levelOk);
     const linkEntries = (planSeed && planSeed.entries || []).filter((e) => e.major === matchMajor);
@@ -374,11 +374,13 @@
       html += '</ul>';
     }
     const searchSuffix = level === 'grad' ? ' 研究生培养方案' : ' 培养方案';
-    html += '<p class="muted small mt">一键搜索各校培养方案（' + esc(displayMajor) + (level ? ' · ' + levelName(level) + '层次' : '') + '）：</p>';
+    const codePrefix = code ? code + ' ' : '';
+    html += '<p class="muted small mt">一键搜索各校培养方案（' + esc(codePrefix + displayMajor) + (level ? ' · ' + levelName(level) + '层次' : '') + '）：</p>';
     const schools = (planSeed && planSeed.schools && planSeed.schools.length) ? planSeed.schools : SCHOOLS;
     for (const s of schools.slice(0, 6)) {
-      const bd = 'https://www.baidu.com/s?wd=' + encodeURIComponent(s + ' ' + displayMajor + searchSuffix);
-      const bi = 'https://www.bing.com/search?q=' + encodeURIComponent(s + ' ' + displayMajor + searchSuffix);
+      const q = s + ' ' + codePrefix + displayMajor + searchSuffix;
+      const bd = 'https://www.baidu.com/s?wd=' + encodeURIComponent(q);
+      const bi = 'https://www.bing.com/search?q=' + encodeURIComponent(q);
       html += '<span class="chip"><a href="' + esc(bd) + '" target="_blank" rel="noopener">' + esc(s) + ' · 百度</a></span><span class="chip"><a href="' + esc(bi) + '" target="_blank" rel="noopener">' + esc(s) + ' · Bing</a></span>';
     }
     $('step3Body').innerHTML = html;
@@ -655,7 +657,7 @@
       $('step3Badge').textContent = totalSources ? ('✅ ' + totalSources + ' 个来源' + (level ? '（' + levelName(level) + '层次）' : '')) : '⚠️ 未收录，请一键搜索或让 AI 整理';
       // 双语桥：研究生学科聚合相关本科专业核心课程（修复 0 重合问题）
       const bridge = buildBridgeFor(seed, found);
-      renderStep3(courses, bridge, displayMajor, matchMajor, planSeed, planCourses, aiEntries, level);
+      renderStep3(courses, bridge, displayMajor, matchMajor, planSeed, planCourses, aiEntries, level, codeText);
 
       // 学校行汇总（供报告）
       const schoolRows = [];
