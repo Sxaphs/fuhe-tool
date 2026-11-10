@@ -322,8 +322,8 @@
     }
   }
 
-  /* ---------- 第 3 步：学校培养方案匹配（标准化表格） ---------- */
-  function renderStep3(courses, bridge, displayMajor, matchMajor, uploadPlanCourses, planSeed, planCoursesData, aiEntries, level) {
+  /* ---------- 第 3 步：目标学校培养方案匹配（标准化表格） ---------- */
+  function renderStep3(courses, bridge, displayMajor, matchMajor, planSeed, planCoursesData, aiEntries, level) {
     const levelOk = (e) => e.major === matchMajor && (!level || !e.level || e.level === level);
     const planEntries = ((planCoursesData && planCoursesData.entries) || []).filter(levelOk);
     const linkEntries = (planSeed && planSeed.entries || []).filter((e) => e.major === matchMajor);
@@ -340,10 +340,6 @@
         ? courses.filter((c) => matchedSet.has(normalize(c)))
         : matchSchoolCourses(courses, e.courses, bridge);
       rows.push({ school: e.school, year: '', hits: aiHits, total: e.courses.length, source: '', kind: 'AI整理', aiMatched: matchedSet.size > 0 });
-    }
-    if (uploadPlanCourses && uploadPlanCourses.length) {
-      const hits = matchSchoolCourses(courses, uploadPlanCourses, bridge);
-      rows.push({ school: '你上传的培养方案', year: '', hits, total: uploadPlanCourses.length, source: '', kind: '上传' });
     }
     rows.sort((a, b) => (b.hits.length / Math.max(b.total, 1)) - (a.hits.length / Math.max(a.total, 1)));
 
@@ -406,10 +402,11 @@
   }
 
   /* ---------- 第 4 步：报告 ---------- */
-  async function generateReport(courses, majorName, catName, codeText, schoolRows, comparisonTable, level) {
+  async function generateReport(courses, majorName, catName, codeText, schoolRows, comparisonTable, level, ownPlanCourses) {
     const cfg = getConfig();
     $('reportBody').innerHTML = '<p class="muted">正在生成复核建议报告……</p>';
     const levelLine = level ? '（学历层次：' + levelName(level) + '）' : '';
+    const ownPlanText = (ownPlanCourses && ownPlanCourses.length) ? ownPlanCourses.join('\n') : '（未上传）';
     const bestLine = schoolRows.length
       ? schoolRows.slice().sort((a, b) => b.hits.length / Math.max(b.total, 1) - a.hits.length / Math.max(a.total, 1))[0]
       : null;
@@ -424,12 +421,13 @@
           + '## 一、目标专业\n' + majorName + (catName ? '（' + catName + (codeText ? ' · ' + codeText : '') + '）' : '') + levelLine + '\n'
           + '## 二、课程对应表\n请用 markdown 表格：| 国外课程 | 对应国内课程 | 来源学校 | 匹配说明 |，必须逐门列出【国外课程】中的每一门课程。'
           + '你必须利用自身知识，为每门国外课程判断并填写对应的国内「' + majorName + '」培养方案课程（例如 Financial Statement Analysis 可对应「财务报表分析」或「中级财务会计」），'
-          + '「来源学校」填一所开设该课程的代表性985/211高校。给出的本地匹配参考仅供参考，以你的专业判断为准；'
+          + '「来源学校」填一所开设该课程的代表性985/211高校。可结合【你的国外学校培养方案课程】说明每门国外课程教了什么，使对应判断更准确。'
+          + '给出的本地匹配参考仅供参考，以你的专业判断为准；'
           + '只有确实无法对应的课程才写「待人工对照」并在匹配说明注明原因，此类不超过总数的 20%。\n'
           + '## 三、推荐选校\n结合重合度说明哪所学校培养方案最适合作为对比依据及理由。\n'
           + '## 四、材料清单\n认证书、成绩单（PDF 单文件 1M 以下）、课程对比说明、目标高校培养方案来源等。\n'
           + '## 五、风险提示\n复核免费、认证结果出具之日起 12 个月内申请、仅 1 次机会；不承诺结果，最终以留服中心审核为准。\n\n'
-          + '【国外课程】\n' + courses.join('\n') + '\n\n【学校课表匹配】\n' + summary + '\n\n【本地匹配参考（仅供参考，以你的判断为准）】\n' + comparisonTable.md + '\n'
+          + '【国外课程】\n' + courses.join('\n') + '\n\n【你的国外学校培养方案课程（课程描述佐证，若已上传）】\n' + ownPlanText + '\n\n【学校课表匹配】\n' + summary + '\n\n【本地匹配参考（仅供参考，以你的判断为准）】\n' + comparisonTable.md + '\n'
           + '【最优学校】' + (bestLine ? bestLine.school : '无') + '\n\n要求：课程对应表必须逐门列出全部国外课程并尽量给出对应课程名，不要大范围写「待人工对照」；语气客观；不出现"保证通过""包过"。';
         const res = await fetch(cfg.base.replace(/\/+$/, '') + '/chat/completions', {
           method: 'POST',
@@ -448,6 +446,7 @@
       report = '# 复核建议报告（模板）\n\n'
         + '## 一、目标专业\n\n' + majorName + (catName ? '（' + catName + (codeText ? ' · ' + codeText : '') + '）' : '') + levelLine + '\n\n'
         + '## 二、课程对应表\n\n' + comparisonTable.md + '\n\n'
+        + (ownPlanCourses && ownPlanCourses.length ? '### 附：你的国外培养方案课程（' + ownPlanCourses.length + ' 门）\n\n' + ownPlanCourses.map((c) => '- ' + c).join('\n') + '\n\n' : '')
         + '## 三、推荐选校\n\n' + (bestLine ? '建议以「' + bestLine.school + '」的培养方案作为课程对比依据（重合度最高：' + bestLine.hits.length + '/' + bestLine.total + ' 门课程匹配）。' : '暂无学校课表数据，请上传目标学校培养方案。') + '\n\n'
         + '## 四、材料清单\n\n- 国外学历学位认证书（原件扫描件）\n- 国外高校官方成绩单（PDF、单文件 1M 以下）\n- 课程对比说明（对照目标高校培养方案逐门说明）\n- 目标高校《培养方案》来源说明（官网链接或文件）\n- 复核原因说明\n\n'
         + '## 五、风险提示\n\n1. 改名目标必须是国内专业目录中真实存在的专业名；\n2. 复核免费、认证结果出具之日起 12 个月内申请、仅 1 次机会；\n3. 报考事业单位自 2024-10-25 起官方建议无需复核；\n4. 本报告仅供申报参考，最终以留服中心审核为准。\n';
@@ -580,6 +579,23 @@
             : '本科成绩单通常复核对标本科专业，不建议匹配研究生学科课表。')
           + '已按你的选择继续，但建议更换目标专业。</div>';
       }
+      // 用户自己国外学校的培养方案/课程描述（课程对比的本方佐证，不是目标学校课表）
+      let ownPlanCourses = [];
+      let ownPlanSummary = '';
+      if (planFile) {
+        try {
+          ownPlanCourses = await parsePlanAuto(planFile);
+          const matchedOwn = courses.filter((c) => ownPlanCourses.some((p) => {
+            const a = normalize(c);
+            const b = normalize(p);
+            return a === b || a.includes(b) || b.includes(a);
+          }));
+          ownPlanSummary = '📎 你的培养方案解析出 ' + ownPlanCourses.length + ' 门课程，与成绩单课程匹配 ' + matchedOwn.length + ' 门（作为课程对比的本方佐证）。';
+        } catch (e) {
+          ownPlanSummary = '⚠️ 你的培养方案解析失败：' + e.message;
+        }
+      }
+      if (ownPlanSummary) step2Html += '<p class="muted small">' + esc(ownPlanSummary) + '</p>';
       if (found && found.kind === 'grad' && found.subs && found.subs.length) {
         step2Html += '<p class="muted small">二级学科：' + found.subs.map(esc).join('、') + '</p>';
       }
@@ -606,7 +622,7 @@
         });
       });
 
-      // 第 3 步：学校培养方案（收录 + AI 自动整理 + 用户上传；按学历层次过滤）
+      // 第 3 步：目标学校培养方案（收录 + AI 自动整理；按学历层次过滤）
       $('step3Badge').textContent = '查找中……';
       const planCourses = await getPlanCourses();
       const planSeed = await getPlanSeed();
@@ -615,14 +631,6 @@
       const displayMajor = found && found.parentName ? found.name + '（' + found.parentName + '）' : majorName;
       // 层次过滤：未知层次的条目在层次明确时排除（严格同层次匹配）
       const levelFilter = (e) => e.major === matchMajor && (!level || !e.level || e.level === level);
-      let uploadPlanCourses = [];
-      if (planFile) {
-        try {
-          uploadPlanCourses = await parsePlanAuto(planFile);
-        } catch (e) {
-          $('step3Badge').textContent = '⚠️ 培养方案解析失败：' + e.message;
-        }
-      }
       // AI 自动整理各校课程 + 语义匹配
       let aiEntries = [];
       if (getConfig().apiKey && getConfig().base && getConfig().model) {
@@ -630,11 +638,11 @@
         aiEntries = await aiFindSchoolCourses(matchMajor, found ? found.kind : 'undergrad', found && found.subs ? found.subs : [], courses, found && found.parentName ? found.name : null);
       }
       const curatedCount = ((planCourses.entries || []).filter(levelFilter)).length;
-      const totalSources = curatedCount + aiEntries.length + (uploadPlanCourses.length ? 1 : 0);
-      $('step3Badge').textContent = totalSources ? ('✅ ' + totalSources + ' 个来源' + (level ? '（' + levelName(level) + '层次）' : '')) : '⚠️ 未收录，请上传或一键搜索';
+      const totalSources = curatedCount + aiEntries.length;
+      $('step3Badge').textContent = totalSources ? ('✅ ' + totalSources + ' 个来源' + (level ? '（' + levelName(level) + '层次）' : '')) : '⚠️ 未收录，请一键搜索或让 AI 整理';
       // 双语桥：研究生学科聚合相关本科专业核心课程（修复 0 重合问题）
       const bridge = buildBridgeFor(seed, found);
-      renderStep3(courses, bridge, displayMajor, matchMajor, uploadPlanCourses, planSeed, planCourses, aiEntries, level);
+      renderStep3(courses, bridge, displayMajor, matchMajor, planSeed, planCourses, aiEntries, level);
 
       // 学校行汇总（供报告）
       const schoolRows = [];
@@ -646,15 +654,12 @@
         const hits = matchedSet.size ? courses.filter((c) => matchedSet.has(normalize(c))) : matchSchoolCourses(courses, e.courses, bridge);
         schoolRows.push({ school: e.school, total: e.courses.length, hits });
       }
-      if (uploadPlanCourses.length) {
-        schoolRows.push({ school: '你上传的培养方案', total: uploadPlanCourses.length, hits: matchSchoolCourses(courses, uploadPlanCourses, bridge) });
-      }
 
       // 第 4 步：报告（标准化表格）
       const comparisonTable = buildComparisonTable(courses, schoolRows);
       const reportMajor = found ? (found.parentName ? found.name + '（' + found.parentName + '）' : found.name) : majorName;
       const reportCat = found && found.parentName ? '研究生学科' : (found ? found.cat : '');
-      await generateReport(courses, reportMajor, reportCat, codeText, schoolRows, comparisonTable, level);
+      await generateReport(courses, reportMajor, reportCat, codeText, schoolRows, comparisonTable, level, ownPlanCourses);
       $('runStatus').textContent = '✅ 分析完成。可编辑识别课程后点「重新生成建议」。';
       document.getElementById('pipelineResults').scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
