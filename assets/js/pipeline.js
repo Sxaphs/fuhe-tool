@@ -71,6 +71,7 @@
 
   let lastDetectedLevel = null;
   let groupData = []; // 两级选择数据：[{gate, entries:[{value,label,level}]}]
+  let refreshMajorSelects = () => {}; // 模块作用域占位，初始化时赋值（runPipeline 会调用）
 
   /* 学科门类（主目录）：从专业代码前两位映射 */
   const GATE = { '01': '哲学', '02': '经济学', '03': '法学', '04': '教育学', '05': '文学', '06': '历史学', '07': '理学', '08': '工学', '09': '农学', '10': '医学', '12': '管理学', '13': '艺术学', '14': '交叉学科' };
@@ -715,8 +716,6 @@
     $('btnExportPdf').addEventListener('click', exportPdf);
 
     // 两级选择：学科门类（主目录）→ 具体专业（子目录，含研究生学科与二级学科）
-    let refreshMajorSelects = () => {};
-
     function populateMajorOptions(level) {
       const gate = $('majorGroup').value;
       const mSel = $('majorSelect');
