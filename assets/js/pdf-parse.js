@@ -9,7 +9,7 @@
   const AI_CONFIG_KEY = 'fuhe-ai-config';
   let lastRawText = ''; // 最近一次解析的原始文本（供学历层次识别等使用）
 
-  const BLOCK_WORDS = /masterarbeit|thesis|dissertation|kernbereich|wahlpflicht|pflichtbereich|erg[aä]nzungsbereich|core\s+\w{2,12}\s+(area|economics|business)|compulsory|elective|\bmodule\b|\bmodul\b|semester|\bnote\b|\bgrade\b|\blp\b|\bcp\b|\bcredit|born|geboren|\bprof\b|\bdr\b|universit|examination|prufung|prüfung|zeugnis|transcript|成绩单|论文|总学分|平均|page\s*\d|出生|毕业|姓名|学号/i;
+  const BLOCK_WORDS = /masterarbeit|thesis|dissertation|kernbereich|wahlpflicht|pflichtbereich|erg[aä]nzungsbereich|core\s+area|core\s+\w{2,12}\s+(area|economics|business)|complementary\s+area|additive\s+key\s+qualifications|\bspecialisation\b|\bseminars?\b|seminar\s+topics|compulsory|elective|\bmodule\b|\bmodul\b|semester|\bnote\b|\bgrade\b|\blp\b|\bcp\b|\bcredit|born|geboren|\bprof\b|\bdr\b|universit|examination|prufung|prüfung|zeugnis|transcript|成绩单|论文|总学分|平均|page\s*\d|出生|毕业|姓名|学号/i;
 
   const TRAIL = /[\s,;，]+(?:\d{1,2}(?:[.,]\d{1,2})?|Pass|Merit|Distinction|Fail|HD|DI|CR|PS|FL|EX|PP|GPA\s*\d[\d.]*|学分|LP|CP|ECTS)\s*$/gi;
 
@@ -26,11 +26,14 @@
         t = parts[parts.length - 1].trim(); // 表格型成绩单：课程名列在最后一栏
       } else if (hasPipe) {
         continue; // 表格型文档中，无 | 的行（人名/标题/说明）跳过
+      } else if (!/\d/.test(t)) {
+        continue; // 无分栏且不含数字的行（标题/人名）跳过
       }
       if (BLOCK_WORDS.test(t)) continue;
       t = t.replace(/^[A-Z]{2,6}\s*\d{2,4}[A-Z]?\s*/, '');
       for (let k = 0; k < 5; k++) {
-        t = t.replace(/[\s:：,，;；]+$/, '');
+        t = t.replace(/[\s:：,，;；<>]+$/, '');
+        t = t.replace(/[\s,;，]*<+\s*\d{1,2}(?:[.,]\d{1,2})?\s*$/, '');
         t = t.replace(/\s+[a-z]\s*$/i, '');
         t = t.replace(TRAIL, '');
       }

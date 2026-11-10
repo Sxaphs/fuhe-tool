@@ -408,14 +408,17 @@
   }
 
   /* ---------- 第 4 步：报告 ---------- */
-  async function generateReport(courses, majorName, catName, codeText, schoolRows, comparisonTable, level, ownPlanCourses, gradSiblings) {
+  async function generateReport(courses, majorName, catName, codeText, schoolRows, comparisonTable, level, ownPlanMaterial, ownPlanIsRegulation, gradSiblings) {
     const cfg = getConfig();
     $('reportBody').innerHTML = '<p class="muted">正在生成复核建议报告……</p>';
     const levelLine = level ? '（学历层次：' + levelName(level) + '）' : '';
     const siblingLine = (gradSiblings && gradSiblings.length)
       ? '\n【重要】目标学科为「' + majorName + '」' + (codeText ? '（代码 ' + codeText + '）' : '') + '，课程对应必须针对该学科自身，不要与同门类其他学科（' + gradSiblings.join('、') + '）的课程混淆。'
       : '';
-    const ownPlanText = (ownPlanCourses && ownPlanCourses.length) ? ownPlanCourses.join('\n') : '（未上传）';
+    const ownPlanLabel = ownPlanIsRegulation
+      ? '你的培养方案条例摘要（课程对比佐证，若已上传）'
+      : '你的国外学校培养方案课程（课程描述佐证，若已上传）';
+    const ownPlanText = ownPlanMaterial || '（未上传）';
     const bestLine = schoolRows.length
       ? schoolRows.slice().sort((a, b) => b.hits.length / Math.max(b.total, 1) - a.hits.length / Math.max(a.total, 1))[0]
       : null;
@@ -436,7 +439,7 @@
           + '## 三、推荐选校\n结合重合度说明哪所学校培养方案最适合作为对比依据及理由。\n'
           + '## 四、材料清单\n认证书、成绩单（PDF 单文件 1M 以下）、课程对比说明、目标高校培养方案来源等。\n'
           + '## 五、风险提示\n复核免费、认证结果出具之日起 12 个月内申请、仅 1 次机会；不承诺结果，最终以留服中心审核为准。\n\n'
-          + '【国外课程】\n' + courses.join('\n') + '\n\n【你的国外学校培养方案课程（课程描述佐证，若已上传）】\n' + ownPlanText + '\n\n【学校课表匹配】\n' + summary + '\n\n【本地匹配参考（仅供参考，以你的判断为准）】\n' + comparisonTable.md + '\n'
+          + '【国外课程】\n' + courses.join('\n') + '\n\n【' + ownPlanLabel + '】\n' + ownPlanText + '\n\n【学校课表匹配】\n' + summary + '\n\n【本地匹配参考（仅供参考，以你的判断为准）】\n' + comparisonTable.md + '\n'
           + '【最优学校】' + (bestLine ? bestLine.school : '无') + '\n\n要求：课程对应表必须逐门列出全部国外课程并尽量给出对应课程名，不要大范围写「待人工对照」；语气客观；不出现"保证通过""包过"。';
         const res = await fetch(cfg.base.replace(/\/+$/, '') + '/chat/completions', {
           method: 'POST',
@@ -455,7 +458,7 @@
       report = '# 复核建议报告（模板）\n\n'
         + '## 一、目标专业\n\n' + majorName + (catName ? '（' + catName + (codeText ? ' · ' + codeText : '') + '）' : '') + levelLine + '\n\n'
         + '## 二、课程对应表\n\n' + comparisonTable.md + '\n\n'
-        + (ownPlanCourses && ownPlanCourses.length ? '### 附：你的国外培养方案课程（' + ownPlanCourses.length + ' 门）\n\n' + ownPlanCourses.map((c) => '- ' + c).join('\n') + '\n\n' : '')
+        + (!ownPlanIsRegulation && ownPlanMaterial ? '### 附：你的国外培养方案课程\n\n' + ownPlanMaterial.split('\n').map((c) => '- ' + c).join('\n') + '\n\n' : '')
         + '## 三、推荐选校\n\n' + (bestLine ? '建议以「' + bestLine.school + '」的培养方案作为课程对比依据（重合度最高：' + bestLine.hits.length + '/' + bestLine.total + ' 门课程匹配）。' : '暂无学校课表数据，请上传目标学校培养方案。') + '\n\n'
         + '## 四、材料清单\n\n- 国外学历学位认证书（原件扫描件）\n- 国外高校官方成绩单（PDF、单文件 1M 以下）\n- 课程对比说明（对照目标高校培养方案逐门说明）\n- 目标高校《培养方案》来源说明（官网链接或文件）\n- 复核原因说明\n\n'
         + '## 五、风险提示\n\n1. 改名目标必须是国内专业目录中真实存在的专业名；\n2. 复核免费、认证结果出具之日起 12 个月内申请、仅 1 次机会；\n3. 报考事业单位自 2024-10-25 起官方建议无需复核；\n4. 本报告仅供申报参考，最终以留服中心审核为准。\n';
@@ -590,21 +593,33 @@
       }
       // 用户自己国外学校的培养方案/课程描述（课程对比的本方佐证，不是目标学校课表）
       let ownPlanCourses = [];
+      let ownPlanRaw = '';
+      let ownPlanIsRegulation = false;
       let ownPlanSummary = '';
       if (planFile) {
         try {
           ownPlanCourses = await parsePlanAuto(planFile);
-          const matchedOwn = courses.filter((c) => ownPlanCourses.some((p) => {
-            const a = normalize(c);
-            const b = normalize(p);
-            return a === b || a.includes(b) || b.includes(a);
-          }));
-          ownPlanSummary = '📎 你的培养方案解析出 ' + ownPlanCourses.length + ' 门课程，与成绩单课程匹配 ' + matchedOwn.length + ' 门（作为课程对比的本方佐证）。';
+          ownPlanRaw = window.FuhePdf.getLastRawText() || '';
+          ownPlanIsRegulation = /study and examination regulations|FSPO|prufungsordnung|prüfungsordnung|§\s*\d+|条例|培养与考试/i.test(ownPlanRaw);
+          if (ownPlanIsRegulation) {
+            ownPlanSummary = '📎 你的培养方案已解析（条例/规章类文档，模块分区与课程信息将作为课程对比佐证传给 AI）。若你学校另有课程清单/模块手册（如《核心课程清单》），上传它效果更好。';
+          } else {
+            const matchedOwn = courses.filter((c) => ownPlanCourses.some((p) => {
+              const a = normalize(c);
+              const b = normalize(p);
+              return a === b || a.includes(b) || b.includes(a);
+            }));
+            ownPlanSummary = '📎 你的培养方案解析出 ' + ownPlanCourses.length + ' 门课程，与成绩单课程匹配 ' + matchedOwn.length + ' 门（作为课程对比的本方佐证）。';
+          }
         } catch (e) {
           ownPlanSummary = '⚠️ 你的培养方案解析失败：' + e.message;
         }
       }
       if (ownPlanSummary) step2Html += '<p class="muted small">' + esc(ownPlanSummary) + '</p>';
+      // 传给报告的佐证材料：条例类给全文摘要，否则给课程列表
+      const ownPlanMaterial = ownPlanIsRegulation
+        ? (ownPlanRaw ? ownPlanRaw.replace(/\s+/g, ' ').slice(0, 3000) : '')
+        : ownPlanCourses.join('\n');
       if (found && found.kind === 'grad' && found.subs && found.subs.length) {
         step2Html += '<p class="muted small">二级学科：' + found.subs.map(esc).join('、') + '</p>';
       }
@@ -652,12 +667,32 @@
         $('step3Badge').textContent = 'AI 正在整理各校课程并语义匹配……';
         aiEntries = await aiFindSchoolCourses(matchMajor, found ? found.kind : 'undergrad', found && found.subs ? found.subs : [], courses, found && found.parentName ? found.name : null, found ? found.code : '', gradSiblings);
       }
+      // 同门类姊妹学科内容守卫：用姊妹学科的二级学科作黑名单，剔除疑似混淆课程
+      let siblingGuardNote = '';
+      if (gradSiblings.length && aiEntries.length && gradData.disciplines) {
+        const siblingSubs = gradData.disciplines
+          .filter((x) => gradSiblings.includes(x.name))
+          .flatMap((x) => x.subs || [])
+          .map(normalize)
+          .filter((s) => s && s.length >= 2);
+        let removed = 0;
+        for (const e of aiEntries) {
+          const before = e.courses.length;
+          e.courses = e.courses.filter((c) => {
+            const n = normalize(c);
+            return !siblingSubs.some((s) => n.includes(s) || s.includes(n));
+          });
+          removed += before - e.courses.length;
+        }
+        if (removed) siblingGuardNote = '⚠️ 已剔除 ' + removed + ' 门疑似同门类其他学科（' + gradSiblings.join('、') + '）的课程，避免学科混淆。';
+      }
       const curatedCount = ((planCourses.entries || []).filter(levelFilter)).length;
       const totalSources = curatedCount + aiEntries.length;
       $('step3Badge').textContent = totalSources ? ('✅ ' + totalSources + ' 个来源' + (level ? '（' + levelName(level) + '层次）' : '')) : '⚠️ 未收录，请一键搜索或让 AI 整理';
       // 双语桥：研究生学科聚合相关本科专业核心课程（修复 0 重合问题）
       const bridge = buildBridgeFor(seed, found);
       renderStep3(courses, bridge, displayMajor, matchMajor, planSeed, planCourses, aiEntries, level, codeText);
+      if (siblingGuardNote) $('step3Body').innerHTML += '<p class="warn small">' + esc(siblingGuardNote) + '</p>';
 
       // 学校行汇总（供报告）
       const schoolRows = [];
@@ -674,7 +709,7 @@
       const comparisonTable = buildComparisonTable(courses, schoolRows);
       const reportMajor = found ? (found.parentName ? found.name + '（' + found.parentName + '）' : found.name) : majorName;
       const reportCat = found && found.parentName ? '研究生学科' : (found ? found.cat : '');
-      await generateReport(courses, reportMajor, reportCat, codeText, schoolRows, comparisonTable, level, ownPlanCourses, gradSiblings);
+      await generateReport(courses, reportMajor, reportCat, codeText, schoolRows, comparisonTable, level, ownPlanMaterial, ownPlanIsRegulation, gradSiblings);
       $('runStatus').textContent = '✅ 分析完成。可编辑识别课程后点「重新生成建议」。';
       document.getElementById('pipelineResults').scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
