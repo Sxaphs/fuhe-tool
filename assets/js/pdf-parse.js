@@ -185,6 +185,11 @@
     const cfg = getAiConfig();
     if (!cfg.base || !cfg.apiKey) throw new Error('未配置 API Key——请先到「AI 助手」页填写并保存');
     if (!cfg.visionModel) throw new Error('未配置视觉模型——DeepSeek 暂无视觉模型，请用 Moonshot（moonshot-v1-8k-vision-preview）或 OpenRouter（如 qwen/qwen2.5-vl-72b-instruct）');
+    let extra = {};
+    try {
+      const v = JSON.parse(String(cfg.extraBody || '') || '{}');
+      if (v && typeof v === 'object' && !Array.isArray(v)) extra = v;
+    } catch (e) { /* 忽略非法额外参数 */ }
 
     const name = String(file.name || '').toLowerCase();
     const canvases = name.endsWith('.pdf') || file.type === 'application/pdf'
@@ -205,7 +210,7 @@
     const res = await fetch(cfg.base.replace(/\/+$/, '') + '/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + cfg.apiKey },
-      body: JSON.stringify({ model: cfg.visionModel, messages: [{ role: 'user', content }], temperature: 0.1, max_tokens: 3000 })
+      body: JSON.stringify({ model: cfg.visionModel, messages: [{ role: 'user', content }], temperature: 0.1, max_tokens: 3000, ...extra })
     });
     if (!res.ok) {
       let detail = '';

@@ -205,13 +205,21 @@ async function llmChat(prompt) {
   const base = (process.env.LLM_BASE_URL || '').replace(/\/+$/, '');
   const key = process.env.LLM_API_KEY;
   if (!base || !key) return '';
+  let extra = {};
+  if (process.env.LLM_EXTRA_JSON) {
+    try {
+      const v = JSON.parse(process.env.LLM_EXTRA_JSON);
+      if (v && typeof v === 'object' && !Array.isArray(v)) extra = v;
+    } catch { /* 忽略非法额外参数 */ }
+  }
   const res = await fetch(`${base}/chat/completions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
     body: JSON.stringify({
-      model: process.env.LLM_MODEL || 'deepseek-chat',
+      model: process.env.LLM_MODEL || 'deepseek-flash',
       messages: [{ role: 'user', content: prompt }],
-      temperature: 0.3
+      temperature: 0.3,
+      ...extra
     })
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

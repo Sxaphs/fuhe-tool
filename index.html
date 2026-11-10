@@ -43,10 +43,13 @@
         <button class="btn ghost" id="btnSaveKey">保存</button>
       </div>
       <div class="flex mb">
-        <input type="text" id="model" value="deepseek-chat" placeholder="文本模型（生成建议用），如 deepseek-chat" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+        <input type="text" id="model" value="deepseek-flash" placeholder="文本模型（生成建议用），如 deepseek-flash" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
         <input type="text" id="visionModel" placeholder="视觉模型（识别截图用），如 moonshot-v1-8k-vision-preview" style="flex:1;min-width:220px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
       </div>
-      <p class="muted small" id="keyStatus">API 的三个用途：<strong>视觉模型</strong>→成绩单截图识别；<strong>文本模型</strong>→自动整理各校课表并语义匹配、生成复核建议报告。视觉模型 DeepSeek 暂无（用 Moonshot/OpenRouter）；文本模型 DeepSeek/Moonshot/OpenRouter 均可。</p>
+      <div class="flex mb">
+        <input type="text" id="extraBody" placeholder='额外请求参数（JSON，可选），如 {"reasoning_effort":"high","thinking":{"type":"enabled"}}' style="flex:1;min-width:260px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+      </div>
+      <p class="muted small" id="keyStatus">接口不写死：服务商地址、文本模型、视觉模型、额外请求参数均可自定义。API 的三个用途：<strong>视觉模型</strong>→成绩单截图识别；<strong>文本模型</strong>→自动整理各校课表并语义匹配、生成复核建议报告。额外参数会原样合并进请求体（如 DeepSeek 新版 deepseek-flash 的 reasoning_effort/thinking）。</p>
     </div>
 
     <div class="card">

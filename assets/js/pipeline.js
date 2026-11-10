@@ -14,7 +14,7 @@
   const CODES_URL = 'data/major-codes.json';
 
   const PRESETS = {
-    'https://api.deepseek.com': 'deepseek-chat',
+    'https://api.deepseek.com': 'deepseek-flash',
     'https://api.moonshot.cn/v1': 'moonshot-v1-8k',
     'https://openrouter.ai/api/v1': 'deepseek/deepseek-chat'
   };
@@ -28,14 +28,21 @@
   /* ---------- 配置 ---------- */
   function loadConfig() { try { return JSON.parse(localStorage.getItem(AI_KEY)) || {}; } catch (e) { return {}; } }
   function saveConfig(c) { localStorage.setItem(AI_KEY, JSON.stringify(c)); }
+  function parseExtra(s) {
+    try {
+      const v = JSON.parse(String(s || '') || '{}');
+      return v && typeof v === 'object' && !Array.isArray(v) ? v : {};
+    } catch (e) { return {}; }
+  }
   function getConfig() {
     const baseSel = $('baseUrl').value;
     const base = baseSel === 'custom' ? $('customBase').value.trim().replace(/\/+$/, '') : baseSel;
     return {
       base,
       apiKey: $('apiKey').value.trim() || loadConfig().apiKey || '',
-      model: $('model').value.trim() || loadConfig().model || 'deepseek-chat',
-      visionModel: $('visionModel').value.trim() || loadConfig().visionModel || ''
+      model: $('model').value.trim() || loadConfig().model || 'deepseek-flash',
+      visionModel: $('visionModel').value.trim() || loadConfig().visionModel || '',
+      extraBody: parseExtra($('extraBody').value) || parseExtra(loadConfig().extraBody)
     };
   }
 
@@ -302,7 +309,7 @@
       const res = await fetch(cfg.base.replace(/\/+$/, '') + '/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + cfg.apiKey },
-        body: JSON.stringify({ model: cfg.model, messages: [{ role: 'user', content: prompt }], temperature: 0.2, max_tokens: 2500 })
+        body: JSON.stringify({ model: cfg.model, messages: [{ role: 'user', content: prompt }], temperature: 0.2, max_tokens: 2500, ...(cfg.extraBody || {}) })
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const j = await res.json();
@@ -445,7 +452,7 @@
         const res = await fetch(cfg.base.replace(/\/+$/, '') + '/chat/completions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + cfg.apiKey },
-          body: JSON.stringify({ model: cfg.model, messages: [{ role: 'user', content: prompt }], temperature: 0.3, max_tokens: 3000 })
+          body: JSON.stringify({ model: cfg.model, messages: [{ role: 'user', content: prompt }], temperature: 0.3, max_tokens: 3000, ...(cfg.extraBody || {}) })
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const j = await res.json();
@@ -734,6 +741,7 @@
       $('customBase').value = cfg.base;
     }
     if (cfg.apiKey) $('apiKey').value = cfg.apiKey;
+    if (cfg.extraBody) $('extraBody').value = JSON.stringify(cfg.extraBody);
 
     $('baseUrl').addEventListener('change', () => {
       const v = $('baseUrl').value;
