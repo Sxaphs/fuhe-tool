@@ -5,3 +5,4 @@ report/
 .DS_Store
 .env
 npm-cache-tmp/
+*traineddata
