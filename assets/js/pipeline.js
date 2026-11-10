@@ -70,6 +70,15 @@
   }
 
   let lastDetectedLevel = null;
+  let groupData = []; // 两级选择数据：[{gate, entries:[{value,label,level}]}]
+
+  /* 学科门类（主目录）：从专业代码前两位映射 */
+  const GATE = { '01': '哲学', '02': '经济学', '03': '法学', '04': '教育学', '05': '文学', '06': '历史学', '07': '理学', '08': '工学', '09': '农学', '10': '医学', '12': '管理学', '13': '艺术学', '14': '交叉学科' };
+  const GATE_ORDER = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '12', '13', '14', '99'];
+  function gateOf(code) {
+    const g = String(code || '').slice(0, 2);
+    return GATE[g] || '其他';
+  }
 
   /* ---------- 工具 ---------- */
   function normalize(s) { return String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ''); }
@@ -112,9 +121,15 @@
     return [...document.querySelectorAll('#coursesTable .course-input')].map((i) => i.value.trim()).filter(Boolean);
   }
 
-  /* 查找目标专业：先本科种子库，再研究生学科库 */
-  function findMajorAny(seed, gradData, name) {
-    const n = String(name || '').trim();
+  /* 查找目标专业：先本科种子库，再研究生学科库（支持「一级学科::二级学科」编码） */
+  function findMajorAny(seed, gradData, sel) {
+    const n = String(sel || '').trim();
+    const [parent, sub] = n.split('::');
+    if (sub && gradData && gradData.disciplines) {
+      const d = gradData.disciplines.find((x) => x.name === parent);
+      if (d) return { name: sub, parentName: d.name, cat: '研究生学科（' + d.name + '）', kind: 'grad', code: d.code, entry: d, subs: d.subs || [] };
+      return null;
+    }
     if (seed && seed.categories) {
       for (const cat of seed.categories) {
         for (const m of cat.majors) {
@@ -124,12 +139,19 @@
     }
     if (gradData && gradData.disciplines) {
       for (const d of gradData.disciplines) {
-        if (d.name === n || (d.subs || []).includes(n)) {
+        if (d.name === n) {
           return { name: d.name, cat: '研究生学科', kind: 'grad', code: d.code, entry: d, subs: d.subs || [] };
         }
       }
     }
     return null;
+  }
+
+  /* 当前选中的目标专业（支持手动输入） */
+  function currentMajorValue() {
+    const v = $('majorSelect').value;
+    if (v === '__custom__') return $('majorCustom').value.trim();
+    return v;
   }
 
   /* ---------- 匹配（课程 → 候选本科专业） ---------- */
@@ -260,12 +282,13 @@
   }
 
   /* ---------- AI 自动查找各校培养方案核心课程 + 语义匹配（结构化 JSON） ---------- */
-  async function aiFindSchoolCourses(majorName, kind, subs, courses) {
+  async function aiFindSchoolCourses(majorName, kind, subs, courses, focusSub) {
     const cfg = getConfig();
     if (!cfg.apiKey || !cfg.base || !cfg.model) return [];
     const kindText = kind === 'grad' ? '研究生一级学科' : '本科专业';
     const subText = (subs && subs.length) ? '（其二级学科包括：' + subs.slice(0, 8).join('、') + '）' : '';
-    const prompt = '你是国内高校课程设置专家。请给出4所985/211高校的「' + majorName + '」' + kindText + subText + '培养方案的核心专业课程清单，'
+    const focusText = focusSub ? '本次用户的目标是其二级学科「' + focusSub + '」，课程清单请侧重覆盖该二级学科的方向课。' : '';
+    const prompt = '你是国内高校课程设置专家。请给出4所985/211高校的「' + majorName + '」' + kindText + subText + focusText + '培养方案的核心专业课程清单，'
       + '并对【国外课程】中的每一门课程判断它与该校哪门课程对应。严格只输出JSON数组（不要markdown代码块、不要解释文字）：\n'
       + '[{"school":"学校全名","courses":["课程1","课程2"],"matched":["对应上的国外课程原名1"]}]\n'
       + '要求：courses 每校12~20门核心专业课程，课程名用国内通行名称；matched 数组中的课程名必须与【国外课程】中的名称逐字一致，只放确实与该培养方案对应的课程（按课程内容语义判断，不要只按名字猜）。\n'
@@ -299,10 +322,10 @@
   }
 
   /* ---------- 第 3 步：学校培养方案匹配（标准化表格） ---------- */
-  function renderStep3(courses, bridge, majorName, uploadPlanCourses, planSeed, planCoursesData, aiEntries, level) {
-    const levelOk = (e) => e.major === majorName && (!level || !e.level || e.level === level);
+  function renderStep3(courses, bridge, displayMajor, matchMajor, uploadPlanCourses, planSeed, planCoursesData, aiEntries, level) {
+    const levelOk = (e) => e.major === matchMajor && (!level || !e.level || e.level === level);
     const planEntries = ((planCoursesData && planCoursesData.entries) || []).filter(levelOk);
-    const linkEntries = (planSeed && planSeed.entries || []).filter((e) => e.major === majorName);
+    const linkEntries = (planSeed && planSeed.entries || []).filter((e) => e.major === matchMajor);
 
     const rows = [];
     for (const e of planEntries) {
@@ -346,15 +369,15 @@
     }
     if (linkEntries.length) {
       html += '<p class="muted small mt">已收录的该专业培养方案链接：</p><ul class="small">';
-      for (const e of linkEntries) html += '<li><a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.school) + ' · ' + esc(majorName) + (e.kind === 'pdf' ? '（PDF）' : '') + '</a></li>';
+      for (const e of linkEntries) html += '<li><a href="' + esc(e.url) + '" target="_blank" rel="noopener">' + esc(e.school) + ' · ' + esc(displayMajor) + (e.kind === 'pdf' ? '（PDF）' : '') + '</a></li>';
       html += '</ul>';
     }
     const searchSuffix = level === 'grad' ? ' 研究生培养方案' : ' 培养方案';
-    html += '<p class="muted small mt">一键搜索各校培养方案（' + esc(majorName) + (level ? ' · ' + levelName(level) + '层次' : '') + '）：</p>';
+    html += '<p class="muted small mt">一键搜索各校培养方案（' + esc(displayMajor) + (level ? ' · ' + levelName(level) + '层次' : '') + '）：</p>';
     const schools = (planSeed && planSeed.schools && planSeed.schools.length) ? planSeed.schools : SCHOOLS;
     for (const s of schools.slice(0, 6)) {
-      const bd = 'https://www.baidu.com/s?wd=' + encodeURIComponent(s + ' ' + majorName + searchSuffix);
-      const bi = 'https://www.bing.com/search?q=' + encodeURIComponent(s + ' ' + majorName + searchSuffix);
+      const bd = 'https://www.baidu.com/s?wd=' + encodeURIComponent(s + ' ' + displayMajor + searchSuffix);
+      const bi = 'https://www.bing.com/search?q=' + encodeURIComponent(s + ' ' + displayMajor + searchSuffix);
       html += '<span class="chip"><a href="' + esc(bd) + '" target="_blank" rel="noopener">' + esc(s) + ' · 百度</a></span><span class="chip"><a href="' + esc(bi) + '" target="_blank" rel="noopener">' + esc(s) + ' · Bing</a></span>';
     }
     $('step3Body').innerHTML = html;
@@ -474,7 +497,7 @@
   }
 
   function exportPdf() {
-    const major = $('majorSelect').value.trim() || '目标专业';
+    const major = currentMajorValue() || '目标专业';
     const text = ($('reportBody').innerText || '').trim();
     if (!text) { alert('还没有报告内容'); return; }
     const w = window.open('', '_blank');
@@ -508,7 +531,7 @@
       if (detected && $('levelSelect').value === 'auto') $('levelSelect').value = detected;
       $('step1Method').textContent = r1.method + (detected ? '｜学历层次识别：' + levelName(detected) : '｜学历层次：未能识别（可手动选择）');
       $('step1Badge').textContent = '✅ ' + r1.courses.length + ' 门课程';
-      refreshMajorList();
+      refreshMajorSelects();
       await runAnalysis(r1.courses);
     } catch (e) {
       $('runStatus').textContent = '❌ 分析失败：' + e.message;
@@ -518,7 +541,7 @@
 
   /* 第 2-4 步：以给定课程列表跑匹配与报告（重新生成时从可编辑表格取课程） */
   async function runAnalysis(courses) {
-    const majorName = $('majorSelect').value.trim();
+    const majorName = currentMajorValue();
     // 有效学历层次：手动选择优先，否则用自动识别结果
     const level = $('levelSelect').value !== 'auto' ? $('levelSelect').value : lastDetectedLevel;
     try {
@@ -531,7 +554,7 @@
       if (found) {
         if (found.kind === 'grad') {
           codeText = found.code;
-          $('step2Badge').textContent = '✅ ' + found.name + '（研究生学科 · ' + found.code + '）';
+          $('step2Badge').textContent = '✅ ' + found.name + (found.parentName ? '（' + found.parentName + ' 二级学科 · ' + found.code + '）' : '（研究生学科 · ' + found.code + '）');
         } else {
           const codes = await getCodes();
           const code = codes && codes.majors && codes.majors[found.name] ? codes.majors[found.name] : '';
@@ -566,8 +589,17 @@
       $('step2Body').innerHTML = step2Html;
       $('step2Body').querySelectorAll('[data-pick]').forEach((el) => {
         el.addEventListener('click', () => {
-          $('majorSelect').value = el.getAttribute('data-pick');
-          $('runStatus').textContent = '已选择「' + el.getAttribute('data-pick') + '」，点击「开始一键分析」重新生成。';
+          const name = el.getAttribute('data-pick');
+          let opt = [...$('majorSelect').options].find((o) => o.value === name);
+          if (!opt) {
+            opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name + '（推荐）';
+            $('majorSelect').appendChild(opt);
+          }
+          $('majorSelect').value = name;
+          $('majorCustom').style.display = 'none';
+          $('runStatus').textContent = '已选择「' + name + '」，点击「开始一键分析」重新生成。';
           $('step3Body').innerHTML = '';
           $('reportBody').innerHTML = '';
         });
@@ -577,8 +609,11 @@
       $('step3Badge').textContent = '查找中……';
       const planCourses = await getPlanCourses();
       const planSeed = await getPlanSeed();
+      // 二级学科选择时，课表按一级学科匹配
+      const matchMajor = found && found.parentName ? found.parentName : majorName;
+      const displayMajor = found && found.parentName ? found.name + '（' + found.parentName + '）' : majorName;
       // 层次过滤：未知层次的条目在层次明确时排除（严格同层次匹配）
-      const levelFilter = (e) => e.major === majorName && (!level || !e.level || e.level === level);
+      const levelFilter = (e) => e.major === matchMajor && (!level || !e.level || e.level === level);
       let uploadPlanCourses = [];
       if (planFile) {
         try {
@@ -591,14 +626,14 @@
       let aiEntries = [];
       if (getConfig().apiKey && getConfig().base && getConfig().model) {
         $('step3Badge').textContent = 'AI 正在整理各校课程并语义匹配……';
-        aiEntries = await aiFindSchoolCourses(majorName, found ? found.kind : 'undergrad', found && found.subs ? found.subs : [], courses);
+        aiEntries = await aiFindSchoolCourses(matchMajor, found ? found.kind : 'undergrad', found && found.subs ? found.subs : [], courses, found && found.parentName ? found.name : null);
       }
       const curatedCount = ((planCourses.entries || []).filter(levelFilter)).length;
       const totalSources = curatedCount + aiEntries.length + (uploadPlanCourses.length ? 1 : 0);
       $('step3Badge').textContent = totalSources ? ('✅ ' + totalSources + ' 个来源' + (level ? '（' + levelName(level) + '层次）' : '')) : '⚠️ 未收录，请上传或一键搜索';
       // 双语桥：研究生学科聚合相关本科专业核心课程（修复 0 重合问题）
       const bridge = buildBridgeFor(seed, found);
-      renderStep3(courses, bridge, majorName, uploadPlanCourses, planSeed, planCourses, aiEntries, level);
+      renderStep3(courses, bridge, displayMajor, matchMajor, uploadPlanCourses, planSeed, planCourses, aiEntries, level);
 
       // 学校行汇总（供报告）
       const schoolRows = [];
@@ -616,7 +651,9 @@
 
       // 第 4 步：报告（标准化表格）
       const comparisonTable = buildComparisonTable(courses, schoolRows);
-      await generateReport(courses, majorName, found ? found.cat : '', codeText, schoolRows, comparisonTable, level);
+      const reportMajor = found ? (found.parentName ? found.name + '（' + found.parentName + '）' : found.name) : majorName;
+      const reportCat = found && found.parentName ? '研究生学科' : (found ? found.cat : '');
+      await generateReport(courses, reportMajor, reportCat, codeText, schoolRows, comparisonTable, level);
       $('runStatus').textContent = '✅ 分析完成。可编辑识别课程后点「重新生成建议」。';
       document.getElementById('pipelineResults').scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
@@ -677,18 +714,39 @@
     });
     $('btnExportPdf').addEventListener('click', exportPdf);
 
-    // 专业候选列表：本科专业 + 研究生学科（按学历层次过滤）
-    let undergradOptions = [];
-    let gradOptions = [];
-    function refreshMajorList() {
-      const dl = $('majorList');
-      dl.innerHTML = '';
-      const level = $('levelSelect').value;
-      if (level !== 'grad') for (const o of undergradOptions) dl.appendChild(o.cloneNode(true));
-      if (level !== 'undergrad') for (const o of gradOptions) dl.appendChild(o.cloneNode(true));
+    // 两级选择：学科门类（主目录）→ 具体专业（子目录，含研究生学科与二级学科）
+    let refreshMajorSelects = () => {};
+
+    function populateMajorOptions(level) {
+      const gate = $('majorGroup').value;
+      const mSel = $('majorSelect');
+      mSel.innerHTML = '';
+      const g = groupData.find((x) => x.gate === gate);
+      if (g) {
+        for (const e of g.entries) {
+          if (level !== 'auto' && e.level !== level) continue;
+          const o = document.createElement('option');
+          o.value = e.value;
+          o.textContent = e.label;
+          mSel.appendChild(o);
+        }
+      }
+      const oc = document.createElement('option');
+      oc.value = '__custom__';
+      oc.textContent = '其他专业（手动输入）…';
+      mSel.appendChild(oc);
+      $('majorCustom').style.display = mSel.value === '__custom__' ? '' : 'none';
     }
+
+    $('majorGroup').addEventListener('change', () => populateMajorOptions($('levelSelect').value));
+    $('majorSelect').addEventListener('change', () => {
+      $('majorCustom').style.display = $('majorSelect').value === '__custom__' ? '' : 'none';
+      $('step2Body').innerHTML = '';
+      $('step3Body').innerHTML = '';
+      $('reportBody').innerHTML = '';
+    });
     $('levelSelect').addEventListener('change', () => {
-      refreshMajorList();
+      refreshMajorSelects();
       $('step2Body').innerHTML = '';
       $('step3Body').innerHTML = '';
       $('reportBody').innerHTML = '';
@@ -697,21 +755,46 @@
     try {
       const seed = await getSeed();
       const grad = await getGrad();
+      const codes = await getCodes();
+      const gateMap = {};
+      const addEntry = (gate, value, label, level) => {
+        if (!gateMap[gate]) gateMap[gate] = [];
+        gateMap[gate].push({ value, label, level });
+      };
       for (const cat of seed.categories) {
         for (const m of cat.majors) {
-          const opt = document.createElement('option');
-          opt.value = m.name;
-          opt.label = m.name + '（' + cat.category + '）';
-          undergradOptions.push(opt);
+          const code = codes && codes.majors && codes.majors[m.name] ? codes.majors[m.name] : '';
+          addEntry(gateOf(code), m.name, m.name + '（本科 · ' + cat.category + (code ? ' · ' + code : '') + '）', 'undergrad');
         }
       }
       for (const d of (grad.disciplines || [])) {
-        const opt = document.createElement('option');
-        opt.value = d.name;
-        opt.label = d.name + '（研究生学科 · ' + d.code + '）';
-        gradOptions.push(opt);
+        addEntry(gateOf(d.code), d.name, d.name + '（研究生学科 · ' + d.code + '）', 'grad');
+        for (const s of (d.subs || [])) {
+          addEntry(gateOf(d.code), d.name + '::' + s, s + '（二级学科 · ' + d.name + '）', 'grad');
+        }
       }
-      refreshMajorList();
+      groupData = GATE_ORDER
+        .map((k) => ({ gate: GATE[k] || '其他', entries: gateMap[GATE[k] || '其他'] || [] }))
+        .filter((g) => g.entries.length);
+      refreshMajorSelects = () => {
+        const level = $('levelSelect').value;
+        const gSel = $('majorGroup');
+        const prevGate = gSel.value;
+        gSel.innerHTML = '';
+        for (const g of groupData) {
+          const opts = g.entries.filter((e) => level === 'auto' || e.level === level);
+          if (!opts.length) continue;
+          const og = document.createElement('option');
+          og.value = g.gate;
+          const nUnd = g.entries.filter((e) => e.level === 'undergrad').length;
+          const nGrad = g.entries.filter((e) => e.level === 'grad').length;
+          og.textContent = g.gate + (level === 'auto' ? '（本科 ' + nUnd + ' / 研究生 ' + nGrad + '）' : '');
+          gSel.appendChild(og);
+        }
+        if (gSel.querySelector('option[value="' + prevGate + '"]')) gSel.value = prevGate;
+        populateMajorOptions(level);
+      };
+      refreshMajorSelects();
     } catch (e) { /* 数据加载失败不影响其他功能 */ }
   });
 })();

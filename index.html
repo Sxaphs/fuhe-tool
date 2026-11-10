@@ -61,12 +61,13 @@
           <option value="undergrad">本科</option>
           <option value="grad">硕士 / 博士</option>
         </select>
-        <input list="majorList" id="majorSelect" placeholder="目标复核专业（必填），如：计算机科学与技术 / 应用经济学" style="flex:1;min-width:240px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
-        <datalist id="majorList"></datalist>
+        <select id="majorGroup" title="第一步：选学科门类（主目录）" style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;max-width:200px;"></select>
+        <select id="majorSelect" title="第二步：选具体专业（子目录）" style="flex:1;min-width:220px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;"></select>
+        <input type="text" id="majorCustom" placeholder="其他专业名（手动输入）" style="display:none;flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
         <label class="btn ghost" for="filePlan" style="cursor:pointer;">📎 上传目标学校培养方案（可选）<input type="file" id="filePlan" accept=".pdf,.png,.jpg,.jpeg,.webp,.bmp,.txt,.csv,image/*" style="display:none;"></label>
         <span class="muted small" id="planName">未选择</span>
       </div>
-      <p class="muted small mb">学历层次自动识别（Master/Bachelor 等字样）：硕士成绩单只匹配研究生学科，本科只匹配本科专业，交叉选择会给出警告。培养方案可选：自动查找已收录课表，找不到时提示上传或一键搜索。</p>
+      <p class="muted small mb">目标专业两级选择：先选学科门类（主目录），再选具体专业（子目录，含研究生学科与二级学科）；没有的话可手动输入。学历层次自动识别（Master/Bachelor 等字样），硕士只匹配研究生学科、本科只匹配本科专业，交叉选择会警告。培养方案可选：自动查找已收录课表，找不到时提示上传或一键搜索。</p>
       <button class="btn" id="btnRun" style="font-size:1.05rem;">🚀 开始一键分析</button>
       <span class="muted small" id="runStatus"></span>
     </div>
