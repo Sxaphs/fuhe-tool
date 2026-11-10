@@ -427,6 +427,7 @@
       : '暂无学校课表数据';
 
     let report = '';
+    let aiNote = '';
     if (cfg.apiKey && cfg.base && cfg.model) {
       try {
         const prompt = '你是留学学历认证复核顾问。基于以下信息生成中文《复核建议报告》，用 markdown 输出，结构固定为：\n'
@@ -451,11 +452,13 @@
         report = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '';
       } catch (e) {
         report = '';
+        aiNote = 'AI 生成失败（' + e.message + '），以下为模板报告。';
         console.warn('AI 报告生成失败：', e.message);
       }
     }
     if (!report) {
-      report = '# 复核建议报告（模板）\n\n'
+      if (!aiNote) aiNote = '未配置 API Key/文本模型，使用模板报告；在「① 配置你的 API Key」填写后可生成完整的 AI 建议。';
+      report = '> ' + aiNote + '\n\n' + '# 复核建议报告（模板）\n\n'
         + '## 一、目标专业\n\n' + majorName + (catName ? '（' + catName + (codeText ? ' · ' + codeText : '') + '）' : '') + levelLine + '\n\n'
         + '## 二、课程对应表\n\n' + comparisonTable.md + '\n\n'
         + (!ownPlanIsRegulation && ownPlanMaterial ? '### 附：你的国外培养方案课程\n\n' + ownPlanMaterial.split('\n').map((c) => '- ' + c).join('\n') + '\n\n' : '')
