@@ -283,13 +283,17 @@
   }
 
   /* ---------- AI 自动查找各校培养方案核心课程 + 语义匹配（结构化 JSON） ---------- */
-  async function aiFindSchoolCourses(majorName, kind, subs, courses, focusSub) {
+  async function aiFindSchoolCourses(majorName, kind, subs, courses, focusSub, code, siblings) {
     const cfg = getConfig();
     if (!cfg.apiKey || !cfg.base || !cfg.model) return [];
     const kindText = kind === 'grad' ? '研究生一级学科' : '本科专业';
+    const codeText = code ? '（学科代码 ' + code + '）' : '';
     const subText = (subs && subs.length) ? '（其二级学科包括：' + subs.slice(0, 8).join('、') + '）' : '';
     const focusText = focusSub ? '本次用户的目标是其二级学科「' + focusSub + '」，课程清单请侧重覆盖该二级学科的方向课。' : '';
-    const prompt = '你是国内高校课程设置专家。请给出4所985/211高校的「' + majorName + '」' + kindText + subText + focusText + '培养方案的核心专业课程清单，'
+    const siblingText = (siblings && siblings.length)
+      ? '【重要】「' + majorName + '」与同门类的其他学科不同，严禁混入以下学科的内容：' + siblings.join('、') + '。课程清单必须体现「' + majorName + '」自身的培养方向。'
+      : '';
+    const prompt = '你是国内高校课程设置专家。请给出4所985/211高校的「' + majorName + '」' + codeText + kindText + subText + focusText + siblingText + '培养方案的核心专业课程清单，'
       + '并对【国外课程】中的每一门课程判断它与该校哪门课程对应。严格只输出JSON数组（不要markdown代码块、不要解释文字）：\n'
       + '[{"school":"学校全名","courses":["课程1","课程2"],"matched":["对应上的国外课程原名1"]}]\n'
       + '要求：courses 每校12~20门核心专业课程，课程名用国内通行名称；matched 数组中的课程名必须与【国外课程】中的名称逐字一致，只放确实与该培养方案对应的课程（按课程内容语义判断，不要只按名字猜）。\n'
@@ -402,10 +406,13 @@
   }
 
   /* ---------- 第 4 步：报告 ---------- */
-  async function generateReport(courses, majorName, catName, codeText, schoolRows, comparisonTable, level, ownPlanCourses) {
+  async function generateReport(courses, majorName, catName, codeText, schoolRows, comparisonTable, level, ownPlanCourses, gradSiblings) {
     const cfg = getConfig();
     $('reportBody').innerHTML = '<p class="muted">正在生成复核建议报告……</p>';
     const levelLine = level ? '（学历层次：' + levelName(level) + '）' : '';
+    const siblingLine = (gradSiblings && gradSiblings.length)
+      ? '\n【重要】目标学科为「' + majorName + '」' + (codeText ? '（代码 ' + codeText + '）' : '') + '，课程对应必须针对该学科自身，不要与同门类其他学科（' + gradSiblings.join('、') + '）的课程混淆。'
+      : '';
     const ownPlanText = (ownPlanCourses && ownPlanCourses.length) ? ownPlanCourses.join('\n') : '（未上传）';
     const bestLine = schoolRows.length
       ? schoolRows.slice().sort((a, b) => b.hits.length / Math.max(b.total, 1) - a.hits.length / Math.max(a.total, 1))[0]
@@ -418,7 +425,7 @@
     if (cfg.apiKey && cfg.base && cfg.model) {
       try {
         const prompt = '你是留学学历认证复核顾问。基于以下信息生成中文《复核建议报告》，用 markdown 输出，结构固定为：\n'
-          + '## 一、目标专业\n' + majorName + (catName ? '（' + catName + (codeText ? ' · ' + codeText : '') + '）' : '') + levelLine + '\n'
+          + '## 一、目标专业\n' + majorName + (catName ? '（' + catName + (codeText ? ' · ' + codeText : '') + '）' : '') + levelLine + siblingLine + '\n'
           + '## 二、课程对应表\n请用 markdown 表格：| 国外课程 | 对应国内课程 | 来源学校 | 匹配说明 |，必须逐门列出【国外课程】中的每一门课程。'
           + '你必须利用自身知识，为每门国外课程判断并填写对应的国内「' + majorName + '」培养方案课程（例如 Financial Statement Analysis 可对应「财务报表分析」或「中级财务会计」），'
           + '「来源学校」填一所开设该课程的代表性985/211高校。可结合【你的国外学校培养方案课程】说明每门国外课程教了什么，使对应判断更准确。'
@@ -633,9 +640,15 @@
       const levelFilter = (e) => e.major === matchMajor && (!level || !e.level || e.level === level);
       // AI 自动整理各校课程 + 语义匹配
       let aiEntries = [];
+      // 同门类其他学科（如理论经济学 vs 应用经济学）→ 提示词中排除，防止 AI 混淆
+      const gradSiblings = (found && found.kind === 'grad' && gradData.disciplines)
+        ? gradData.disciplines
+          .filter((x) => x.name !== (found.parentName || found.name) && String(x.code || '').slice(0, 2) === String(found.code || '').slice(0, 2))
+          .map((x) => x.name)
+        : [];
       if (getConfig().apiKey && getConfig().base && getConfig().model) {
         $('step3Badge').textContent = 'AI 正在整理各校课程并语义匹配……';
-        aiEntries = await aiFindSchoolCourses(matchMajor, found ? found.kind : 'undergrad', found && found.subs ? found.subs : [], courses, found && found.parentName ? found.name : null);
+        aiEntries = await aiFindSchoolCourses(matchMajor, found ? found.kind : 'undergrad', found && found.subs ? found.subs : [], courses, found && found.parentName ? found.name : null, found ? found.code : '', gradSiblings);
       }
       const curatedCount = ((planCourses.entries || []).filter(levelFilter)).length;
       const totalSources = curatedCount + aiEntries.length;
@@ -659,7 +672,7 @@
       const comparisonTable = buildComparisonTable(courses, schoolRows);
       const reportMajor = found ? (found.parentName ? found.name + '（' + found.parentName + '）' : found.name) : majorName;
       const reportCat = found && found.parentName ? '研究生学科' : (found ? found.cat : '');
-      await generateReport(courses, reportMajor, reportCat, codeText, schoolRows, comparisonTable, level, ownPlanCourses);
+      await generateReport(courses, reportMajor, reportCat, codeText, schoolRows, comparisonTable, level, ownPlanCourses, gradSiblings);
       $('runStatus').textContent = '✅ 分析完成。可编辑识别课程后点「重新生成建议」。';
       document.getElementById('pipelineResults').scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
@@ -739,6 +752,7 @@
       oc.value = '__custom__';
       oc.textContent = '其他专业（手动输入）…';
       mSel.appendChild(oc);
+      mSel.selectedIndex = 0; // 切换主目录后始终重置为第一项，避免残留旧选中值
       $('majorCustom').style.display = mSel.value === '__custom__' ? '' : 'none';
     }
 
