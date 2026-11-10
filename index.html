@@ -56,12 +56,17 @@
         <span class="muted small" id="transcriptName">未选择文件</span>
       </div>
       <div class="flex mb">
+        <select id="levelSelect" style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
+          <option value="auto">学历层次：自动识别</option>
+          <option value="undergrad">本科</option>
+          <option value="grad">硕士 / 博士</option>
+        </select>
         <input list="majorList" id="majorSelect" placeholder="目标复核专业（必填），如：计算机科学与技术 / 应用经济学" style="flex:1;min-width:240px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;">
         <datalist id="majorList"></datalist>
         <label class="btn ghost" for="filePlan" style="cursor:pointer;">📎 上传目标学校培养方案（可选）<input type="file" id="filePlan" accept=".pdf,.png,.jpg,.jpeg,.webp,.bmp,.txt,.csv,image/*" style="display:none;"></label>
         <span class="muted small" id="planName">未选择</span>
       </div>
-      <p class="muted small mb">培养方案可选：工具会自动查找已收录的 985/211 课表；找不到时会提示你上传，或提供各校官网一键搜索入口。</p>
+      <p class="muted small mb">学历层次自动识别（Master/Bachelor 等字样）：硕士成绩单只匹配研究生学科，本科只匹配本科专业，交叉选择会给出警告。培养方案可选：自动查找已收录课表，找不到时提示上传或一键搜索。</p>
       <button class="btn" id="btnRun" style="font-size:1.05rem;">🚀 开始一键分析</button>
       <span class="muted small" id="runStatus"></span>
     </div>

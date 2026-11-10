@@ -6,6 +6,7 @@
     {
       "major": "计算机科学与技术",
       "school": "清华大学",
+      "level": "undergrad",
       "year": "2022级本科培养方案",
       "source": "https://www.tsinghua.edu.cn/jxjywj/bkzy2022/zxzy/29-1.pdf",
       "courses": [
@@ -32,6 +33,7 @@
     {
       "major": "计算机科学与技术",
       "school": "北京大学",
+      "level": "grad",
       "year": "2012 硕士培养方案（计算机应用技术）",
       "source": "https://www.ece.pku.edu.cn/__local/1/5F/68/E1EA4087A32C03F6B6151EBE625_F31C3F89_2DF18.pdf",
       "courses": [

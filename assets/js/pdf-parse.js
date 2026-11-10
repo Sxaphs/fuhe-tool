@@ -7,6 +7,7 @@
 
   const VENDOR = 'assets/vendor/tesseract/';
   const AI_CONFIG_KEY = 'fuhe-ai-config';
+  let lastRawText = ''; // 最近一次解析的原始文本（供学历层次识别等使用）
 
   const BLOCK_WORDS = /masterarbeit|thesis|dissertation|kernbereich|wahlpflicht|pflichtbereich|erg[aä]nzungsbereich|core\s+\w{2,12}\s+(area|economics|business)|compulsory|elective|\bmodule\b|\bmodul\b|semester|\bnote\b|\bgrade\b|\blp\b|\bcp\b|\bcredit|born|geboren|\bprof\b|\bdr\b|universit|examination|prufung|prüfung|zeugnis|transcript|成绩单|论文|总学分|平均|page\s*\d|出生|毕业|姓名|学号/i;
 
@@ -104,7 +105,9 @@
         const { data } = await worker.recognize(c);
         lines.push(...String(data.text || '').split('\n'));
       }
-      return lines.map((s) => s.trim()).filter(Boolean);
+      const cleaned = lines.map((s) => s.trim()).filter(Boolean);
+      lastRawText = cleaned.join('\n');
+      return cleaned;
     } finally {
       try { await worker.terminate(); } catch (e) { /* ignore */ }
     }
@@ -159,6 +162,7 @@
         if (s) lines.push(s);
       }
     }
+    lastRawText = lines.join('\n');
     let courses = extractCoursesFromPdfLines(lines);
     if (!courses.length) {
       const canvases = await renderPdfPagesToCanvases(pdf, 2400);
@@ -186,9 +190,10 @@
 
     const content = [{
       type: 'text',
-      text: '这是国外成绩单的截图。请只提取其中的【课程列表】：每行输出一门课程的英文课程名，不要输出任何其他内容。'
+      text: '这是国外成绩单的截图。请先判断学历层次：第一行只输出「本科」「硕士」「博士」或「未知」四者之一（硕士项目常出现 Master/MSc/Magister，本科项目常出现 Bachelor/BSc）。'
+        + '从第二行开始，只输出【课程列表】：每行一门课程的英文课程名。'
         + '必须排除：姓名、出生日期、论文题目（如 Master Thesis）、分类标题（如 Core Area/Compulsory/Elective）、学校与学位信息、分数、学分、表头。'
-        + '课程名通常带课程代码、分数或学分，请去掉这些，只保留课程名本身。只输出课程名列表，每行一门，不要编号、解释或 markdown。'
+        + '课程名通常带课程代码、分数或学分，请去掉这些，只保留课程名本身。不要编号、解释或 markdown。'
     }];
     for (const c of canvases) {
       content.push({ type: 'image_url', image_url: { url: c.toDataURL('image/jpeg', 0.85) } });
@@ -208,6 +213,7 @@
     }
     const j = await res.json();
     const text = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '';
+    lastRawText = text;
     const courses = extractCoursesFromPdfLines(String(text).split('\n'));
     if (!courses.length) throw new Error('AI 返回内容中未解析出课程行');
     return courses;
@@ -224,8 +230,16 @@
     const type = String(file.type || '');
     if (name.endsWith('.pdf') || type === 'application/pdf') return parseCourseListFromPdf(file);
     if (/\.(png|jpe?g|webp|bmp|gif|heic|heif)$/.test(name) || type.startsWith('image/')) return parseImageViaOcr(file);
-    return parseCsvText(await file.text());
+    const text = await file.text();
+    lastRawText = text;
+    return parseCsvText(text);
   }
 
-  window.FuhePdf = { parseCourseListFromPdf, parseCsvText, parseImageViaOcr, parseViaVisionApi, parseTranscript };
+  /* 解析并返回课程 + 原始文本（供学历层次识别） */
+  async function parseTranscriptDetailed(file) {
+    const courses = await parseTranscript(file);
+    return { courses, raw: lastRawText };
+  }
+
+  window.FuhePdf = { parseCourseListFromPdf, parseCsvText, parseImageViaOcr, parseViaVisionApi, parseTranscript, parseTranscriptDetailed, getLastRawText: () => lastRawText };
 })();
