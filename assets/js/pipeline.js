@@ -776,7 +776,7 @@
         .map((k) => ({ gate: GATE[k] || '其他', entries: gateMap[GATE[k] || '其他'] || [] }))
         .filter((g) => g.entries.length);
       refreshMajorSelects = () => {
-        const level = $('levelSelect').value;
+        const level = ($('levelSelect').value === 'undergrad' || $('levelSelect').value === 'grad') ? $('levelSelect').value : 'auto';
         const gSel = $('majorGroup');
         const prevGate = gSel.value;
         gSel.innerHTML = '';
